@@ -5,6 +5,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import PenetrationTesting from "./pages/PenetrationTesting";
+import VulnerabilityAssessment from "./pages/VulnerabilityAssessment";
+import RedTeamOperations from "./pages/RedTeamOperations";
+import WebApplicationSecurity from "./pages/WebApplicationSecurity";
+import CloudSecurityAssessment from "./pages/CloudSecurityAssessment";
+import ComplianceAuditing from "./pages/ComplianceAuditing";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +22,12 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/services/penetration-testing" element={<PenetrationTesting />} />
+          <Route path="/services/vulnerability-assessment" element={<VulnerabilityAssessment />} />
+          <Route path="/services/red-team-operations" element={<RedTeamOperations />} />
+          <Route path="/services/web-application-security" element={<WebApplicationSecurity />} />
+          <Route path="/services/cloud-security-assessment" element={<CloudSecurityAssessment />} />
+          <Route path="/services/compliance-auditing" element={<ComplianceAuditing />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
