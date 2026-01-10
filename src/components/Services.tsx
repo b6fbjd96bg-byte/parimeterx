@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Shield, Search, Target, Cloud, Globe, Lock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const services = [
   {
@@ -43,6 +44,9 @@ const services = [
 ];
 
 const Services = () => {
+  const headerAnimation = useScrollAnimation({ threshold: 0.2 });
+  const cardsAnimation = useScrollAnimation({ threshold: 0.1 });
+
   return (
     <section id="services" className="py-24 relative">
       {/* Background decoration */}
@@ -50,7 +54,12 @@ const Services = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div 
+          ref={headerAnimation.ref}
+          className={`text-center max-w-2xl mx-auto mb-16 transition-all duration-700 ${
+            headerAnimation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
+        >
           <span className="text-primary text-sm font-semibold tracking-widest uppercase mb-4 block">Our Services</span>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Comprehensive <span className="text-primary">Security Solutions</span>
@@ -61,12 +70,24 @@ const Services = () => {
         </div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div 
+          ref={cardsAnimation.ref}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {services.map((service, index) => (
-            <Link key={index} to={service.link}>
-              <Card className="group h-full bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/50 transition-all duration-300 cursor-pointer">
+            <Link 
+              key={index} 
+              to={service.link}
+              className={`transition-all duration-700 ${
+                cardsAnimation.isVisible 
+                  ? "opacity-100 translate-y-0" 
+                  : "opacity-0 translate-y-10"
+              }`}
+              style={{ transitionDelay: `${index * 100}ms` }}
+            >
+              <Card className="group h-full bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/50 transition-all duration-300 cursor-pointer hover:-translate-y-1">
                 <CardHeader>
-                  <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+                  <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
                     <service.icon className="h-6 w-6 text-primary" />
                   </div>
                   <CardTitle className="text-xl group-hover:text-primary transition-colors duration-300">
@@ -78,7 +99,7 @@ const Services = () => {
                     {service.description}
                   </CardDescription>
                   <Button variant="ghost" className="p-0 h-auto text-primary hover:text-primary/80">
-                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                    Learn More <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </CardContent>
               </Card>
