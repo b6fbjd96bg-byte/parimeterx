@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import AboutUs from "./pages/AboutUs";
 import PenetrationTesting from "./pages/PenetrationTesting";
 import VulnerabilityAssessment from "./pages/VulnerabilityAssessment";
 import RedTeamOperations from "./pages/RedTeamOperations";
@@ -22,6 +23,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/about" element={<AboutUs />} />
           <Route path="/services/penetration-testing" element={<PenetrationTesting />} />
           <Route path="/services/vulnerability-assessment" element={<VulnerabilityAssessment />} />
           <Route path="/services/red-team-operations" element={<RedTeamOperations />} />
