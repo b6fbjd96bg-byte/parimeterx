@@ -13,6 +13,7 @@ import WebApplicationSecurity from "./pages/WebApplicationSecurity";
 import CloudSecurityAssessment from "./pages/CloudSecurityAssessment";
 import ComplianceAuditing from "./pages/ComplianceAuditing";
 
+
 const queryClient = new QueryClient();
 
 const App = () => (
