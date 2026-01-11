@@ -7,16 +7,16 @@ const RedTeamOperations = () => {
       icon={<Target className="h-8 w-8 text-primary" />}
       title="Red Team Operations"
       subtitle="Adversary Simulation"
-      description="Our red team engagements replicate advanced adversary behavior to evaluate your organization's detection, response, and resilience capabilities. Through realistic attack simulations, we test people, processes, and technology to uncover gaps in monitoring, incident response, and security controls."
+      description="Our red team engagements replicate advanced adversary behavior to evaluate your organization's detection, response, and resilience capabilities. Through realistic attack simulations aligned with MITRE ATT&CK framework, we test people, processes, and technology to uncover gaps in monitoring, incident response, and security controls."
       features={[
         "Full-scope adversary simulation campaigns",
         "Advanced persistent threat (APT) emulation",
-        "Social engineering and physical security testing",
-        "Bypass of security controls and detection systems",
-        "Command and control (C2) infrastructure setup",
-        "Data exfiltration and objective completion testing",
+        "Phishing and social engineering attacks",
+        "Initial access and lateral movement simulation",
+        "Privilege escalation testing",
+        "Data exfiltration simulation",
+        "MITRE ATT&CK aligned methodologies",
         "Purple team collaboration with your security team",
-        "Tabletop exercises and attack scenario planning",
       ]}
       benefits={[
         "Test your security team's real-world detection capabilities",
@@ -27,6 +27,7 @@ const RedTeamOperations = () => {
         "Improve overall security resilience and preparedness",
       ]}
       ctaText="Plan Red Team Exercise"
+      accentColor="red"
     />
   );
 };

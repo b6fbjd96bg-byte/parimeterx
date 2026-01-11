@@ -52,6 +52,12 @@
     --gradient-card: linear-gradient(180deg, hsl(220 20% 12%), hsl(220 20% 8%));
     --shadow-glow: 0 0 40px hsl(187 100% 50% / 0.3);
     --shadow-glow-sm: 0 0 20px hsl(187 100% 50% / 0.2);
+
+    /* Color-coded service accents */
+    --color-red-team: 0 84% 60%;
+    --color-blue-ai: 210 100% 56%;
+    --color-green-secure: 142 70% 45%;
+    --color-purple-blockchain: 270 70% 60%;
   }
 
   .dark {
@@ -169,5 +175,153 @@
   }
   100% {
     background-position: 100% 100%;
+  }
+}
+
+/* Shield and security animations */
+@keyframes shield-rotate {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes shield-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 20px hsl(var(--color-blue-ai) / 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 40px hsl(var(--color-green-secure) / 0.6));
+  }
+}
+
+@keyframes attack-incoming {
+  0% {
+    transform: translate(var(--start-x, -100px), var(--start-y, 0)) scale(1);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, 0) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes scan-wave {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+@keyframes secured-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px hsl(var(--color-green-secure) / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px hsl(var(--color-green-secure) / 0.6);
+  }
+}
+
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateX(var(--orbit-radius, 120px)) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(var(--orbit-radius, 120px)) rotate(-360deg);
+  }
+}
+
+@keyframes connect-pulse {
+  0%, 100% {
+    stroke-opacity: 0.3;
+  }
+  50% {
+    stroke-opacity: 0.8;
+  }
+}
+
+@layer utilities {
+  .animate-shield-rotate {
+    animation: shield-rotate 20s linear infinite;
+  }
+  
+  .animate-shield-glow {
+    animation: shield-glow 4s ease-in-out infinite;
+  }
+  
+  .animate-attack {
+    animation: attack-incoming 2s ease-out infinite;
+  }
+  
+  .animate-scan-wave {
+    animation: scan-wave 3s ease-out infinite;
+  }
+  
+  .animate-secured-pulse {
+    animation: secured-pulse 2s ease-in-out infinite;
+  }
+  
+  .animate-orbit {
+    animation: orbit 15s linear infinite;
+  }
+  
+  .text-glow-red {
+    text-shadow: 0 0 20px hsl(var(--color-red-team) / 0.5);
+  }
+  
+  .text-glow-blue {
+    text-shadow: 0 0 20px hsl(var(--color-blue-ai) / 0.5);
+  }
+  
+  .text-glow-green {
+    text-shadow: 0 0 20px hsl(var(--color-green-secure) / 0.5);
+  }
+  
+  .text-glow-purple {
+    text-shadow: 0 0 20px hsl(var(--color-purple-blockchain) / 0.5);
+  }
+  
+  .border-red-team {
+    border-color: hsl(var(--color-red-team));
+  }
+  
+  .border-blue-ai {
+    border-color: hsl(var(--color-blue-ai));
+  }
+  
+  .border-green-secure {
+    border-color: hsl(var(--color-green-secure));
+  }
+  
+  .border-purple-blockchain {
+    border-color: hsl(var(--color-purple-blockchain));
+  }
+  
+  .bg-red-team {
+    background-color: hsl(var(--color-red-team));
+  }
+  
+  .bg-blue-ai {
+    background-color: hsl(var(--color-blue-ai));
+  }
+  
+  .bg-green-secure {
+    background-color: hsl(var(--color-green-secure));
+  }
+  
+  .bg-purple-blockchain {
+    background-color: hsl(var(--color-purple-blockchain));
   }
 }

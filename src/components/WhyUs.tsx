@@ -1,36 +1,36 @@
-import { Check, Zap, FileText, Users, Award, Clock } from "lucide-react";
+import { Brain, FileText, Users, Zap, Clock, Target } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const features = [
   {
-    icon: Zap,
-    title: "Expert-Driven Approach",
-    description: "Our team of certified security professionals goes beyond automated tools with deep manual testing expertise.",
-  },
-  {
-    icon: FileText,
-    title: "Clear Reporting",
-    description: "Receive detailed, actionable reports with prioritized findings and step-by-step remediation guidance.",
+    icon: Brain,
+    title: "AI-Powered Platform",
+    description: "Advanced AI continuously scans and identifies vulnerabilities across your entire digital infrastructure.",
   },
   {
     icon: Users,
-    title: "Dedicated Support",
-    description: "Work directly with our security experts who understand your business context and threat landscape.",
+    title: "Expert-Driven Testing",
+    description: "Certified security professionals conduct deep manual testing that automated tools can't match.",
   },
   {
-    icon: Award,
-    title: "Industry Certified",
-    description: "OSCP, CEH, CISSP certified professionals aligned with OWASP, NIST, and SANS methodologies.",
+    icon: Target,
+    title: "Zero-Day & Logic Focus",
+    description: "We uncover unknown vulnerabilities and business logic flaws that attackers exploit.",
+  },
+  {
+    icon: FileText,
+    title: "Clear & Actionable Reports",
+    description: "Receive detailed reports with prioritized findings and step-by-step remediation guidance.",
   },
   {
     icon: Clock,
-    title: "Rapid Turnaround",
-    description: "Get comprehensive security assessments delivered on time without compromising thoroughness.",
+    title: "Fast Turnaround Time",
+    description: "Get comprehensive security assessments delivered on time without compromising quality.",
   },
   {
-    icon: Check,
-    title: "Zero-Day Discovery",
-    description: "Uncover unknown vulnerabilities and business logic flaws that automated scanners miss.",
+    icon: Zap,
+    title: "Direct Expert Access",
+    description: "Work directly with our security experts who understand your business and threat landscape.",
   },
 ];
 
@@ -54,10 +54,10 @@ const WhyUs = () => {
           >
             <span className="text-primary text-sm font-semibold tracking-widest uppercase mb-4 block">Why Choose Us</span>
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Stay Secure, Compliant, and <span className="text-primary">Resilient</span>
+              Why Choose <span className="text-primary">Perimeter X</span>
             </h2>
             <p className="text-muted-foreground mb-8 leading-relaxed">
-              PerimeterX empowers organizations to identify real-world security risks before attackers exploit them. Our approach combines cutting-edge technology with human expertise to deliver comprehensive security solutions.
+              PerimeterX combines cutting-edge AI technology with expert human intelligence to deliver comprehensive security solutions. We go beyond automated scanning to uncover the vulnerabilities that matter most.
             </p>
             
             {/* Stats */}
@@ -68,8 +68,8 @@ const WhyUs = () => {
               }`}
             >
               {[
-                { value: "500+", label: "Assessments Done" },
-                { value: "99%", label: "Client Retention" },
+                { value: "700+", label: "Assessments Done" },
+                { value: "99.9%", label: "Client Satisfaction" },
                 { value: "24/7", label: "Expert Support" },
               ].map((stat, index) => (
                 <div 

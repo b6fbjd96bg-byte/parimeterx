@@ -27,6 +27,7 @@ const PenetrationTesting = () => {
         "Gain confidence in your security posture",
       ]}
       ctaText="Request a Pentest"
+      accentColor="blue"
     />
   );
 };

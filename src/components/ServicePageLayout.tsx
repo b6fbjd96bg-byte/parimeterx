@@ -21,6 +21,8 @@ import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
+type AccentColor = "red" | "blue" | "green" | "purple";
+
 interface ServicePageLayoutProps {
   icon: ReactNode;
   title: string;
@@ -29,7 +31,35 @@ interface ServicePageLayoutProps {
   features: string[];
   benefits: string[];
   ctaText?: string;
+  accentColor?: AccentColor;
 }
+
+const accentStyles: Record<AccentColor, { border: string; bg: string; text: string; glow: string }> = {
+  red: {
+    border: "border-[hsl(var(--color-red-team))]",
+    bg: "bg-[hsl(var(--color-red-team))]",
+    text: "text-[hsl(var(--color-red-team))]",
+    glow: "shadow-[0_0_30px_hsl(var(--color-red-team)/0.3)]",
+  },
+  blue: {
+    border: "border-[hsl(var(--color-blue-ai))]",
+    bg: "bg-[hsl(var(--color-blue-ai))]",
+    text: "text-[hsl(var(--color-blue-ai))]",
+    glow: "shadow-[0_0_30px_hsl(var(--color-blue-ai)/0.3)]",
+  },
+  green: {
+    border: "border-[hsl(var(--color-green-secure))]",
+    bg: "bg-[hsl(var(--color-green-secure))]",
+    text: "text-[hsl(var(--color-green-secure))]",
+    glow: "shadow-[0_0_30px_hsl(var(--color-green-secure)/0.3)]",
+  },
+  purple: {
+    border: "border-[hsl(var(--color-purple-blockchain))]",
+    bg: "bg-[hsl(var(--color-purple-blockchain))]",
+    text: "text-[hsl(var(--color-purple-blockchain))]",
+    glow: "shadow-[0_0_30px_hsl(var(--color-purple-blockchain)/0.3)]",
+  },
+};
 
 const processSteps = [
   { icon: Eye, title: "Discovery", description: "Initial scoping and reconnaissance" },
@@ -54,7 +84,10 @@ const ServicePageLayout = ({
   features,
   benefits,
   ctaText = "Get Started Today",
+  accentColor = "blue",
 }: ServicePageLayoutProps) => {
+  const accent = accentStyles[accentColor];
+  
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -62,6 +95,10 @@ const ServicePageLayout = ({
         {/* Hero Section */}
         <section className="pt-32 pb-16 relative overflow-hidden">
           <div className="absolute inset-0 gradient-radial opacity-30" />
+          {/* Accent color gradient for red team */}
+          {accentColor === "red" && (
+            <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--color-red-team)/0.05)] to-transparent" />
+          )}
           <div className="container mx-auto px-4 relative z-10">
             <Link to="/#services">
               <Button variant="ghost" className="mb-8 text-muted-foreground hover:text-primary">
@@ -71,10 +108,10 @@ const ServicePageLayout = ({
             </Link>
             
             <div className="max-w-4xl">
-              <div className="h-16 w-16 rounded-xl bg-primary/10 flex items-center justify-center mb-6 animate-pulse-glow">
+              <div className={`h-16 w-16 rounded-xl bg-primary/10 flex items-center justify-center mb-6 animate-pulse-glow ${accent.glow}`}>
                 {icon}
               </div>
-              <span className="text-primary text-sm font-semibold tracking-widest uppercase mb-4 block">
+              <span className={`text-sm font-semibold tracking-widest uppercase mb-4 block ${accent.text || "text-primary"}`}>
                 {subtitle}
               </span>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
@@ -123,7 +160,7 @@ const ServicePageLayout = ({
         <section className="py-16 relative">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12">
-              <div className="bg-card/30 backdrop-blur-sm border border-border/50 rounded-2xl p-8">
+              <div className={`bg-card/30 backdrop-blur-sm border border-border/50 rounded-2xl p-8 hover:${accent.border}/30 transition-colors`}>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
                     <Zap className="h-5 w-5 text-primary" />
@@ -172,7 +209,7 @@ const ServicePageLayout = ({
                 <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-3">
                   <Shield className="h-6 w-6 text-primary" />
                 </div>
-                <div className="text-3xl font-bold text-primary mb-1">500+</div>
+                <div className="text-3xl font-bold text-primary mb-1">700+</div>
                 <p className="text-sm text-muted-foreground">Assessments Completed</p>
               </div>
               <div className="text-center">

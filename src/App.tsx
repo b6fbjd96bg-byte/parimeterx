@@ -12,7 +12,7 @@ import RedTeamOperations from "./pages/RedTeamOperations";
 import WebApplicationSecurity from "./pages/WebApplicationSecurity";
 import CloudSecurityAssessment from "./pages/CloudSecurityAssessment";
 import ComplianceAuditing from "./pages/ComplianceAuditing";
-
+import BlockchainSecurity from "./pages/BlockchainSecurity";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +31,7 @@ const App = () => (
           <Route path="/services/web-application-security" element={<WebApplicationSecurity />} />
           <Route path="/services/cloud-security-assessment" element={<CloudSecurityAssessment />} />
           <Route path="/services/compliance-auditing" element={<ComplianceAuditing />} />
+          <Route path="/services/blockchain-security" element={<BlockchainSecurity />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
