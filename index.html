@@ -4,6 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PerimeterX | Expert Cybersecurity & Penetration Testing</title>
+    <!-- Single Page Apps for GitHub Pages -->
+    <script type="text/javascript">
+      // This script checks to see if a redirect is present in the query string,
+      // converts it back into the correct url and adds it to the browser's history
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
     <meta name="description" content="PerimeterX delivers expert-driven penetration testing, vulnerability assessments, and red-team security solutions for startups, enterprises, and financial institutions." />
     <meta name="author" content="PerimeterX" />
     <meta name="keywords" content="cybersecurity, penetration testing, vulnerability assessment, red team, security audit, OWASP, NIST, cloud security" />
