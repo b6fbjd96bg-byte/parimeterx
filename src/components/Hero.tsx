@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 import AnimatedShield from "./AnimatedShield";
 
 const Hero = () => {
@@ -51,9 +52,11 @@ const Hero = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button variant="cyber" size="xl" className="group">
-                Get Free AI Security Scan
-                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              <Button variant="cyber" size="xl" className="group" asChild>
+                <Link to="/get-security-audit">
+                  Get Free AI Security Scan
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Link>
               </Button>
               <Button variant="cyberOutline" size="xl">
                 <Phone className="mr-2 h-5 w-5" />

@@ -39,7 +39,7 @@ const FinalCTA = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/#contact">
+            <Link to="/get-security-audit">
               <Button variant="cyber" size="xl" className="group w-full sm:w-auto">
                 Request Free Security Audit
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />

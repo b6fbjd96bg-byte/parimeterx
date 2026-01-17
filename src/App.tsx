@@ -13,6 +13,7 @@ import WebApplicationSecurity from "./pages/WebApplicationSecurity";
 import CloudSecurityAssessment from "./pages/CloudSecurityAssessment";
 import ComplianceAuditing from "./pages/ComplianceAuditing";
 import BlockchainSecurity from "./pages/BlockchainSecurity";
+import GetSecurityAudit from "./pages/GetSecurityAudit";
 import LoadingScreen from "./components/LoadingScreen";
 import CustomCursor from "./components/CustomCursor";
 
@@ -29,6 +30,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/get-security-audit" element={<GetSecurityAudit />} />
           <Route path="/services/penetration-testing" element={<PenetrationTesting />} />
           <Route path="/services/vulnerability-assessment" element={<VulnerabilityAssessment />} />
           <Route path="/services/red-team-operations" element={<RedTeamOperations />} />
