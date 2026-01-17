@@ -54,10 +54,10 @@ const WhyUs = () => {
           >
             <span className="text-primary text-sm font-semibold tracking-widest uppercase mb-4 block">Why Choose Us</span>
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Why Choose <span className="text-primary">Perimeter X</span>
+              Why Choose <span className="text-primary">Parameter X</span>
             </h2>
             <p className="text-muted-foreground mb-8 leading-relaxed">
-              PerimeterX combines cutting-edge AI technology with expert human intelligence to deliver comprehensive security solutions. We go beyond automated scanning to uncover the vulnerabilities that matter most.
+              ParameterX combines cutting-edge AI technology with expert human intelligence to deliver comprehensive security solutions. We go beyond automated scanning to uncover the vulnerabilities that matter most.
             </p>
             
             {/* Stats */}
