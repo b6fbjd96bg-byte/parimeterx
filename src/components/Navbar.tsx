@@ -66,8 +66,8 @@ const Navbar = () => {
                 </a>
               )
             ))}
-            <Button variant="cyber" size="sm">
-              Get Security Audit
+            <Button variant="cyber" size="sm" asChild>
+              <Link to="/get-security-audit">Get Security Audit</Link>
             </Button>
           </div>
 
@@ -113,8 +113,8 @@ const Navbar = () => {
                   </a>
                 )
               ))}
-              <Button variant="cyber" size="sm" className="w-fit">
-                Get Security Audit
+              <Button variant="cyber" size="sm" className="w-fit" asChild>
+                <Link to="/get-security-audit">Get Security Audit</Link>
               </Button>
             </div>
           </div>
