@@ -13,12 +13,16 @@ import WebApplicationSecurity from "./pages/WebApplicationSecurity";
 import CloudSecurityAssessment from "./pages/CloudSecurityAssessment";
 import ComplianceAuditing from "./pages/ComplianceAuditing";
 import BlockchainSecurity from "./pages/BlockchainSecurity";
+import LoadingScreen from "./components/LoadingScreen";
+import CustomCursor from "./components/CustomCursor";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <LoadingScreen />
+      <CustomCursor />
       <Toaster />
       <Sonner />
       <BrowserRouter>

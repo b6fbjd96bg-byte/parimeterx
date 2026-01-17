@@ -11,19 +11,19 @@ const Footer = () => {
             <Link to="/" className="flex items-center gap-2 mb-4">
               <Shield className="h-7 w-7 text-primary" />
               <span className="text-lg font-bold tracking-wider">
-                <span className="text-foreground">PERIMETER</span>
+                <span className="text-foreground">PARAMETER</span>
                 <span className="text-primary"> X</span>
               </span>
             </Link>
             <p className="text-muted-foreground text-sm max-w-md leading-relaxed">
-              Defining the Next Edge of Defense. PerimeterX delivers expert-driven cybersecurity solutions to protect your organization against modern cyber threats.
+              Defining the Next Edge of Defense. ParameterX delivers expert-driven cybersecurity solutions to protect your organization against modern cyber threats.
             </p>
             
             {/* Contact Info with Icons */}
             <div className="mt-6 space-y-2">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Mail className="h-4 w-4 text-primary" />
-                <span>contact@perimeterx.io</span>
+                <span>contact@parameterx.io</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Phone className="h-4 w-4 text-primary" />
@@ -83,7 +83,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-border/50 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            © 2025 PerimeterX. All rights reserved.
+            © 2025 ParameterX. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-muted-foreground">
             <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
@@ -94,7 +94,7 @@ const Footer = () => {
         {/* Hashtags */}
         <div className="text-center mt-8 pt-4 border-t border-border/30">
           <p className="text-xs text-primary/60">
-            #PerimeterX #AICybersecurity #ZeroTrust #CyberDefense
+            #ParameterX #AICybersecurity #ZeroTrust #CyberDefense
           </p>
         </div>
       </div>

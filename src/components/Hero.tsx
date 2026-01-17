@@ -35,7 +35,7 @@ const Hero = () => {
 
             {/* Main Headline */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
-              <span className="text-foreground">PERIMETER</span>
+              <span className="text-foreground">PARAMETER</span>
               <span className="text-primary text-glow"> X</span>
             </h1>
             

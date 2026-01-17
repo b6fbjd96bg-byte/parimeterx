@@ -32,7 +32,7 @@ const teamMembers = [
 ];
 
 const timeline = [
-  { year: "2018", event: "PerimeterX founded with a mission to democratize cybersecurity" },
+  { year: "2018", event: "ParameterX founded with a mission to democratize cybersecurity" },
   { year: "2019", event: "Expanded services to include cloud security assessments" },
   { year: "2020", event: "Launched red team operations division" },
   { year: "2021", event: "Achieved SOC 2 Type II certification" },
@@ -123,7 +123,7 @@ const AboutUs = () => {
             Defining the <span className="text-primary text-glow">Next Edge</span> of Defense
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            PerimeterX is a next-generation cybersecurity company dedicated to protecting organizations 
+            ParameterX is a next-generation cybersecurity company dedicated to protecting organizations 
             from evolving cyber threats through expert-driven security solutions.
           </p>
         </div>

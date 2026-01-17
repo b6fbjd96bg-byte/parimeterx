@@ -61,10 +61,10 @@ const AISecurityEngine = () => {
             AI-Powered Security
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-            PerimeterX <span className="text-primary text-glow">AI Security Engine</span>
+            ParameterX <span className="text-primary text-glow">AI Security Engine</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            PerimeterX uses artificial intelligence combined with human security experts to continuously scan, detect, and help eliminate vulnerabilities before attackers exploit them.
+            ParameterX uses artificial intelligence combined with human security experts to continuously scan, detect, and help eliminate vulnerabilities before attackers exploit them.
           </p>
         </div>
 
