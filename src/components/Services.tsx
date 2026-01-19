@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Shield, Search, Target, Cloud, Globe, Boxes, ArrowRight } from "lucide-react";
+import { Shield, Target, Cloud, Network, Code, Cpu, Brain, Building2, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { LucideIcon } from "lucide-react";
@@ -17,45 +17,59 @@ interface Service {
 
 const services: Service[] = [
   {
-    icon: Search,
-    title: "Penetration Testing",
-    description: "Manual and automated penetration testing to identify and exploit real-world vulnerabilities in applications, networks, and infrastructure.",
+    icon: Shield,
+    title: "Application Pentest",
+    description: "Enhance the security of your applications and elevate your DevSecOps practice.",
     link: "/services/penetration-testing",
     accent: "blue",
   },
   {
-    icon: Shield,
-    title: "Vulnerability Assessment",
-    description: "Systematic vulnerability scanning and analysis to identify, classify, and prioritize security risks with false-positive free reporting.",
+    icon: Building2,
+    title: "Enterprise Pentest",
+    description: "Protect your organization from cyber threats with our comprehensive enterprise security solutions.",
     link: "/services/vulnerability-assessment",
     accent: "green",
   },
   {
     icon: Target,
-    title: "Red Team Operations",
-    description: "Advanced adversary simulations that replicate real attacker behavior to test detection and response capabilities with MITRE ATT&CK alignment.",
+    title: "Red Team Assessment",
+    description: "Obtain a comprehensive perspective on your organization's defense capabilities against real-world attacks.",
     link: "/services/red-team-operations",
     accent: "red",
   },
   {
-    icon: Globe,
-    title: "Web & API Security",
-    description: "In-depth security testing of web applications and APIs beyond OWASP Top 10, including business logic and authentication testing.",
-    link: "/services/web-application-security",
-    accent: "blue",
-  },
-  {
     icon: Cloud,
-    title: "Cloud Security Assessment",
-    description: "Security assessment of cloud infrastructure across AWS, Azure, and GCP with IAM, network, and container security focus.",
+    title: "Cloud Pentest",
+    description: "Evaluate and enhance cloud security posture with expert testing and analysis.",
     link: "/services/cloud-security-assessment",
     accent: "blue",
   },
   {
-    icon: Boxes,
-    title: "Blockchain & Web3 Security",
-    description: "Security testing for blockchain applications and smart contracts including reentrancy, flash loan, and oracle manipulation testing.",
+    icon: Network,
+    title: "Network Pentest",
+    description: "Uncover potential network vulnerabilities and protect your sensitive systems and data.",
+    link: "/services/web-application-security",
+    accent: "green",
+  },
+  {
+    icon: Code,
+    title: "Source Code Audit",
+    description: "Ensure the integrity and security of your codebase with our source code audits.",
     link: "/services/blockchain-security",
+    accent: "purple",
+  },
+  {
+    icon: Cpu,
+    title: "IoT Pentest",
+    description: "Secure interconnected devices and products by validating their resilience against potential attackers.",
+    link: "/services/compliance-auditing",
+    accent: "green",
+  },
+  {
+    icon: Brain,
+    title: "AI Security Assessment",
+    description: "We identify critical vulnerabilities in production LLMs and AI systems that expose novel attack paths.",
+    link: "/services/red-team-operations",
     accent: "purple",
   },
 ];
