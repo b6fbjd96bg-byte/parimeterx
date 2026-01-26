@@ -78,18 +78,39 @@ const TrustMetrics = () => {
           {metrics.map((metric, index) => (
             <div 
               key={index}
-              className={`relative group p-6 md:p-8 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/50 transition-all duration-500 text-center ${
+              className={`relative group p-6 md:p-8 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/50 transition-all duration-500 text-center hover:-translate-y-2 overflow-hidden ${
                 animation.isVisible 
                   ? "opacity-100 translate-y-0" 
                   : "opacity-0 translate-y-10"
               }`}
               style={{ transitionDelay: `${index * 150}ms` }}
             >
+              {/* Animated border gradient */}
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div className="absolute inset-[-2px] rounded-2xl bg-gradient-to-r from-primary/50 via-primary/20 to-primary/50 animate-gradient-x" />
+                <div className="absolute inset-[1px] rounded-2xl bg-card" />
+              </div>
+              
               {/* Glow effect on hover */}
               <div className="absolute inset-0 rounded-2xl bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               
+              {/* Floating particles effect */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none overflow-hidden rounded-2xl">
+                {[...Array(5)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="absolute w-1 h-1 bg-primary/40 rounded-full animate-float-particle"
+                    style={{
+                      left: `${20 + i * 15}%`,
+                      animationDelay: `${i * 0.2}s`,
+                      animationDuration: `${2 + i * 0.5}s`,
+                    }}
+                  />
+                ))}
+              </div>
+              
               <div className="relative z-10">
-                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
+                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                   <metric.icon className="w-7 h-7 text-primary" />
                 </div>
                 
@@ -103,6 +124,26 @@ const TrustMetrics = () => {
               </div>
             </div>
           ))}
+          
+          <style>{`
+            @keyframes gradient-x {
+              0%, 100% { background-position: 0% 50%; }
+              50% { background-position: 100% 50%; }
+            }
+            .animate-gradient-x {
+              background-size: 200% 200%;
+              animation: gradient-x 3s ease infinite;
+            }
+            @keyframes float-particle {
+              0%, 100% { transform: translateY(100%) scale(0); opacity: 0; }
+              10% { opacity: 1; }
+              90% { opacity: 1; }
+              100% { transform: translateY(-100px) scale(1); opacity: 0; }
+            }
+            .animate-float-particle {
+              animation: float-particle 3s ease-in-out infinite;
+            }
+          `}</style>
         </div>
       </div>
     </section>

@@ -147,21 +147,26 @@ const Services = () => {
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <Card className={`group h-full bg-card/50 backdrop-blur-sm ${accent.border} ${accent.hoverBorder} transition-all duration-300 cursor-pointer hover:-translate-y-1`}>
-                  <CardHeader>
-                    <div className={`h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 ${accent.iconBg} group-hover:scale-110 transition-all duration-300`}>
-                      <IconComponent className="h-6 w-6 text-primary" />
+                <Card className={`group h-full bg-card/50 backdrop-blur-sm ${accent.border} ${accent.hoverBorder} transition-all duration-300 cursor-pointer hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/10 relative overflow-hidden`}>
+                  {/* Shimmer effect on hover */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                  </div>
+                  
+                  <CardHeader className="relative z-10">
+                    <div className={`h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 ${accent.iconBg} group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
+                      <IconComponent className="h-6 w-6 text-primary group-hover:animate-pulse" />
                     </div>
                     <CardTitle className="text-xl group-hover:text-primary transition-colors duration-300">
                       {service.title}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="relative z-10">
                     <CardDescription className="text-muted-foreground leading-relaxed mb-4">
                       {service.description}
                     </CardDescription>
-                    <Button variant="ghost" className="p-0 h-auto text-primary hover:text-primary/80">
-                      Learn More <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    <Button variant="ghost" className="p-0 h-auto text-primary hover:text-primary/80 group/btn">
+                      Learn More <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-2 transition-transform duration-300" />
                     </Button>
                   </CardContent>
                 </Card>
