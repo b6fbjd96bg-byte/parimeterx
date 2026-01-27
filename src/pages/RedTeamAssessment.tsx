@@ -1,9 +1,11 @@
 import { Target, Shield, Lock, Award, FileCheck, Search, BarChart3, FileText, Wrench, RefreshCw, Users } from "lucide-react";
 import DetailedServicePageLayout from "@/components/DetailedServicePageLayout";
+import RedTeamAnimation from "@/components/animations/RedTeamAnimation";
 
 const RedTeamAssessment = () => {
   return (
     <DetailedServicePageLayout
+      heroAnimation={<RedTeamAnimation />}
       icon={<Target className="h-8 w-8 text-[hsl(var(--color-red-team))]" />}
       title="Test Your Defenses Against Real-World Attacks"
       subtitle="Red Team Assessment"

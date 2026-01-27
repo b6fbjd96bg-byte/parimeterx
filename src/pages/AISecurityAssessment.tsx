@@ -1,9 +1,11 @@
 import { Brain, Shield, Lock, Award, FileCheck, Search, Target, BarChart3, FileText, Wrench, RefreshCw } from "lucide-react";
 import DetailedServicePageLayout from "@/components/DetailedServicePageLayout";
+import AISecurityAnimation from "@/components/animations/AISecurityAnimation";
 
 const AISecurityAssessment = () => {
   return (
     <DetailedServicePageLayout
+      heroAnimation={<AISecurityAnimation />}
       icon={<Brain className="h-8 w-8 text-[hsl(var(--color-purple-blockchain))]" />}
       title="Secure Your AI Systems Against Novel Attacks"
       subtitle="AI Security Assessment"

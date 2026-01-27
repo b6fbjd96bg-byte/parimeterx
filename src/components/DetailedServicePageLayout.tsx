@@ -57,6 +57,7 @@ interface DetailedServicePageLayoutProps {
   ctaDescription: string;
   ctaButtonText: string;
   accentColor?: AccentColor;
+  heroAnimation?: ReactNode;
 }
 
 // Custom hook for individual step animation
@@ -229,6 +230,7 @@ const DetailedServicePageLayout = ({
   ctaDescription,
   ctaButtonText,
   accentColor = "blue",
+  heroAnimation,
 }: DetailedServicePageLayoutProps) => {
   const colorVar = accentColors[accentColor];
 
@@ -247,32 +249,43 @@ const DetailedServicePageLayout = ({
               </Button>
             </Link>
             
-            <div className="max-w-4xl">
-              <div className={`h-16 w-16 rounded-xl bg-[hsl(var(--${colorVar})/0.1)] flex items-center justify-center mb-6 animate-pulse-glow shadow-[0_0_30px_hsl(var(--${colorVar})/0.3)]`}>
-                {icon}
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="max-w-2xl">
+                <div className={`h-16 w-16 rounded-xl bg-[hsl(var(--${colorVar})/0.1)] flex items-center justify-center mb-6 animate-pulse-glow shadow-[0_0_30px_hsl(var(--${colorVar})/0.3)]`}>
+                  {icon}
+                </div>
+                <span className={`text-sm font-semibold tracking-widest uppercase mb-4 block text-[hsl(var(--${colorVar}))]`}>
+                  {subtitle}
+                </span>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                  {title.split(' ').slice(0, -2).join(' ')} <span className={`text-[hsl(var(--${colorVar}))]`}>{title.split(' ').slice(-2).join(' ')}</span>
+                </h1>
+                <p className="text-xl text-muted-foreground leading-relaxed mb-6">
+                  {tagline}
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+                  {description}
+                </p>
+                
+                {/* Trust Indicators */}
+                <div className="flex flex-wrap gap-4">
+                  {trustIndicators.map((item, index) => (
+                    <div key={index} className="flex items-center gap-2 bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg px-4 py-2">
+                      <item.icon className={`h-4 w-4 text-[hsl(var(--${colorVar}))]`} />
+                      <span className="text-sm text-muted-foreground">{item.label}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <span className={`text-sm font-semibold tracking-widest uppercase mb-4 block text-[hsl(var(--${colorVar}))]`}>
-                {subtitle}
-              </span>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-                {title.split(' ').slice(0, -2).join(' ')} <span className={`text-[hsl(var(--${colorVar}))]`}>{title.split(' ').slice(-2).join(' ')}</span>
-              </h1>
-              <p className="text-xl text-muted-foreground leading-relaxed mb-6">
-                {tagline}
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                {description}
-              </p>
               
-              {/* Trust Indicators */}
-              <div className="flex flex-wrap gap-4">
-                {trustIndicators.map((item, index) => (
-                  <div key={index} className="flex items-center gap-2 bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg px-4 py-2">
-                    <item.icon className={`h-4 w-4 text-[hsl(var(--${colorVar}))]`} />
-                    <span className="text-sm text-muted-foreground">{item.label}</span>
+              {/* Hero Animation */}
+              {heroAnimation && (
+                <div className="hidden lg:block">
+                  <div className={`rounded-2xl border border-[hsl(var(--${colorVar})/0.2)] bg-card/20 backdrop-blur-sm overflow-hidden`}>
+                    {heroAnimation}
                   </div>
-                ))}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </section>

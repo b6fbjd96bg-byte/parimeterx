@@ -1,9 +1,11 @@
 import { Code, Shield, Lock, Award, FileCheck, Search, Target, BarChart3, FileText, Wrench, RefreshCw } from "lucide-react";
 import DetailedServicePageLayout from "@/components/DetailedServicePageLayout";
+import SourceCodeAuditAnimation from "@/components/animations/SourceCodeAuditAnimation";
 
 const SourceCodeAudit = () => {
   return (
     <DetailedServicePageLayout
+      heroAnimation={<SourceCodeAuditAnimation />}
       icon={<Code className="h-8 w-8 text-[hsl(var(--color-purple-blockchain))]" />}
       title="Ensure Code Security From the Source"
       subtitle="Source Code Security Audit"
