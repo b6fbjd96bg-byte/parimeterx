@@ -6,27 +6,44 @@ import TypingText from "./TypingText";
 import GlitchText from "./GlitchText";
 import MagneticButton from "./MagneticButton";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useParallax } from "@/hooks/useParallax";
 
 const Hero = () => {
   const statsAnimation = useScrollAnimation({ threshold: 0.3 });
+  
+  // Parallax effects for background elements
+  const gridParallax = useParallax({ speed: 0.1 });
+  const orbSlowParallax = useParallax({ speed: 0.15 });
+  const orbFastParallax = useParallax({ speed: 0.25 });
+  const shieldParallax = useParallax({ speed: 0.05 });
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Animated Gradient Background */}
-      <div className="absolute inset-0 z-0 bg-background">
-        {/* Grid Pattern with animation */}
+      {/* Animated Gradient Background with Parallax */}
+      <div className="absolute inset-0 z-0 bg-background overflow-hidden">
+        {/* Grid Pattern with animation and parallax */}
         <div 
-          className="absolute inset-0 opacity-[0.03] animate-grid-flow"
+          className="absolute inset-0 opacity-[0.03] animate-grid-flow will-change-transform"
           style={{
             backgroundImage: `linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)`,
-            backgroundSize: '60px 60px'
+            backgroundSize: '60px 60px',
+            transform: `translateY(${gridParallax}px)`,
           }}
         />
         
-        {/* Radial Gradient Orbs */}
-        <div className="absolute top-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] animate-pulse-glow" />
-        <div className="absolute bottom-1/4 -right-1/4 w-[500px] h-[500px] rounded-full bg-accent/5 blur-[100px] animate-pulse-glow" style={{ animationDelay: '1.5s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/3 blur-[150px]" />
+        {/* Radial Gradient Orbs with Parallax */}
+        <div 
+          className="absolute top-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] animate-pulse-glow will-change-transform"
+          style={{ transform: `translateY(${orbSlowParallax}px)` }}
+        />
+        <div 
+          className="absolute bottom-1/4 -right-1/4 w-[500px] h-[500px] rounded-full bg-accent/5 blur-[100px] animate-pulse-glow will-change-transform" 
+          style={{ animationDelay: '1.5s', transform: `translateY(${orbFastParallax}px)` }} 
+        />
+        <div 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/3 blur-[150px] will-change-transform"
+          style={{ transform: `translate(-50%, calc(-50% + ${orbSlowParallax * 0.5}px))` }}
+        />
         
         {/* Scanning line effect */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -108,8 +125,14 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Column - Animated Shield */}
-          <div className="flex justify-center order-1 lg:order-2 animate-scale-in" style={{ animationDelay: "0.4s" }}>
+          {/* Right Column - Animated Shield with Parallax */}
+          <div 
+            className="flex justify-center order-1 lg:order-2 animate-scale-in will-change-transform" 
+            style={{ 
+              animationDelay: "0.4s",
+              transform: `translateY(${shieldParallax}px)`,
+            }}
+          >
             <AnimatedShield />
           </div>
         </div>

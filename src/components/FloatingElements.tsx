@@ -1,4 +1,5 @@
 import { Shield, Lock, Key, Eye, Fingerprint, Wifi, Database, Code } from "lucide-react";
+import { useParallax } from "@/hooks/useParallax";
 
 const icons = [Shield, Lock, Key, Eye, Fingerprint, Wifi, Database, Code];
 
@@ -9,6 +10,7 @@ interface FloatingElement {
   size: number;
   duration: number;
   delay: number;
+  parallaxSpeed: number;
 }
 
 const generateElements = (): FloatingElement[] => {
@@ -19,23 +21,35 @@ const generateElements = (): FloatingElement[] => {
     size: 16 + (index % 3) * 8,
     duration: 15 + (index % 5) * 5,
     delay: index * 0.5,
+    parallaxSpeed: 0.1 + (index % 4) * 0.1, // Varying speeds for depth
   }));
 };
 
 const FloatingElements = () => {
   const elements = generateElements();
+  
+  // Multiple parallax layers for depth effect
+  const parallax1 = useParallax({ speed: 0.1 });
+  const parallax2 = useParallax({ speed: 0.2 });
+  const parallax3 = useParallax({ speed: 0.3 });
+  const parallax4 = useParallax({ speed: 0.15, direction: "down" });
+
+  const parallaxOffsets = [parallax1, parallax2, parallax3, parallax4];
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
       {elements.map((element, index) => {
         const Icon = element.icon;
+        const parallaxOffset = parallaxOffsets[index % 4];
+        
         return (
           <div
             key={index}
-            className="absolute opacity-[0.03] text-primary"
+            className="absolute opacity-[0.03] text-primary will-change-transform"
             style={{
               left: `${element.x}%`,
               top: `${element.y}%`,
+              transform: `translateY(${parallaxOffset}px)`,
               animation: `float-${index % 4} ${element.duration}s ease-in-out infinite`,
               animationDelay: `${element.delay}s`,
             }}

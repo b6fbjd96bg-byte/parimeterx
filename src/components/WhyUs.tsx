@@ -1,5 +1,6 @@
 import { Brain, FileText, Users, Zap, Clock, Target } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useParallax } from "@/hooks/useParallax";
 
 const features = [
   {
@@ -38,10 +39,16 @@ const WhyUs = () => {
   const textAnimation = useScrollAnimation({ threshold: 0.2 });
   const featuresAnimation = useScrollAnimation({ threshold: 0.1 });
   const statsAnimation = useScrollAnimation({ threshold: 0.3 });
+  
+  // Parallax effect
+  const bgParallax = useParallax({ speed: 0.12 });
 
   return (
-    <section id="why-us" className="py-24 bg-secondary/30 relative">
-      <div className="absolute inset-0 gradient-cyber opacity-50" />
+    <section id="why-us" className="py-24 bg-secondary/30 relative overflow-hidden">
+      <div 
+        className="absolute inset-0 gradient-cyber opacity-50 will-change-transform" 
+        style={{ transform: `translateY(${bgParallax}px)` }}
+      />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">

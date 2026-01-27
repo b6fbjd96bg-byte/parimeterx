@@ -10,12 +10,14 @@ import Footer from "@/components/Footer";
 import ParticleField from "@/components/ParticleField";
 import FloatingElements from "@/components/FloatingElements";
 import ScrollProgress from "@/components/ScrollProgress";
+import ParallaxBackground from "@/components/ParallaxBackground";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background relative">
-      {/* Global Animations */}
+      {/* Global Animations & Parallax */}
       <ScrollProgress />
+      <ParallaxBackground />
       <ParticleField />
       <FloatingElements />
       

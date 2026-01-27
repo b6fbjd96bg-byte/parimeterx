@@ -1,6 +1,7 @@
 import { Brain, Globe, Server, Cloud, Boxes, Scan, Shield, Zap, Target } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useParallax } from "@/hooks/useParallax";
 
 const connectedAssets = [
   { icon: Globe, label: "Web Application", angle: 0 },
@@ -42,12 +43,22 @@ const AISecurityEngine = () => {
   const headerAnimation = useScrollAnimation({ threshold: 0.2 });
   const visualAnimation = useScrollAnimation({ threshold: 0.1 });
   const featuresAnimation = useScrollAnimation({ threshold: 0.1 });
+  
+  // Parallax effects
+  const bgParallax = useParallax({ speed: 0.2 });
+  const orbParallax = useParallax({ speed: 0.15 });
 
   return (
     <section className="py-24 relative overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 gradient-radial opacity-40" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/5 blur-[150px]" />
+      {/* Background effects with parallax */}
+      <div 
+        className="absolute inset-0 gradient-radial opacity-40 will-change-transform" 
+        style={{ transform: `translateY(${bgParallax * 0.3}px)` }}
+      />
+      <div 
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/5 blur-[150px] will-change-transform"
+        style={{ transform: `translate(-50%, calc(-50% + ${orbParallax}px))` }}
+      />
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}

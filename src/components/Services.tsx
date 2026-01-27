@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Shield, Target, Cloud, Network, Code, Cpu, Brain, Building2, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useParallax } from "@/hooks/useParallax";
 import { LucideIcon } from "lucide-react";
 
 type AccentColor = "red" | "blue" | "green" | "purple";
@@ -104,11 +105,17 @@ const accentStyles: Record<AccentColor, { border: string; bg: string; hoverBorde
 const Services = () => {
   const headerAnimation = useScrollAnimation({ threshold: 0.2 });
   const cardsAnimation = useScrollAnimation({ threshold: 0.1 });
+  
+  // Parallax for background
+  const bgParallax = useParallax({ speed: 0.1 });
 
   return (
-    <section id="services" className="py-24 relative">
-      {/* Background decoration */}
-      <div className="absolute inset-0 gradient-radial opacity-30" />
+    <section id="services" className="py-24 relative overflow-hidden">
+      {/* Background decoration with parallax */}
+      <div 
+        className="absolute inset-0 gradient-radial opacity-30 will-change-transform" 
+        style={{ transform: `translateY(${bgParallax}px)` }}
+      />
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
