@@ -42,6 +42,7 @@ const App = () => (
           <Route path="/services/source-code-audit" element={<SourceCodeAudit />} />
           <Route path="/services/iot-pentest" element={<IoTPentest />} />
           <Route path="/services/ai-security-assessment" element={<AISecurityAssessment />} />
+          <Route path="/services/blockchain-security" element={<BlockchainSecurity />} />
           <Route path="/services/web-application-security" element={<WebApplicationSecurity />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

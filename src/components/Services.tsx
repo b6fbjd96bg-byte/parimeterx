@@ -73,6 +73,13 @@ const services: Service[] = [
     link: "/services/ai-security-assessment",
     accent: "purple",
   },
+  {
+    icon: Boxes,
+    title: "Blockchain Security",
+    description: "Secure decentralized systems with smart contract audits, DeFi protocol testing, and Web3 security.",
+    link: "/services/blockchain-security",
+    accent: "purple",
+  },
 ];
 
 const accentStyles: Record<AccentColor, { border: string; bg: string; hoverBorder: string; iconBg: string }> = {
