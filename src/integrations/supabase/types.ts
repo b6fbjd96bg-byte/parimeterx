@@ -14,7 +14,119 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      scans: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          id: string
+          progress: number
+          scan_type: string
+          started_at: string | null
+          status: string
+          target_url: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          progress?: number
+          scan_type?: string
+          started_at?: string | null
+          status?: string
+          target_url: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          progress?: number
+          scan_type?: string
+          started_at?: string | null
+          status?: string
+          target_url?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      vulnerabilities: {
+        Row: {
+          created_at: string
+          cve_id: string | null
+          cvss_score: number | null
+          description: string | null
+          id: string
+          location: string | null
+          recommendation: string | null
+          scan_id: string
+          severity: string
+          status: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          cve_id?: string | null
+          cvss_score?: number | null
+          description?: string | null
+          id?: string
+          location?: string | null
+          recommendation?: string | null
+          scan_id: string
+          severity: string
+          status?: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          cve_id?: string | null
+          cvss_score?: number | null
+          description?: string | null
+          id?: string
+          location?: string | null
+          recommendation?: string | null
+          scan_id?: string
+          severity?: string
+          status?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vulnerabilities_scan_id_fkey"
+            columns: ["scan_id"]
+            isOneToOne: false
+            referencedRelation: "scans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
