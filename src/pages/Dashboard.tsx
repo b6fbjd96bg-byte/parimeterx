@@ -160,12 +160,12 @@ const Dashboard = () => {
 
         {/* Recent Scans and Threat Feed Row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <RecentScans key={refreshKey} />
+          <RecentScans refreshKey={refreshKey} />
           <LiveThreatFeed />
         </div>
 
         {/* Vulnerability List */}
-        <VulnerabilityList />
+        <VulnerabilityList refreshKey={refreshKey} />
       </main>
     </div>
   );
