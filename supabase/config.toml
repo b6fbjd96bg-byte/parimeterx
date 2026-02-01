@@ -1,1 +1,4 @@
 project_id = "zuwikccwxwskhixkcisv"
+
+[functions.scan-vulnerabilities]
+verify_jwt = false
