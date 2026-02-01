@@ -4,13 +4,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Plus, Loader2, Shield, Zap, Target } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 
-const urlSchema = z.string().url('Please enter a valid URL');
+const urlSchema = z.string().min(1, 'URL is required');
 
 interface NewScanModalProps {
   onScanCreated: () => void;
@@ -32,7 +31,7 @@ const NewScanModal = ({ onScanCreated }: NewScanModalProps) => {
     try {
       urlSchema.parse(targetUrl);
     } catch {
-      setError('Please enter a valid URL (e.g., https://example.com)');
+      setError('Please enter a valid URL (e.g., https://example.com or example.com)');
       return;
     }
 
@@ -43,15 +42,22 @@ const NewScanModal = ({ onScanCreated }: NewScanModalProps) => {
 
     setLoading(true);
 
-    const { error: dbError } = await supabase.from('scans').insert({
+    // Normalize URL
+    let normalizedUrl = targetUrl.trim();
+    if (!normalizedUrl.startsWith('http://') && !normalizedUrl.startsWith('https://')) {
+      normalizedUrl = `https://${normalizedUrl}`;
+    }
+
+    // Create the scan record first
+    const { data: scanData, error: dbError } = await supabase.from('scans').insert({
       user_id: user.id,
-      target_url: targetUrl,
+      target_url: normalizedUrl,
       scan_type: scanType,
       status: 'pending',
       progress: 0,
-    });
+    }).select().single();
 
-    if (dbError) {
+    if (dbError || !scanData) {
       setError('Failed to create scan. Please try again.');
       setLoading(false);
       return;
@@ -59,14 +65,47 @@ const NewScanModal = ({ onScanCreated }: NewScanModalProps) => {
 
     toast({
       title: 'Scan Created',
-      description: 'Your vulnerability scan has been queued.',
+      description: 'Starting vulnerability scan...',
     });
 
-    setLoading(false);
     setOpen(false);
     setTargetUrl('');
     setScanType('full');
     onScanCreated();
+
+    // Trigger the edge function to perform the scan
+    const { data: session } = await supabase.auth.getSession();
+    
+    try {
+      const response = await supabase.functions.invoke('scan-vulnerabilities', {
+        body: {
+          scanId: scanData.id,
+          targetUrl: normalizedUrl,
+        },
+        headers: {
+          Authorization: `Bearer ${session?.session?.access_token}`,
+        },
+      });
+
+      if (response.error) {
+        console.error('Scan error:', response.error);
+        toast({
+          title: 'Scan Error',
+          description: 'The scan encountered an error. Please try again.',
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Scan Completed',
+          description: `Found ${response.data?.vulnerabilities || 0} potential vulnerabilities.`,
+        });
+        onScanCreated();
+      }
+    } catch (err) {
+      console.error('Edge function error:', err);
+    }
+
+    setLoading(false);
   };
 
   const scanTypes = [
@@ -96,11 +135,14 @@ const NewScanModal = ({ onScanCreated }: NewScanModalProps) => {
             <Input
               id="target"
               type="text"
-              placeholder="https://example.com"
+              placeholder="example.com or https://example.com"
               value={targetUrl}
               onChange={(e) => setTargetUrl(e.target.value)}
               className="bg-muted/50"
             />
+            <p className="text-xs text-muted-foreground">
+              Enter the website URL to scan for security vulnerabilities
+            </p>
           </div>
 
           <div className="space-y-2">
@@ -139,7 +181,7 @@ const NewScanModal = ({ onScanCreated }: NewScanModalProps) => {
               {loading ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Creating...
+                  Scanning...
                 </>
               ) : (
                 'Start Scan'
