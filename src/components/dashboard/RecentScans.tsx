@@ -88,11 +88,11 @@ const RecentScans = ({ refreshKey }: RecentScansProps) => {
     
     const { data } = await supabase
       .from('vulnerabilities')
-      .select('id, severity, title')
+      .select('*')
       .eq('scan_id', scan.id)
       .order('created_at', { ascending: false });
     
-    setScanVulnerabilities(data || []);
+    setScanVulnerabilities(data as Vulnerability[] || []);
     setLoadingVulns(false);
   };
 
