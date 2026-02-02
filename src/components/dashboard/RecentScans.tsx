@@ -203,9 +203,14 @@ const RecentScans = ({ refreshKey }: RecentScansProps) => {
       <Dialog open={!!selectedScan} onOpenChange={() => setSelectedScan(null)}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Globe className="w-5 h-5 text-primary" />
-              Scan Details
+            <DialogTitle className="flex items-center justify-between">
+              <span className="flex items-center gap-2">
+                <Globe className="w-5 h-5 text-primary" />
+                Scan Details
+              </span>
+              {selectedScan && selectedScan.status === 'completed' && (
+                <ScanReportPDF scan={selectedScan} vulnerabilities={scanVulnerabilities} />
+              )}
             </DialogTitle>
           </DialogHeader>
           {selectedScan && (
