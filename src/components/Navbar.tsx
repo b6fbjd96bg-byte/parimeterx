@@ -68,9 +68,23 @@ const Navbar = () => {
                 </a>
               )
             ))}
-            <Button variant="cyber" size="sm" asChild>
-              <Link to="/get-security-audit">Get Security Audit</Link>
-            </Button>
+            {user ? (
+              <Button variant="cyber" size="sm" asChild>
+                <Link to="/dashboard">Dashboard</Link>
+              </Button>
+            ) : (
+              <>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/auth" className="flex items-center gap-2">
+                    <LogIn className="w-4 h-4" />
+                    Login
+                  </Link>
+                </Button>
+                <Button variant="cyber" size="sm" asChild>
+                  <Link to="/get-security-audit">Get Security Audit</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
