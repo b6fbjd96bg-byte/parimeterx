@@ -6,6 +6,7 @@ import { Globe, Clock, AlertTriangle, CheckCircle, Loader2, RefreshCw, Eye } fro
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import ScanReportPDF from './ScanReportPDF';
 
 interface Scan {
   id: string;
@@ -21,6 +22,12 @@ interface Vulnerability {
   id: string;
   severity: string;
   title: string;
+  description: string | null;
+  location: string | null;
+  cve_id?: string | null;
+  cvss_score?: number | null;
+  recommendation?: string | null;
+  status: string;
 }
 
 interface RecentScansProps {
