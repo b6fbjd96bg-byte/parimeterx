@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Shield } from "lucide-react";
+import { Menu, X, Shield, LogIn } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
+  const { user } = useAuth();
 
   const navLinks = [
     { label: "Services", href: isHomePage ? "#services" : "/#services" },
@@ -66,9 +68,23 @@ const Navbar = () => {
                 </a>
               )
             ))}
-            <Button variant="cyber" size="sm" asChild>
-              <Link to="/get-security-audit">Get Security Audit</Link>
-            </Button>
+            {user ? (
+              <Button variant="cyber" size="sm" asChild>
+                <Link to="/dashboard">Dashboard</Link>
+              </Button>
+            ) : (
+              <>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/auth" className="flex items-center gap-2">
+                    <LogIn className="w-4 h-4" />
+                    Login
+                  </Link>
+                </Button>
+                <Button variant="cyber" size="sm" asChild>
+                  <Link to="/get-security-audit">Get Security Audit</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -113,9 +129,20 @@ const Navbar = () => {
                   </a>
                 )
               ))}
-              <Button variant="cyber" size="sm" className="w-fit" asChild>
-                <Link to="/get-security-audit">Get Security Audit</Link>
-              </Button>
+              {user ? (
+                <Button variant="cyber" size="sm" className="w-fit" asChild>
+                  <Link to="/dashboard">Dashboard</Link>
+                </Button>
+              ) : (
+                <>
+                  <Button variant="ghost" size="sm" className="w-fit" asChild>
+                    <Link to="/auth">Login</Link>
+                  </Button>
+                  <Button variant="cyber" size="sm" className="w-fit" asChild>
+                    <Link to="/get-security-audit">Get Security Audit</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         )}
