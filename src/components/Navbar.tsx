@@ -129,9 +129,20 @@ const Navbar = () => {
                   </a>
                 )
               ))}
-              <Button variant="cyber" size="sm" className="w-fit" asChild>
-                <Link to="/get-security-audit">Get Security Audit</Link>
-              </Button>
+              {user ? (
+                <Button variant="cyber" size="sm" className="w-fit" asChild>
+                  <Link to="/dashboard">Dashboard</Link>
+                </Button>
+              ) : (
+                <>
+                  <Button variant="ghost" size="sm" className="w-fit" asChild>
+                    <Link to="/auth">Login</Link>
+                  </Button>
+                  <Button variant="cyber" size="sm" className="w-fit" asChild>
+                    <Link to="/get-security-audit">Get Security Audit</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         )}
