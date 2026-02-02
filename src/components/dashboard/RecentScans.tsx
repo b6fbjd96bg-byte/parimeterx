@@ -6,6 +6,7 @@ import { Globe, Clock, AlertTriangle, CheckCircle, Loader2, RefreshCw, Eye } fro
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import ScanReportPDF from './ScanReportPDF';
 
 interface Scan {
   id: string;
@@ -21,6 +22,12 @@ interface Vulnerability {
   id: string;
   severity: string;
   title: string;
+  description: string | null;
+  location: string | null;
+  cve_id?: string | null;
+  cvss_score?: number | null;
+  recommendation?: string | null;
+  status: string;
 }
 
 interface RecentScansProps {
@@ -81,11 +88,11 @@ const RecentScans = ({ refreshKey }: RecentScansProps) => {
     
     const { data } = await supabase
       .from('vulnerabilities')
-      .select('id, severity, title')
+      .select('*')
       .eq('scan_id', scan.id)
       .order('created_at', { ascending: false });
     
-    setScanVulnerabilities(data || []);
+    setScanVulnerabilities(data as Vulnerability[] || []);
     setLoadingVulns(false);
   };
 
@@ -196,9 +203,14 @@ const RecentScans = ({ refreshKey }: RecentScansProps) => {
       <Dialog open={!!selectedScan} onOpenChange={() => setSelectedScan(null)}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Globe className="w-5 h-5 text-primary" />
-              Scan Details
+            <DialogTitle className="flex items-center justify-between">
+              <span className="flex items-center gap-2">
+                <Globe className="w-5 h-5 text-primary" />
+                Scan Details
+              </span>
+              {selectedScan && selectedScan.status === 'completed' && (
+                <ScanReportPDF scan={selectedScan} vulnerabilities={scanVulnerabilities} />
+              )}
             </DialogTitle>
           </DialogHeader>
           {selectedScan && (
