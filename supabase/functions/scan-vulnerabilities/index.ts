@@ -352,9 +352,9 @@ async function checkCookieSecurity(url: string): Promise<VulnerabilityResult[]> 
   const vulnerabilities: VulnerabilityResult[] = [];
   
   try {
-    const response = await fetch(url, {
+    const response = await fetchWithTimeout(url, {
       headers: { 'User-Agent': 'BreachAware Security Scanner/2.0' },
-    });
+    }, 10000);
     
     const setCookieHeaders = response.headers.get('set-cookie');
     
