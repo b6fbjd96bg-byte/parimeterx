@@ -439,29 +439,44 @@ async function detectTechnologies(url: string, headers: Headers, bodyContent: st
   return Array.from(detectedTechnologies);
 }
 
+// Helper function for fetch with timeout
+async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 5000): Promise<Response> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (error) {
+    clearTimeout(timeoutId);
+    throw error;
+  }
+}
+
 async function discoverSubdomains(domain: string): Promise<string[]> {
   const subdomains: string[] = [];
+  // Reduced list for faster scanning - prioritize most common/critical subdomains
   const commonSubdomains = [
-    'www', 'mail', 'ftp', 'localhost', 'webmail', 'smtp', 'pop', 'ns1', 'ns2',
-    'admin', 'api', 'dev', 'staging', 'test', 'beta', 'app', 'portal', 'blog',
-    'shop', 'store', 'cdn', 'static', 'assets', 'img', 'images', 'media',
-    'secure', 'vpn', 'remote', 'web', 'server', 'database', 'db', 'sql',
-    'login', 'auth', 'sso', 'dashboard', 'panel', 'cpanel', 'control',
-    'm', 'mobile', 'wap', 'support', 'help', 'docs', 'wiki', 'forum',
+    'www', 'mail', 'api', 'dev', 'staging', 'test', 'beta', 'app', 'admin',
+    'cdn', 'static', 'auth', 'login', 'dashboard', 'm', 'docs', 'support',
   ];
   
   const checkPromises = commonSubdomains.map(async (sub) => {
     try {
       const subdomain = `${sub}.${domain}`;
-      const response = await fetch(`https://${subdomain}`, {
+      const response = await fetchWithTimeout(`https://${subdomain}`, {
         method: 'HEAD',
         headers: { 'User-Agent': 'BreachAware Security Scanner/2.0' },
-      });
+      }, 3000);
       if (response.ok || response.status < 500) {
         return subdomain;
       }
     } catch {
-      // Subdomain doesn't exist or not accessible
+      // Subdomain doesn't exist, timeout, or not accessible
     }
     return null;
   });
