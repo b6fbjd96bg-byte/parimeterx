@@ -491,15 +491,15 @@ async function scanPorts(host: string): Promise<{ port: number; service: string;
   const openPorts: { port: number; service: string; state: string }[] = [];
   
   // Note: In edge functions we can't do raw TCP connections, so we check HTTP-based ports
-  const httpPorts = [80, 443, 8080, 8443, 3000, 4000, 5000, 8000, 9000];
+  const httpPorts = [80, 443, 8080, 8443, 3000, 5000, 8000];
   
   const checkPromises = httpPorts.map(async (port) => {
     try {
       const protocol = port === 443 || port === 8443 ? 'https' : 'http';
-      const response = await fetch(`${protocol}://${host}:${port}`, {
+      const response = await fetchWithTimeout(`${protocol}://${host}:${port}`, {
         method: 'HEAD',
         headers: { 'User-Agent': 'BreachAware Security Scanner/2.0' },
-      });
+      }, 3000);
       
       const service = commonPorts.find(p => p.port === port)?.service || 'Unknown';
       return { port, service, state: 'open' };
