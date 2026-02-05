@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
-import AnimatedShield from "./AnimatedShield";
+ import XShieldAnimation from "./XShieldAnimation";
 import TypingText from "./TypingText";
 import GlitchText from "./GlitchText";
 import MagneticButton from "./MagneticButton";
@@ -133,7 +133,7 @@ const Hero = () => {
               transform: `translateY(${shieldParallax}px)`,
             }}
           >
-            <AnimatedShield />
+             <XShieldAnimation />
           </div>
         </div>
 
