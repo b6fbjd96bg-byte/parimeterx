@@ -235,12 +235,23 @@ const DetailedServicePageLayout = ({
   const colorVar = accentColors[accentColor];
 
   return (
-    <div className="min-h-screen bg-background">
+     <div className="min-h-screen bg-background overflow-hidden">
       <Navbar />
       <main>
         {/* Hero Section */}
-        <section className="pt-32 pb-16 relative overflow-hidden">
-          <div className="absolute inset-0 gradient-radial opacity-30" />
+         <section className="pt-32 pb-16 relative overflow-hidden animate-fade-in">
+           {/* Animated background elements */}
+           <div className="absolute inset-0 gradient-radial opacity-30 animate-pulse" style={{ animationDuration: '4s' }} />
+           <div 
+             className="absolute inset-0 opacity-[0.03]"
+             style={{
+               backgroundImage: `linear-gradient(hsl(var(--${colorVar})) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--${colorVar})) 1px, transparent 1px)`,
+               backgroundSize: '40px 40px',
+             }}
+           />
+           {/* Floating orbs */}
+           <div className={`absolute top-20 left-10 w-64 h-64 rounded-full bg-[hsl(var(--${colorVar})/0.1)] blur-[80px] animate-float`} />
+           <div className={`absolute bottom-20 right-10 w-48 h-48 rounded-full bg-[hsl(var(--${colorVar})/0.1)] blur-[60px] animate-float`} style={{ animationDelay: '2s' }} />
           <div className="container mx-auto px-4 relative z-10">
             <Link to="/#services">
               <Button variant="ghost" className="mb-8 text-muted-foreground hover:text-primary">
@@ -250,27 +261,31 @@ const DetailedServicePageLayout = ({
             </Link>
             
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="max-w-2xl">
-                <div className={`h-16 w-16 rounded-xl bg-[hsl(var(--${colorVar})/0.1)] flex items-center justify-center mb-6 animate-pulse-glow shadow-[0_0_30px_hsl(var(--${colorVar})/0.3)]`}>
+               <div className="max-w-2xl animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                 <div className={`h-16 w-16 rounded-xl bg-[hsl(var(--${colorVar})/0.1)] flex items-center justify-center mb-6 animate-pulse-glow shadow-[0_0_30px_hsl(var(--${colorVar})/0.3)] hover:scale-110 transition-transform duration-300`}>
                   {icon}
                 </div>
-                <span className={`text-sm font-semibold tracking-widest uppercase mb-4 block text-[hsl(var(--${colorVar}))]`}>
+                 <span className={`text-sm font-semibold tracking-widest uppercase mb-4 block text-[hsl(var(--${colorVar}))] animate-fade-in`} style={{ animationDelay: '0.3s' }}>
                   {subtitle}
                 </span>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in" style={{ animationDelay: '0.4s' }}>
                   {title.split(' ').slice(0, -2).join(' ')} <span className={`text-[hsl(var(--${colorVar}))]`}>{title.split(' ').slice(-2).join(' ')}</span>
                 </h1>
-                <p className="text-xl text-muted-foreground leading-relaxed mb-6">
+                 <p className="text-xl text-muted-foreground leading-relaxed mb-6 animate-fade-in" style={{ animationDelay: '0.5s' }}>
                   {tagline}
                 </p>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+                 <p className="text-lg text-muted-foreground leading-relaxed mb-8 animate-fade-in" style={{ animationDelay: '0.6s' }}>
                   {description}
                 </p>
                 
                 {/* Trust Indicators */}
-                <div className="flex flex-wrap gap-4">
+                 <div className="flex flex-wrap gap-4 animate-fade-in" style={{ animationDelay: '0.7s' }}>
                   {trustIndicators.map((item, index) => (
-                    <div key={index} className="flex items-center gap-2 bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg px-4 py-2">
+                     <div 
+                       key={index} 
+                       className={`flex items-center gap-2 bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg px-4 py-2 hover:border-[hsl(var(--${colorVar})/0.5)] hover:scale-105 transition-all duration-300`}
+                       style={{ animationDelay: `${0.8 + index * 0.1}s` }}
+                     >
                       <item.icon className={`h-4 w-4 text-[hsl(var(--${colorVar}))]`} />
                       <span className="text-sm text-muted-foreground">{item.label}</span>
                     </div>
@@ -280,8 +295,8 @@ const DetailedServicePageLayout = ({
               
               {/* Hero Animation */}
               {heroAnimation && (
-                <div className="hidden lg:block">
-                  <div className={`rounded-2xl border border-[hsl(var(--${colorVar})/0.2)] bg-card/20 backdrop-blur-sm overflow-hidden`}>
+                 <div className="hidden lg:block animate-scale-in" style={{ animationDelay: '0.5s' }}>
+                   <div className={`rounded-2xl border border-[hsl(var(--${colorVar})/0.2)] bg-card/20 backdrop-blur-sm overflow-hidden hover:border-[hsl(var(--${colorVar})/0.5)] transition-colors duration-300`}>
                     {heroAnimation}
                   </div>
                 </div>
@@ -291,9 +306,11 @@ const DetailedServicePageLayout = ({
         </section>
 
         {/* Approach Section */}
-        <section className="py-16 relative border-t border-border/30">
+         <section className="py-16 relative border-t border-border/30 overflow-hidden">
+           {/* Animated accent line */}
+           <div className={`absolute top-0 left-0 h-[2px] bg-gradient-to-r from-transparent via-[hsl(var(--${colorVar}))] to-transparent animate-scan`} style={{ width: '100%' }} />
           <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center mb-12">
+             <div className="max-w-3xl mx-auto text-center mb-12 animate-fade-in">
               <h2 className="text-2xl md:text-3xl font-bold mb-4">
                 {approachTitle.split(' ').slice(0, -1).join(' ')} <span className={`text-[hsl(var(--${colorVar}))]`}>{approachTitle.split(' ').slice(-1)}</span>
               </h2>
@@ -305,10 +322,10 @@ const DetailedServicePageLayout = ({
         </section>
 
         {/* What We Test Section */}
-        <section className="py-16 relative">
+         <section className="py-16 relative overflow-hidden">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
+               <div className="text-center mb-12 animate-fade-in">
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">
                   {whatWeTestTitle.split(' ').slice(0, -1).join(' ')} <span className={`text-[hsl(var(--${colorVar}))]`}>{whatWeTestTitle.split(' ').slice(-1)}</span>
                 </h2>
@@ -317,7 +334,7 @@ const DetailedServicePageLayout = ({
                 </p>
               </div>
               
-              <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+               <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:border-[hsl(var(--${colorVar})/0.3)] transition-colors duration-300 animate-fade-in" style={{ animationDelay: '0.2s' }}>
                 <CardContent className="p-8">
                   <h3 className="text-xl font-bold mb-6 flex items-center gap-3">
                     <Shield className={`h-5 w-5 text-[hsl(var(--${colorVar}))]`} />
@@ -325,7 +342,7 @@ const DetailedServicePageLayout = ({
                   </h3>
                   <div className="grid md:grid-cols-2 gap-4">
                     {coreTestingAreas.map((area, index) => (
-                      <div key={index} className="flex items-start gap-3 group">
+                       <div key={index} className="flex items-start gap-3 group animate-fade-in" style={{ animationDelay: `${0.3 + index * 0.05}s` }}>
                         <CheckCircle className={`h-5 w-5 text-[hsl(var(--${colorVar}))] mt-0.5 flex-shrink-0 group-hover:scale-110 transition-transform`} />
                         <p className="text-muted-foreground">{area}</p>
                       </div>
@@ -374,18 +391,23 @@ const DetailedServicePageLayout = ({
         </section>
 
         {/* What You Receive Section */}
-        <section className="py-16 relative border-t border-border/30">
+         <section className="py-16 relative border-t border-border/30 overflow-hidden">
+           <div className={`absolute top-0 left-0 h-[2px] bg-gradient-to-r from-transparent via-[hsl(var(--${colorVar}))] to-transparent animate-scan`} style={{ width: '100%', animationDelay: '1s' }} />
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
+               <div className="text-center mb-12 animate-fade-in">
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">
                   What You <span className={`text-[hsl(var(--${colorVar}))]`}>Receive</span>
                 </h2>
               </div>
               
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
                 {deliverables.map((item, index) => (
-                  <Card key={index} className={`bg-card/50 backdrop-blur-sm border-border/50 hover:border-[hsl(var(--${colorVar})/0.5)] transition-all duration-300`}>
+                   <Card 
+                     key={index} 
+                     className={`bg-card/50 backdrop-blur-sm border-border/50 hover:border-[hsl(var(--${colorVar})/0.5)] hover:scale-105 hover:-translate-y-1 transition-all duration-300`}
+                     style={{ animationDelay: `${0.3 + index * 0.05}s` }}
+                   >
                     <CardContent className="p-4 flex items-center gap-3">
                       <CheckCircle className={`h-5 w-5 text-[hsl(var(--${colorVar}))] flex-shrink-0`} />
                       <span className="text-sm">{item}</span>
@@ -404,18 +426,24 @@ const DetailedServicePageLayout = ({
         </section>
 
         {/* Why Trust Us Section */}
-        <section className="py-16 relative">
+         <section className="py-16 relative overflow-hidden">
+           <div className={`absolute top-1/2 left-0 w-32 h-32 rounded-full bg-[hsl(var(--${colorVar})/0.1)] blur-[60px] animate-pulse`} />
+           <div className={`absolute top-1/3 right-0 w-40 h-40 rounded-full bg-[hsl(var(--${colorVar})/0.1)] blur-[80px] animate-pulse`} style={{ animationDelay: '1.5s' }} />
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
+               <div className="text-center mb-12 animate-fade-in">
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">
                   Why Organizations <span className={`text-[hsl(var(--${colorVar}))]`}>Trust Us</span>
                 </h2>
               </div>
               
-              <div className="grid md:grid-cols-2 gap-4">
+               <div className="grid md:grid-cols-2 gap-4 animate-fade-in" style={{ animationDelay: '0.2s' }}>
                 {whyTrustUs.map((reason, index) => (
-                  <div key={index} className={`flex items-start gap-3 bg-card/30 backdrop-blur-sm border border-border/50 rounded-lg p-4 hover:border-[hsl(var(--${colorVar})/0.5)] transition-colors`}>
+                   <div 
+                     key={index} 
+                     className={`flex items-start gap-3 bg-card/30 backdrop-blur-sm border border-border/50 rounded-lg p-4 hover:border-[hsl(var(--${colorVar})/0.5)] hover:scale-[1.02] transition-all duration-300`}
+                     style={{ animationDelay: `${0.3 + index * 0.1}s` }}
+                   >
                     <Shield className={`h-5 w-5 text-[hsl(var(--${colorVar}))] mt-0.5 flex-shrink-0`} />
                     <p className="text-muted-foreground">{reason}</p>
                   </div>
@@ -426,23 +454,28 @@ const DetailedServicePageLayout = ({
         </section>
 
         {/* Stats Section */}
-        <section className="py-16 relative border-t border-border/30">
+         <section className="py-16 relative border-t border-border/30 overflow-hidden">
+           <div className={`absolute top-0 left-0 h-[2px] bg-gradient-to-r from-transparent via-[hsl(var(--${colorVar}))] to-transparent animate-scan`} style={{ width: '100%', animationDelay: '2s' }} />
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
+             <div className="text-center mb-12 animate-fade-in">
               <h2 className="text-2xl md:text-3xl font-bold">
                 Measurable <span className={`text-[hsl(var(--${colorVar}))]`}>Results</span>
               </h2>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
               {stats.map((stat, index) => {
                 const icons = [Shield, Users, Clock, Award];
                 const Icon = icons[index % icons.length];
                 return (
-                  <div key={index} className="text-center">
-                    <div className={`h-12 w-12 rounded-lg bg-[hsl(var(--${colorVar})/0.1)] flex items-center justify-center mx-auto mb-3`}>
+                   <div 
+                     key={index} 
+                     className="text-center group animate-fade-in" 
+                     style={{ animationDelay: `${0.3 + index * 0.1}s` }}
+                   >
+                     <div className={`h-12 w-12 rounded-lg bg-[hsl(var(--${colorVar})/0.1)] flex items-center justify-center mx-auto mb-3 group-hover:scale-110 group-hover:shadow-[0_0_20px_hsl(var(--${colorVar})/0.3)] transition-all duration-300`}>
                       <Icon className={`h-6 w-6 text-[hsl(var(--${colorVar}))]`} />
                     </div>
-                    <div className={`text-3xl font-bold text-[hsl(var(--${colorVar}))] mb-1`}>{stat.value}</div>
+                     <div className={`text-3xl font-bold text-[hsl(var(--${colorVar}))] mb-1 group-hover:scale-110 transition-transform duration-300`}>{stat.value}</div>
                     <p className="text-sm text-muted-foreground">{stat.label}</p>
                   </div>
                 );

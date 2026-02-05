@@ -34,8 +34,8 @@ const CustomCursor = () => {
     };
 
     const animate = () => {
-      currentX = lerp(currentX, targetX, 0.15);
-      currentY = lerp(currentY, targetY, 0.15);
+       currentX = lerp(currentX, targetX, 0.35);
+       currentY = lerp(currentY, targetY, 0.35);
       
       positionRef.current = { x: currentX, y: currentY };
       setPosition({ x: currentX, y: currentY });
@@ -130,7 +130,8 @@ const CustomCursor = () => {
             width: '8px',
             height: '8px',
             borderRadius: '50%',
-            backgroundColor: 'hsl(var(--primary))',
+             background: 'linear-gradient(135deg, hsl(var(--primary)), hsl(var(--color-blue-ai)))',
+             boxShadow: '0 0 10px hsl(var(--primary) / 0.5)',
           }}
         />
       </div>
@@ -153,36 +154,15 @@ const CustomCursor = () => {
             width: '40px',
             height: '40px',
             borderRadius: '50%',
-            border: `2px solid ${isPointer ? 'hsl(var(--primary))' : 'hsl(var(--primary) / 0.5)'}`,
-            backgroundColor: isPointer ? 'hsl(var(--primary) / 0.1)' : 'transparent',
-            transition: 'border-color 0.2s ease-out, background-color 0.2s ease-out',
+             border: `2px solid ${isPointer ? 'hsl(var(--primary))' : 'hsl(var(--primary) / 0.6)'}`,
+             backgroundColor: isPointer ? 'hsl(var(--primary) / 0.15)' : 'transparent',
+             transition: 'border-color 0.15s ease-out, background-color 0.15s ease-out',
+             boxShadow: isPointer ? '0 0 20px hsl(var(--primary) / 0.4)' : 'none',
           }}
         />
       </div>
 
       {/* Trailing glow effect */}
-      <div
-        style={{
-          position: 'fixed',
-          left: position.x,
-          top: position.y,
-          transform: 'translate(-50%, -50%)',
-          opacity: isVisible ? 0.3 : 0,
-          transition: 'opacity 0.3s ease-out',
-          pointerEvents: 'none',
-          zIndex: 99997,
-        }}
-      >
-        <div 
-          style={{
-            width: '60px',
-            height: '60px',
-            borderRadius: '50%',
-            backgroundColor: 'hsl(var(--primary) / 0.2)',
-            filter: 'blur(20px)',
-          }}
-        />
-      </div>
     </div>
   );
 };
