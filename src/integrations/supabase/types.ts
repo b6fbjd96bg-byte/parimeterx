@@ -14,6 +14,78 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_logs: {
+        Row: {
+          action: string
+          created_at: string
+          entity_id: string | null
+          entity_type: string
+          id: string
+          ip_address: string | null
+          new_values: Json | null
+          old_values: Json | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          entity_id?: string | null
+          entity_type: string
+          id?: string
+          ip_address?: string | null
+          new_values?: Json | null
+          old_values?: Json | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string
+          id?: string
+          ip_address?: string | null
+          new_values?: Json | null
+          old_values?: Json | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      invitations: {
+        Row: {
+          accepted_at: string | null
+          created_at: string
+          email: string
+          expires_at: string
+          id: string
+          invited_by: string
+          role: Database["public"]["Enums"]["app_role"]
+          token: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          created_at?: string
+          email: string
+          expires_at: string
+          id?: string
+          invited_by: string
+          role: Database["public"]["Enums"]["app_role"]
+          token: string
+        }
+        Update: {
+          accepted_at?: string | null
+          created_at?: string
+          email?: string
+          expires_at?: string
+          id?: string
+          invited_by?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          token?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -40,6 +112,200 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      program_assets: {
+        Row: {
+          asset_type: string
+          asset_value: string
+          created_at: string
+          id: string
+          is_in_scope: boolean
+          notes: string | null
+          program_id: string
+        }
+        Insert: {
+          asset_type: string
+          asset_value: string
+          created_at?: string
+          id?: string
+          is_in_scope?: boolean
+          notes?: string | null
+          program_id: string
+        }
+        Update: {
+          asset_type?: string
+          asset_value?: string
+          created_at?: string
+          id?: string
+          is_in_scope?: boolean
+          notes?: string | null
+          program_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "program_assets_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: false
+            referencedRelation: "programs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      program_pentesters: {
+        Row: {
+          assigned_at: string
+          assigned_by: string
+          id: string
+          pentester_id: string
+          program_id: string
+        }
+        Insert: {
+          assigned_at?: string
+          assigned_by: string
+          id?: string
+          pentester_id: string
+          program_id: string
+        }
+        Update: {
+          assigned_at?: string
+          assigned_by?: string
+          id?: string
+          pentester_id?: string
+          program_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "program_pentesters_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: false
+            referencedRelation: "programs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      programs: {
+        Row: {
+          client_id: string
+          created_at: string
+          created_by: string
+          description: string | null
+          end_date: string | null
+          id: string
+          name: string
+          rules_of_engagement: string | null
+          start_date: string | null
+          status: string
+          testing_guidelines: string | null
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          created_by: string
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          name: string
+          rules_of_engagement?: string | null
+          start_date?: string | null
+          status?: string
+          testing_guidelines?: string | null
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          name?: string
+          rules_of_engagement?: string | null
+          start_date?: string | null
+          status?: string
+          testing_guidelines?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      report_attachments: {
+        Row: {
+          created_at: string
+          file_name: string
+          file_path: string
+          file_size: number
+          file_type: string
+          id: string
+          report_id: string
+          uploaded_by: string
+        }
+        Insert: {
+          created_at?: string
+          file_name: string
+          file_path: string
+          file_size: number
+          file_type: string
+          id?: string
+          report_id: string
+          uploaded_by: string
+        }
+        Update: {
+          created_at?: string
+          file_name?: string
+          file_path?: string
+          file_size?: number
+          file_type?: string
+          id?: string
+          report_id?: string
+          uploaded_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "report_attachments_report_id_fkey"
+            columns: ["report_id"]
+            isOneToOne: false
+            referencedRelation: "vulnerability_reports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      report_comments: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          is_internal: boolean
+          report_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          is_internal?: boolean
+          report_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          is_internal?: boolean
+          report_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "report_comments_report_id_fkey"
+            columns: ["report_id"]
+            isOneToOne: false
+            referencedRelation: "vulnerability_reports"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       scans: {
         Row: {
@@ -73,6 +339,62 @@ export type Database = {
           started_at?: string | null
           status?: string
           target_url?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      severity_slas: {
+        Row: {
+          created_at: string
+          id: string
+          program_id: string
+          resolution_days: number
+          response_hours: number
+          severity: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          program_id: string
+          resolution_days: number
+          response_hours: number
+          severity: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          program_id?: string
+          resolution_days?: number
+          response_hours?: number
+          severity?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "severity_slas_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: false
+            referencedRelation: "programs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
         }
         Relationships: []
@@ -127,15 +449,107 @@ export type Database = {
           },
         ]
       }
+      vulnerability_reports: {
+        Row: {
+          affected_endpoint: string | null
+          created_at: string
+          cvss_score: number | null
+          cwe_id: string | null
+          id: string
+          impact: string | null
+          owasp_category: string | null
+          program_id: string
+          proof_of_concept: string | null
+          remediation: string | null
+          resolved_at: string | null
+          severity: string
+          status: string
+          steps_to_reproduce: string | null
+          submitted_by: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          affected_endpoint?: string | null
+          created_at?: string
+          cvss_score?: number | null
+          cwe_id?: string | null
+          id?: string
+          impact?: string | null
+          owasp_category?: string | null
+          program_id: string
+          proof_of_concept?: string | null
+          remediation?: string | null
+          resolved_at?: string | null
+          severity: string
+          status?: string
+          steps_to_reproduce?: string | null
+          submitted_by: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          affected_endpoint?: string | null
+          created_at?: string
+          cvss_score?: number | null
+          cwe_id?: string | null
+          id?: string
+          impact?: string | null
+          owasp_category?: string | null
+          program_id?: string
+          proof_of_concept?: string | null
+          remediation?: string | null
+          resolved_at?: string | null
+          severity?: string
+          status?: string
+          steps_to_reproduce?: string | null
+          submitted_by?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vulnerability_reports_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: false
+            referencedRelation: "programs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_user_role: {
+        Args: { _user_id: string }
+        Returns: Database["public"]["Enums"]["app_role"]
+      }
+      has_program_access: {
+        Args: { _program_id: string; _user_id: string }
+        Returns: boolean
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      log_audit_event: {
+        Args: {
+          _action: string
+          _entity_id?: string
+          _entity_type: string
+          _new_values?: Json
+          _old_values?: Json
+        }
+        Returns: string
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "pentester" | "client"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -262,6 +676,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "pentester", "client"],
+    },
   },
 } as const
