@@ -26,7 +26,18 @@ import TermsOfService from "./pages/TermsOfService";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LoadingScreen from "./components/LoadingScreen";
 import CustomCursor from "./components/CustomCursor";
- import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTop from "./components/ScrollToTop";
+
+// Platform Pages
+import PlatformDashboard from "./pages/platform/PlatformDashboard";
+import ProgramsPage from "./pages/platform/ProgramsPage";
+import VulnerabilitiesPage from "./pages/platform/VulnerabilitiesPage";
+import SubmitVulnerabilityPage from "./pages/platform/SubmitVulnerabilityPage";
+import VulnerabilityDetailPage from "./pages/platform/VulnerabilityDetailPage";
+import UsersPage from "./pages/platform/UsersPage";
+import InvitationsPage from "./pages/platform/InvitationsPage";
+import ReportsPage from "./pages/platform/ReportsPage";
+import AuditLogsPage from "./pages/platform/AuditLogsPage";
 
 const queryClient = new QueryClient();
 
@@ -39,7 +50,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-           <ScrollToTop />
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
@@ -59,6 +70,16 @@ const App = () => (
                 </ProtectedRoute>
               }
             />
+            {/* Platform Routes */}
+            <Route path="/platform" element={<ProtectedRoute><PlatformDashboard /></ProtectedRoute>} />
+            <Route path="/platform/programs" element={<ProtectedRoute><ProgramsPage /></ProtectedRoute>} />
+            <Route path="/platform/vulnerabilities" element={<ProtectedRoute><VulnerabilitiesPage /></ProtectedRoute>} />
+            <Route path="/platform/vulnerabilities/new" element={<ProtectedRoute><SubmitVulnerabilityPage /></ProtectedRoute>} />
+            <Route path="/platform/vulnerabilities/:id" element={<ProtectedRoute><VulnerabilityDetailPage /></ProtectedRoute>} />
+            <Route path="/platform/users" element={<ProtectedRoute><UsersPage /></ProtectedRoute>} />
+            <Route path="/platform/invitations" element={<ProtectedRoute><InvitationsPage /></ProtectedRoute>} />
+            <Route path="/platform/reports" element={<ProtectedRoute><ReportsPage /></ProtectedRoute>} />
+            <Route path="/platform/audit-logs" element={<ProtectedRoute><AuditLogsPage /></ProtectedRoute>} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/get-security-audit" element={<GetSecurityAudit />} />
             <Route path="/services/application-pentest" element={<ApplicationPentest />} />
@@ -74,7 +95,6 @@ const App = () => (
             <Route path="/careers" element={<Careers />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
