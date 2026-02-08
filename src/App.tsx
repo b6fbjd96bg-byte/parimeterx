@@ -28,15 +28,22 @@ import LoadingScreen from "./components/LoadingScreen";
 import CustomCursor from "./components/CustomCursor";
 import ScrollToTop from "./components/ScrollToTop";
 
+// Dashboard Sub-pages
+import ScansPage from "./pages/dashboard/ScansPage";
+import DashboardVulnerabilitiesPage from "./pages/dashboard/VulnerabilitiesPage";
+import DashboardReportsPage from "./pages/dashboard/ReportsPage";
+import TargetsPage from "./pages/dashboard/TargetsPage";
+import ActivityPage from "./pages/dashboard/ActivityPage";
+
 // Platform Pages
 import PlatformDashboard from "./pages/platform/PlatformDashboard";
 import ProgramsPage from "./pages/platform/ProgramsPage";
-import VulnerabilitiesPage from "./pages/platform/VulnerabilitiesPage";
+import PlatformVulnerabilitiesPage from "./pages/platform/VulnerabilitiesPage";
 import SubmitVulnerabilityPage from "./pages/platform/SubmitVulnerabilityPage";
 import VulnerabilityDetailPage from "./pages/platform/VulnerabilityDetailPage";
 import UsersPage from "./pages/platform/UsersPage";
 import InvitationsPage from "./pages/platform/InvitationsPage";
-import ReportsPage from "./pages/platform/ReportsPage";
+import PlatformReportsPage from "./pages/platform/ReportsPage";
 import AuditLogsPage from "./pages/platform/AuditLogsPage";
 
 const queryClient = new QueryClient();
@@ -54,32 +61,27 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/dashboard/*"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
+            
+            {/* Dashboard Routes */}
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/dashboard/scans" element={<ProtectedRoute><ScansPage /></ProtectedRoute>} />
+            <Route path="/dashboard/vulnerabilities" element={<ProtectedRoute><DashboardVulnerabilitiesPage /></ProtectedRoute>} />
+            <Route path="/dashboard/reports" element={<ProtectedRoute><DashboardReportsPage /></ProtectedRoute>} />
+            <Route path="/dashboard/targets" element={<ProtectedRoute><TargetsPage /></ProtectedRoute>} />
+            <Route path="/dashboard/activity" element={<ProtectedRoute><ActivityPage /></ProtectedRoute>} />
+            
             {/* Platform Routes */}
             <Route path="/platform" element={<ProtectedRoute><PlatformDashboard /></ProtectedRoute>} />
             <Route path="/platform/programs" element={<ProtectedRoute><ProgramsPage /></ProtectedRoute>} />
-            <Route path="/platform/vulnerabilities" element={<ProtectedRoute><VulnerabilitiesPage /></ProtectedRoute>} />
+            <Route path="/platform/vulnerabilities" element={<ProtectedRoute><PlatformVulnerabilitiesPage /></ProtectedRoute>} />
             <Route path="/platform/vulnerabilities/new" element={<ProtectedRoute><SubmitVulnerabilityPage /></ProtectedRoute>} />
             <Route path="/platform/vulnerabilities/:id" element={<ProtectedRoute><VulnerabilityDetailPage /></ProtectedRoute>} />
             <Route path="/platform/users" element={<ProtectedRoute><UsersPage /></ProtectedRoute>} />
             <Route path="/platform/invitations" element={<ProtectedRoute><InvitationsPage /></ProtectedRoute>} />
-            <Route path="/platform/reports" element={<ProtectedRoute><ReportsPage /></ProtectedRoute>} />
+            <Route path="/platform/reports" element={<ProtectedRoute><PlatformReportsPage /></ProtectedRoute>} />
             <Route path="/platform/audit-logs" element={<ProtectedRoute><AuditLogsPage /></ProtectedRoute>} />
+            
+            {/* Service Pages */}
             <Route path="/about" element={<AboutUs />} />
             <Route path="/get-security-audit" element={<GetSecurityAudit />} />
             <Route path="/services/application-pentest" element={<ApplicationPentest />} />
