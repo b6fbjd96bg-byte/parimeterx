@@ -28,15 +28,22 @@ import LoadingScreen from "./components/LoadingScreen";
 import CustomCursor from "./components/CustomCursor";
 import ScrollToTop from "./components/ScrollToTop";
 
+// Dashboard Sub-pages
+import ScansPage from "./pages/dashboard/ScansPage";
+import VulnerabilitiesPage from "./pages/dashboard/VulnerabilitiesPage";
+import ReportsPage from "./pages/dashboard/ReportsPage";
+import TargetsPage from "./pages/dashboard/TargetsPage";
+import ActivityPage from "./pages/dashboard/ActivityPage";
+
 // Platform Pages
 import PlatformDashboard from "./pages/platform/PlatformDashboard";
 import ProgramsPage from "./pages/platform/ProgramsPage";
-import VulnerabilitiesPage from "./pages/platform/VulnerabilitiesPage";
+import VulnerabilitiesPage as PlatformVulnerabilitiesPage from "./pages/platform/VulnerabilitiesPage";
 import SubmitVulnerabilityPage from "./pages/platform/SubmitVulnerabilityPage";
 import VulnerabilityDetailPage from "./pages/platform/VulnerabilityDetailPage";
 import UsersPage from "./pages/platform/UsersPage";
 import InvitationsPage from "./pages/platform/InvitationsPage";
-import ReportsPage from "./pages/platform/ReportsPage";
+import ReportsPage as PlatformReportsPage from "./pages/platform/ReportsPage";
 import AuditLogsPage from "./pages/platform/AuditLogsPage";
 
 const queryClient = new QueryClient();
