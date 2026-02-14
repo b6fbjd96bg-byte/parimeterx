@@ -104,8 +104,8 @@ const TermsOfService = () => {
                 For questions about these Terms, contact us at:
               </p>
               <p className="text-muted-foreground mt-4">
-                <strong>Email:</strong> legal@parameterx.io<br />
-                <strong>Address:</strong> ParameterX Security, San Francisco, CA
+                <strong>Email:</strong> contact@parameterx.org<br />
+                <strong>Address:</strong> Suncity Sector 54, Gurugram, Haryana, India
               </p>
             </section>
           </div>

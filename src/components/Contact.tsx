@@ -32,9 +32,9 @@ const Contact = () => {
             {/* Contact Info */}
             <div className="space-y-6">
               {[
-                { icon: Mail, label: "Email Us", value: "contact@parameterx.ai", href: "mailto:contact@parameterx.ai" },
-                { icon: Phone, label: "Call Us", value: "+1 (234) 567-890", href: "tel:+1234567890" },
-                { icon: MapPin, label: "Visit Us", value: "www.parameterx.ai", href: null },
+                { icon: Mail, label: "Email Us", value: "contact@parameterx.org", href: "mailto:contact@parameterx.org" },
+                { icon: Phone, label: "Call Us", value: "8851484102", href: "tel:8851484102" },
+                { icon: MapPin, label: "Visit Us", value: "Suncity Sector 54, Gurugram, Haryana, India", href: null },
               ].map((item, index) => (
                 <div 
                   key={index}
