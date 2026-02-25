@@ -6,6 +6,7 @@ import {
   Calendar, 
   Users as UsersIcon, 
   Bug, 
+  Target,
   MoreVertical,
   Edit,
   Trash2,
@@ -268,9 +269,14 @@ const ProgramCard = ({ program, onUpdate }: { program: Program; onUpdate: () => 
     <Card className="bg-card/80 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-300 group">
       <CardHeader className="flex flex-row items-start justify-between space-y-0">
         <div className="space-y-1">
-          <CardTitle className="text-lg group-hover:text-primary transition-colors">
-            {program.name}
-          </CardTitle>
+          <Link
+            to={isAdmin ? `/platform/programs/${program.id}` : `/platform/programs/${program.id}/pentest`}
+            className="hover:text-primary transition-colors"
+          >
+            <CardTitle className="text-lg group-hover:text-primary transition-colors">
+              {program.name}
+            </CardTitle>
+          </Link>
           <Badge className={cn('text-xs border', statusColors[program.status])}>
             {program.status}
           </Badge>
@@ -345,6 +351,21 @@ const ProgramCard = ({ program, onUpdate }: { program: Program; onUpdate: () => 
             {program.vulnerability_count || 0} findings
           </div>
         </div>
+
+        {!isAdmin && program.status === 'active' && (
+          <div className="mt-4 flex gap-2">
+            <Button variant="cyber" size="sm" asChild>
+              <Link to={`/platform/programs/${program.id}/pentest`}>
+                <Target className="w-4 h-4 mr-1" />View Scope
+              </Link>
+            </Button>
+            <Button variant="outline" size="sm" asChild>
+              <Link to={`/platform/vulnerabilities/new?program=${program.id}`}>
+                <Bug className="w-4 h-4 mr-1" />Submit Finding
+              </Link>
+            </Button>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
