@@ -28,7 +28,7 @@ import TermsOfService from "./pages/TermsOfService";
 import ProtectedRoute from "./components/ProtectedRoute";
 import RoleGuard from "./components/platform/RoleGuard";
 import LoadingScreen from "./components/LoadingScreen";
-import CustomCursor from "./components/CustomCursor";
+
 import ScrollToTop from "./components/ScrollToTop";
 
 // Dashboard Sub-pages
@@ -58,7 +58,7 @@ const App = () => (
     <AuthProvider>
       <TooltipProvider>
         <LoadingScreen />
-        <CustomCursor />
+        
         <Toaster />
         <Sonner />
         <BrowserRouter>
