@@ -11,7 +11,6 @@ import {
   UserPlus,
   FileText,
   Activity,
-  Bell,
   Menu,
   X
 } from 'lucide-react';
@@ -21,6 +20,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuth } from '@/hooks/useAuth';
 import { useUserRole } from '@/hooks/useUserRole';
 import AnimatedBackground from '@/components/dashboard/AnimatedBackground';
+import NotificationBell from '@/components/platform/NotificationBell';
 import { cn } from '@/lib/utils';
 
 interface NavItem {
@@ -143,15 +143,18 @@ const PlatformLayout = ({ children, title, subtitle, actions }: PlatformLayoutPr
 
           {/* User Section */}
           <div className="p-4 border-t border-border">
-            <div className="flex items-center gap-3 px-4 py-2 mb-2">
-              <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                <span className="text-sm font-medium text-primary">
-                  {user?.email?.charAt(0).toUpperCase()}
-                </span>
+            <div className="flex items-center justify-between px-4 py-2 mb-2">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                  <span className="text-sm font-medium text-primary">
+                    {user?.email?.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium truncate">{user?.email}</p>
+                </div>
               </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium truncate">{user?.email}</p>
-              </div>
+              <NotificationBell />
             </div>
             <Button
               variant="ghost"
