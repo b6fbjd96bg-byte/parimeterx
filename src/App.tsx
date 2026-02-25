@@ -19,11 +19,14 @@ import IoTPentest from "./pages/IoTPentest";
 import AISecurityAssessment from "./pages/AISecurityAssessment";
 import BlockchainSecurity from "./pages/BlockchainSecurity";
 import Auth from "./pages/Auth";
+import AdminLogin from "./pages/AdminLogin";
+import ProtectorsLogin from "./pages/ProtectorsLogin";
 import Dashboard from "./pages/Dashboard";
 import Careers from "./pages/Careers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import ProtectedRoute from "./components/ProtectedRoute";
+import RoleGuard from "./components/platform/RoleGuard";
 import LoadingScreen from "./components/LoadingScreen";
 import CustomCursor from "./components/CustomCursor";
 import ScrollToTop from "./components/ScrollToTop";
@@ -63,28 +66,30 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/AdMiN_loggin" element={<AdminLogin />} />
+            <Route path="/prOtectors" element={<ProtectorsLogin />} />
             
-            {/* Dashboard Routes */}
-            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-            <Route path="/dashboard/scans" element={<ProtectedRoute><ScansPage /></ProtectedRoute>} />
-            <Route path="/dashboard/vulnerabilities" element={<ProtectedRoute><DashboardVulnerabilitiesPage /></ProtectedRoute>} />
-            <Route path="/dashboard/reports" element={<ProtectedRoute><DashboardReportsPage /></ProtectedRoute>} />
-            <Route path="/dashboard/targets" element={<ProtectedRoute><TargetsPage /></ProtectedRoute>} />
-            <Route path="/dashboard/activity" element={<ProtectedRoute><ActivityPage /></ProtectedRoute>} />
+            {/* Dashboard Routes - Admin only */}
+            <Route path="/dashboard" element={<RoleGuard allowedRoles={['admin']}><Dashboard /></RoleGuard>} />
+            <Route path="/dashboard/scans" element={<RoleGuard allowedRoles={['admin']}><ScansPage /></RoleGuard>} />
+            <Route path="/dashboard/vulnerabilities" element={<RoleGuard allowedRoles={['admin']}><DashboardVulnerabilitiesPage /></RoleGuard>} />
+            <Route path="/dashboard/reports" element={<RoleGuard allowedRoles={['admin']}><DashboardReportsPage /></RoleGuard>} />
+            <Route path="/dashboard/targets" element={<RoleGuard allowedRoles={['admin']}><TargetsPage /></RoleGuard>} />
+            <Route path="/dashboard/activity" element={<RoleGuard allowedRoles={['admin']}><ActivityPage /></RoleGuard>} />
             
-            {/* Platform Routes */}
-            <Route path="/platform" element={<ProtectedRoute><PlatformDashboard /></ProtectedRoute>} />
-            <Route path="/platform/programs" element={<ProtectedRoute><ProgramsPage /></ProtectedRoute>} />
-            <Route path="/platform/programs/:id" element={<ProtectedRoute><ProgramDetailPage /></ProtectedRoute>} />
-            <Route path="/platform/programs/:id/pentest" element={<ProtectedRoute><PentesterProgramDetailPage /></ProtectedRoute>} />
-            <Route path="/platform/programs/:id/client" element={<ProtectedRoute><ClientProgramDetailPage /></ProtectedRoute>} />
-            <Route path="/platform/vulnerabilities" element={<ProtectedRoute><PlatformVulnerabilitiesPage /></ProtectedRoute>} />
-            <Route path="/platform/vulnerabilities/new" element={<ProtectedRoute><SubmitVulnerabilityPage /></ProtectedRoute>} />
-            <Route path="/platform/vulnerabilities/:id" element={<ProtectedRoute><VulnerabilityDetailPage /></ProtectedRoute>} />
-            <Route path="/platform/users" element={<ProtectedRoute><UsersPage /></ProtectedRoute>} />
-            <Route path="/platform/invitations" element={<ProtectedRoute><InvitationsPage /></ProtectedRoute>} />
-            <Route path="/platform/reports" element={<ProtectedRoute><PlatformReportsPage /></ProtectedRoute>} />
-            <Route path="/platform/audit-logs" element={<ProtectedRoute><AuditLogsPage /></ProtectedRoute>} />
+            {/* Platform Routes - Role-based */}
+            <Route path="/platform" element={<RoleGuard allowedRoles={['admin', 'pentester', 'client']}><PlatformDashboard /></RoleGuard>} />
+            <Route path="/platform/programs" element={<RoleGuard allowedRoles={['admin', 'pentester', 'client']}><ProgramsPage /></RoleGuard>} />
+            <Route path="/platform/programs/:id" element={<RoleGuard allowedRoles={['admin', 'pentester', 'client']}><ProgramDetailPage /></RoleGuard>} />
+            <Route path="/platform/programs/:id/pentest" element={<RoleGuard allowedRoles={['admin', 'pentester', 'client']}><PentesterProgramDetailPage /></RoleGuard>} />
+            <Route path="/platform/programs/:id/client" element={<RoleGuard allowedRoles={['admin', 'pentester', 'client']}><ClientProgramDetailPage /></RoleGuard>} />
+            <Route path="/platform/vulnerabilities" element={<RoleGuard allowedRoles={['admin', 'pentester', 'client']}><PlatformVulnerabilitiesPage /></RoleGuard>} />
+            <Route path="/platform/vulnerabilities/new" element={<RoleGuard allowedRoles={['admin', 'pentester']}><SubmitVulnerabilityPage /></RoleGuard>} />
+            <Route path="/platform/vulnerabilities/:id" element={<RoleGuard allowedRoles={['admin', 'pentester', 'client']}><VulnerabilityDetailPage /></RoleGuard>} />
+            <Route path="/platform/users" element={<RoleGuard allowedRoles={['admin']}><UsersPage /></RoleGuard>} />
+            <Route path="/platform/invitations" element={<RoleGuard allowedRoles={['admin']}><InvitationsPage /></RoleGuard>} />
+            <Route path="/platform/reports" element={<RoleGuard allowedRoles={['admin', 'pentester', 'client']}><PlatformReportsPage /></RoleGuard>} />
+            <Route path="/platform/audit-logs" element={<RoleGuard allowedRoles={['admin']}><AuditLogsPage /></RoleGuard>} />
             
             {/* Service Pages */}
             <Route path="/about" element={<AboutUs />} />
