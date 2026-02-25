@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { supabase } from "@/integrations/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -120,11 +121,22 @@ const SecurityAuditForm = () => {
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    
-    console.log("Form submitted:", data);
+    // Save to database
+    const { error } = await supabase.from("contact_submissions").insert({
+      full_name: data.fullName,
+      company: data.company,
+      email: data.email,
+      service_interest: data.services.join(", "),
+      message: `Industry: ${data.industry} | Size: ${data.companySize} | Urgency: ${data.urgency} | Budget: ${data.budget || 'N/A'} | Website: ${data.website || 'N/A'} | Phone: ${data.phone || 'N/A'} | Title: ${data.jobTitle || 'N/A'}\n\n${data.additionalInfo || ''}`,
+    });
+
     setIsSubmitting(false);
+    
+    if (error) {
+      toast.error("Something went wrong. Please try again.");
+      return;
+    }
+    
     setIsSubmitted(true);
     toast.success("Your security audit request has been submitted!");
   };
