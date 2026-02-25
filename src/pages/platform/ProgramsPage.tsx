@@ -7,6 +7,7 @@ import {
   Users as UsersIcon, 
   Bug, 
   Target,
+  BarChart3,
   MoreVertical,
   Edit,
   Trash2,
@@ -225,7 +226,7 @@ const CreateProgramDialog = ({ onCreated }: { onCreated: () => void }) => {
 
 const ProgramCard = ({ program, onUpdate }: { program: Program; onUpdate: () => void }) => {
   const { updateProgram, deleteProgram } = usePrograms();
-  const { isAdmin } = useUserRole();
+  const { isAdmin, isPentester, isClient } = useUserRole();
   const { toast } = useToast();
 
   const handleStatusChange = async (status: ProgramStatus) => {
@@ -270,7 +271,7 @@ const ProgramCard = ({ program, onUpdate }: { program: Program; onUpdate: () => 
       <CardHeader className="flex flex-row items-start justify-between space-y-0">
         <div className="space-y-1">
           <Link
-            to={isAdmin ? `/platform/programs/${program.id}` : `/platform/programs/${program.id}/pentest`}
+            to={isAdmin ? `/platform/programs/${program.id}` : isClient ? `/platform/programs/${program.id}/client` : `/platform/programs/${program.id}/pentest`}
             className="hover:text-primary transition-colors"
           >
             <CardTitle className="text-lg group-hover:text-primary transition-colors">
@@ -352,7 +353,7 @@ const ProgramCard = ({ program, onUpdate }: { program: Program; onUpdate: () => 
           </div>
         </div>
 
-        {!isAdmin && program.status === 'active' && (
+        {isPentester && program.status === 'active' && (
           <div className="mt-4 flex gap-2">
             <Button variant="cyber" size="sm" asChild>
               <Link to={`/platform/programs/${program.id}/pentest`}>
@@ -362,6 +363,16 @@ const ProgramCard = ({ program, onUpdate }: { program: Program; onUpdate: () => 
             <Button variant="outline" size="sm" asChild>
               <Link to={`/platform/vulnerabilities/new?program=${program.id}`}>
                 <Bug className="w-4 h-4 mr-1" />Submit Finding
+              </Link>
+            </Button>
+          </div>
+        )}
+
+        {isClient && (
+          <div className="mt-4">
+            <Button variant="cyber" size="sm" asChild>
+              <Link to={`/platform/programs/${program.id}/client`}>
+                <BarChart3 className="w-4 h-4 mr-1" />View Status & Findings
               </Link>
             </Button>
           </div>
