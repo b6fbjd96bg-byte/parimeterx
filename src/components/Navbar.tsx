@@ -69,9 +69,14 @@ const Navbar = () => {
               )
             ))}
             {user ? (
-              <Button variant="cyber" size="sm" asChild>
-                <Link to="/dashboard">Dashboard</Link>
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/platform">Platform</Link>
+                </Button>
+                <Button variant="cyber" size="sm" asChild>
+                  <Link to="/dashboard">Dashboard</Link>
+                </Button>
+              </div>
             ) : (
               <>
                 <Button variant="ghost" size="sm" asChild>
@@ -130,9 +135,14 @@ const Navbar = () => {
                 )
               ))}
               {user ? (
-                <Button variant="cyber" size="sm" className="w-fit" asChild>
-                  <Link to="/dashboard">Dashboard</Link>
-                </Button>
+                <div className="flex flex-col gap-2">
+                  <Button variant="ghost" size="sm" className="w-fit" asChild>
+                    <Link to="/platform">Platform</Link>
+                  </Button>
+                  <Button variant="cyber" size="sm" className="w-fit" asChild>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </Button>
+                </div>
               ) : (
                 <>
                   <Button variant="ghost" size="sm" className="w-fit" asChild>

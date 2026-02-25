@@ -4,8 +4,10 @@ import {
   Shield, 
   UserCheck,
   UserX,
+  UserPlus,
   MoreVertical,
-  Search
+  Search,
+  Trash2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -46,6 +48,8 @@ import PlatformLayout from '@/components/platform/PlatformLayout';
 import RoleGuard from '@/components/platform/RoleGuard';
 import { useUsers } from '@/hooks/useUsers';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
 import type { AppRole } from '@/types/platform';
@@ -59,11 +63,21 @@ const ROLE_COLORS: Record<AppRole, string> = {
 const UsersPage = () => {
   const { users, loading, assignRole, removeRole, refetch } = useUsers();
   const { toast } = useToast();
+  const { user: currentUser } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState<string>('all');
   const [assignDialogOpen, setAssignDialogOpen] = useState(false);
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
   const [selectedRole, setSelectedRole] = useState<AppRole | ''>('');
+  
+  // Create user form
+  const [newEmail, setNewEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [newFullName, setNewFullName] = useState('');
+  const [newRole, setNewRole] = useState<AppRole | ''>('');
+  const [isCreating, setIsCreating] = useState(false);
+  const [isDeleting, setIsDeleting] = useState<string | null>(null);
 
   const filteredUsers = users.filter((user) => {
     const matchesSearch = 
@@ -77,7 +91,6 @@ const UsersPage = () => {
 
   const handleAssignRole = async () => {
     if (!selectedUser || !selectedRole) return;
-
     try {
       await assignRole(selectedUser, selectedRole);
       toast({ title: 'Success', description: 'Role assigned successfully' });
@@ -86,27 +99,65 @@ const UsersPage = () => {
       setSelectedRole('');
       refetch();
     } catch (err) {
-      toast({ 
-        title: 'Error', 
-        description: err instanceof Error ? err.message : 'Failed to assign role', 
-        variant: 'destructive' 
-      });
+      toast({ title: 'Error', description: err instanceof Error ? err.message : 'Failed to assign role', variant: 'destructive' });
     }
   };
 
   const handleRemoveRole = async (userId: string) => {
     if (!confirm('Are you sure you want to remove this user\'s role?')) return;
-
     try {
       await removeRole(userId);
       toast({ title: 'Success', description: 'Role removed successfully' });
       refetch();
     } catch (err) {
-      toast({ 
-        title: 'Error', 
-        description: err instanceof Error ? err.message : 'Failed to remove role', 
-        variant: 'destructive' 
+      toast({ title: 'Error', description: err instanceof Error ? err.message : 'Failed to remove role', variant: 'destructive' });
+    }
+  };
+
+  const handleCreateUser = async () => {
+    if (!newEmail || !newPassword) return;
+    setIsCreating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('manage-users', {
+        body: {
+          action: 'create_user',
+          email: newEmail,
+          password: newPassword,
+          full_name: newFullName || newEmail,
+          role: newRole || undefined,
+        },
       });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      toast({ title: 'User Created', description: `${newEmail} has been created successfully` });
+      setCreateDialogOpen(false);
+      setNewEmail('');
+      setNewPassword('');
+      setNewFullName('');
+      setNewRole('');
+      setTimeout(() => refetch(), 1000);
+    } catch (err) {
+      toast({ title: 'Error', description: err instanceof Error ? err.message : 'Failed to create user', variant: 'destructive' });
+    } finally {
+      setIsCreating(false);
+    }
+  };
+
+  const handleDeleteUser = async (userId: string, userName: string) => {
+    if (!confirm(`Are you sure you want to permanently delete "${userName}"? This cannot be undone.`)) return;
+    setIsDeleting(userId);
+    try {
+      const { data, error } = await supabase.functions.invoke('manage-users', {
+        body: { action: 'delete_user', user_id: userId },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      toast({ title: 'User Deleted', description: `${userName} has been deleted` });
+      setTimeout(() => refetch(), 500);
+    } catch (err) {
+      toast({ title: 'Error', description: err instanceof Error ? err.message : 'Failed to delete user', variant: 'destructive' });
+    } finally {
+      setIsDeleting(null);
     }
   };
 
@@ -120,7 +171,7 @@ const UsersPage = () => {
     <RoleGuard allowedRoles={['admin']}>
       <PlatformLayout
         title="User Management"
-        subtitle="Manage platform users and their roles"
+        subtitle="Create, manage, and assign roles to platform users"
       >
         {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
@@ -178,7 +229,7 @@ const UsersPage = () => {
           </Card>
         </div>
 
-        {/* Filters */}
+        {/* Filters + Create Button */}
         <Card className="bg-card/80 backdrop-blur-sm border-border/50 mb-6">
           <CardContent className="p-4">
             <div className="flex flex-col sm:flex-row gap-4">
@@ -203,6 +254,10 @@ const UsersPage = () => {
                   <SelectItem value="unassigned">Unassigned</SelectItem>
                 </SelectContent>
               </Select>
+              <Button onClick={() => setCreateDialogOpen(true)} className="gap-2">
+                <UserPlus className="w-4 h-4" />
+                Create User
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -299,6 +354,19 @@ const UsersPage = () => {
                                   </DropdownMenuItem>
                                 </>
                               )}
+                              {user.user_id !== currentUser?.id && (
+                                <>
+                                  <DropdownMenuSeparator />
+                                  <DropdownMenuItem 
+                                    onClick={() => handleDeleteUser(user.user_id, user.full_name || 'Unknown')}
+                                    className="text-destructive focus:text-destructive"
+                                    disabled={isDeleting === user.user_id}
+                                  >
+                                    <Trash2 className="w-4 h-4 mr-2" />
+                                    {isDeleting === user.user_id ? 'Deleting...' : 'Delete User'}
+                                  </DropdownMenuItem>
+                                </>
+                              )}
                             </DropdownMenuContent>
                           </DropdownMenu>
                         </TableCell>
@@ -334,11 +402,74 @@ const UsersPage = () => {
               </Select>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setAssignDialogOpen(false)}>
-                Cancel
-              </Button>
-              <Button variant="cyber" onClick={handleAssignRole} disabled={!selectedRole}>
-                Assign Role
+              <Button variant="outline" onClick={() => setAssignDialogOpen(false)}>Cancel</Button>
+              <Button onClick={handleAssignRole} disabled={!selectedRole}>Assign Role</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Create User Dialog */}
+        <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Create New User</DialogTitle>
+              <DialogDescription>
+                Create a new user account with email and password.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div>
+                <Label htmlFor="fullName">Full Name</Label>
+                <Input
+                  id="fullName"
+                  placeholder="John Doe"
+                  value={newFullName}
+                  onChange={(e) => setNewFullName(e.target.value)}
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <Label htmlFor="email">Email *</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="user@example.com"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  className="mt-1"
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="password">Password *</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Minimum 6 characters"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="mt-1"
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="newRole">Role</Label>
+                <Select value={newRole} onValueChange={(value) => setNewRole(value as AppRole)}>
+                  <SelectTrigger className="mt-1">
+                    <SelectValue placeholder="Select a role (optional)" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="admin">Admin</SelectItem>
+                    <SelectItem value="pentester">Pentester</SelectItem>
+                    <SelectItem value="client">Client</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setCreateDialogOpen(false)}>Cancel</Button>
+              <Button onClick={handleCreateUser} disabled={!newEmail || !newPassword || isCreating}>
+                {isCreating ? 'Creating...' : 'Create User'}
               </Button>
             </DialogFooter>
           </DialogContent>
