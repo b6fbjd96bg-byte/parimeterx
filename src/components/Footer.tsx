@@ -37,19 +37,19 @@ const Footer = () => {
             
             {/* Social Icons */}
             <div className="flex gap-3 mt-6">
-              <a href="#" className="h-10 w-10 rounded-lg bg-muted/50 flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all duration-300">
+              <a href="https://linkedin.com/company/parameterx" target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-lg bg-muted/50 flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all duration-300">
                 <Linkedin className="h-5 w-5" />
               </a>
-              <a href="#" className="h-10 w-10 rounded-lg bg-muted/50 flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all duration-300">
+              <a href="https://twitter.com/parameterx" target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-lg bg-muted/50 flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all duration-300">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="h-10 w-10 rounded-lg bg-muted/50 flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all duration-300">
+              <a href="https://github.com/parameterx" target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-lg bg-muted/50 flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all duration-300">
                 <Github className="h-5 w-5" />
               </a>
-              <a href="#" className="h-10 w-10 rounded-lg bg-muted/50 flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all duration-300">
+              <a href="https://facebook.com/parameterx" target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-lg bg-muted/50 flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all duration-300">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="h-10 w-10 rounded-lg bg-muted/50 flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all duration-300">
+              <a href="https://youtube.com/@parameterx" target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-lg bg-muted/50 flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all duration-300">
                 <Youtube className="h-5 w-5" />
               </a>
             </div>
@@ -59,10 +59,10 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4 text-sm tracking-wide">Services</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link to="/services/penetration-testing" className="hover:text-primary transition-colors">Penetration Testing</Link></li>
-              <li><Link to="/services/vulnerability-assessment" className="hover:text-primary transition-colors">Vulnerability Assessment</Link></li>
-              <li><Link to="/services/red-team-operations" className="hover:text-primary transition-colors">Red Team Operations</Link></li>
-              <li><Link to="/services/cloud-security-assessment" className="hover:text-primary transition-colors">Cloud Security</Link></li>
+              <li><Link to="/services/application-pentest" className="hover:text-primary transition-colors">Penetration Testing</Link></li>
+              <li><Link to="/services/network-pentest" className="hover:text-primary transition-colors">Network Security</Link></li>
+              <li><Link to="/services/red-team-assessment" className="hover:text-primary transition-colors">Red Team Operations</Link></li>
+              <li><Link to="/services/cloud-pentest" className="hover:text-primary transition-colors">Cloud Security</Link></li>
               <li><Link to="/services/web-application-security" className="hover:text-primary transition-colors">Web App Security</Link></li>
               <li><Link to="/services/blockchain-security" className="hover:text-primary transition-colors">Blockchain Security</Link></li>
             </ul>
