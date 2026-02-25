@@ -13,7 +13,6 @@ const ParticleField = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const animationRef = useRef<number>();
-  const mouseRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -28,17 +27,17 @@ const ParticleField = () => {
     };
 
     const createParticles = () => {
-      const particleCount = Math.min(80, Math.floor(window.innerWidth / 20));
+      const particleCount = Math.min(35, Math.floor(window.innerWidth / 50));
       particlesRef.current = [];
 
       for (let i = 0; i < particleCount; i++) {
         particlesRef.current.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
-          size: Math.random() * 2 + 1,
-          opacity: Math.random() * 0.5 + 0.2,
+          vx: (Math.random() - 0.5) * 0.15,
+          vy: (Math.random() - 0.5) * 0.15,
+          size: Math.random() * 1.5 + 0.5,
+          opacity: Math.random() * 0.2 + 0.05,
         });
       }
     };
@@ -46,55 +45,35 @@ const ParticleField = () => {
     const drawParticles = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Get primary color from CSS variable
       const primaryColor = getComputedStyle(document.documentElement)
         .getPropertyValue("--primary")
         .trim();
 
       particlesRef.current.forEach((particle, i) => {
-        // Update position
         particle.x += particle.vx;
         particle.y += particle.vy;
 
-        // Mouse interaction - subtle attraction
-        const dx = mouseRef.current.x - particle.x;
-        const dy = mouseRef.current.y - particle.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 200) {
-          particle.vx += dx * 0.00005;
-          particle.vy += dy * 0.00005;
-        }
-
-        // Boundary check with wrap
         if (particle.x < 0) particle.x = canvas.width;
         if (particle.x > canvas.width) particle.x = 0;
         if (particle.y < 0) particle.y = canvas.height;
         if (particle.y > canvas.height) particle.y = 0;
 
-        // Speed limit
-        const speed = Math.sqrt(particle.vx * particle.vx + particle.vy * particle.vy);
-        if (speed > 1) {
-          particle.vx *= 0.95;
-          particle.vy *= 0.95;
-        }
-
-        // Draw particle
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fillStyle = `hsla(${primaryColor}, ${particle.opacity})`;
         ctx.fill();
 
-        // Draw connections
+        // Sparse connections
         particlesRef.current.slice(i + 1).forEach((other) => {
           const dx = particle.x - other.x;
           const dy = particle.y - other.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
-          if (dist < 120) {
+          if (dist < 150) {
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(other.x, other.y);
-            ctx.strokeStyle = `hsla(${primaryColor}, ${0.15 * (1 - dist / 120)})`;
+            ctx.strokeStyle = `hsla(${primaryColor}, ${0.04 * (1 - dist / 150)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -102,10 +81,6 @@ const ParticleField = () => {
       });
 
       animationRef.current = requestAnimationFrame(drawParticles);
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
     };
 
     resizeCanvas();
@@ -116,14 +91,12 @@ const ParticleField = () => {
       resizeCanvas();
       createParticles();
     });
-    window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
       window.removeEventListener("resize", resizeCanvas);
-      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
@@ -131,7 +104,7 @@ const ParticleField = () => {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-0"
-      style={{ opacity: 0.6 }}
+      style={{ opacity: 0.4 }}
     />
   );
 };
