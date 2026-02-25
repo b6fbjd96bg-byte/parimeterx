@@ -1,12 +1,51 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, Mail, Phone, MapPin } from "lucide-react";
+import { ArrowRight, Mail, Phone, MapPin, CheckCircle } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const Contact = () => {
   const leftAnimation = useScrollAnimation({ threshold: 0.2 });
   const rightAnimation = useScrollAnimation({ threshold: 0.2 });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({
+    full_name: "",
+    company: "",
+    email: "",
+    service_interest: "",
+    message: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.full_name || !form.email) {
+      toast.error("Please fill in your name and email.");
+      return;
+    }
+    setIsSubmitting(true);
+    const { error } = await supabase.from("contact_submissions").insert({
+      full_name: form.full_name,
+      company: form.company || null,
+      email: form.email,
+      service_interest: form.service_interest || null,
+      message: form.message || null,
+    });
+    setIsSubmitting(false);
+    if (error) {
+      toast.error("Something went wrong. Please try again.");
+      return;
+    }
+    setSubmitted(true);
+    toast.success("Your request has been submitted! We'll get back to you soon.");
+  };
 
   return (
     <section id="contact" className="py-24 relative">
@@ -68,60 +107,99 @@ const Contact = () => {
               rightAnimation.isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
             }`}
           >
-            <h3 className="text-xl font-semibold mb-6">Request a Free Security Audit</h3>
-            <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="name" className="text-sm font-medium mb-2 block">Full Name</label>
-                  <Input 
-                    id="name" 
-                    placeholder="John Doe" 
-                    className="bg-background/50 border-border/50 focus:border-primary"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="company" className="text-sm font-medium mb-2 block">Company</label>
-                  <Input 
-                    id="company" 
-                    placeholder="Your Company" 
-                    className="bg-background/50 border-border/50 focus:border-primary"
-                  />
-                </div>
+            {submitted ? (
+              <div className="flex flex-col items-center justify-center h-full py-12 text-center">
+                <CheckCircle className="w-16 h-16 text-primary mb-6" />
+                <h3 className="text-2xl font-semibold mb-3">Thank You!</h3>
+                <p className="text-muted-foreground max-w-sm">
+                  Your request has been received. Our security team will review it and get back to you within 24 hours.
+                </p>
+                <Button
+                  variant="cyberOutline"
+                  className="mt-6"
+                  onClick={() => {
+                    setSubmitted(false);
+                    setForm({ full_name: "", company: "", email: "", service_interest: "", message: "" });
+                  }}
+                >
+                  Submit Another Request
+                </Button>
               </div>
-              
-              <div>
-                <label htmlFor="email" className="text-sm font-medium mb-2 block">Email</label>
-                <Input 
-                  id="email" 
-                  type="email" 
-                  placeholder="john@company.com" 
-                  className="bg-background/50 border-border/50 focus:border-primary"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="service" className="text-sm font-medium mb-2 block">Service Interested In</label>
-                <Input 
-                  id="service" 
-                  placeholder="e.g., Penetration Testing, Red Team" 
-                  className="bg-background/50 border-border/50 focus:border-primary"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="text-sm font-medium mb-2 block">Message</label>
-                <Textarea 
-                  id="message" 
-                  placeholder="Tell us about your security needs..." 
-                  className="bg-background/50 border-border/50 focus:border-primary min-h-[100px]"
-                />
-              </div>
-              
-              <Button variant="cyber" size="lg" className="w-full group">
-                Submit Request
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Button>
-            </form>
+            ) : (
+              <>
+                <h3 className="text-xl font-semibold mb-6">Request a Free Security Audit</h3>
+                <form className="space-y-5" onSubmit={handleSubmit}>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="full_name" className="text-sm font-medium mb-2 block">Full Name *</label>
+                      <Input 
+                        id="full_name"
+                        name="full_name"
+                        value={form.full_name}
+                        onChange={handleChange}
+                        placeholder="John Doe" 
+                        className="bg-background/50 border-border/50 focus:border-primary"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="company" className="text-sm font-medium mb-2 block">Company</label>
+                      <Input 
+                        id="company"
+                        name="company"
+                        value={form.company}
+                        onChange={handleChange}
+                        placeholder="Your Company" 
+                        className="bg-background/50 border-border/50 focus:border-primary"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="email" className="text-sm font-medium mb-2 block">Email *</label>
+                    <Input 
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={form.email}
+                      onChange={handleChange}
+                      placeholder="john@company.com" 
+                      className="bg-background/50 border-border/50 focus:border-primary"
+                      required
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="service_interest" className="text-sm font-medium mb-2 block">Service Interested In</label>
+                    <Input 
+                      id="service_interest"
+                      name="service_interest"
+                      value={form.service_interest}
+                      onChange={handleChange}
+                      placeholder="e.g., Penetration Testing, Red Team" 
+                      className="bg-background/50 border-border/50 focus:border-primary"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="message" className="text-sm font-medium mb-2 block">Message</label>
+                    <Textarea 
+                      id="message"
+                      name="message"
+                      value={form.message}
+                      onChange={handleChange}
+                      placeholder="Tell us about your security needs..." 
+                      className="bg-background/50 border-border/50 focus:border-primary min-h-[100px]"
+                    />
+                  </div>
+                  
+                  <Button variant="cyber" size="lg" className="w-full group" type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Submitting..." : "Submit Request"}
+                    {!isSubmitting && <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />}
+                  </Button>
+                </form>
+              </>
+            )}
           </div>
         </div>
       </div>
