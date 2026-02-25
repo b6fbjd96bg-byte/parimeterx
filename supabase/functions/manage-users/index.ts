@@ -14,8 +14,43 @@ Deno.serve(async (req) => {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
+    const adminClient = createClient(supabaseUrl, serviceRoleKey);
 
-    // Verify the caller is an admin
+    const body = await req.json();
+    const { action, ...params } = body;
+
+    // Allow reset_password without auth (bootstrap scenario)
+    if (action === "reset_admin_password") {
+      const { email, password } = params;
+      // Protected: verify caller has service role key
+      const authHeader = req.headers.get("Authorization");
+      if (!authHeader?.includes(serviceRoleKey)) {
+        return new Response(JSON.stringify({ error: "Forbidden" }), {
+          status: 403,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { data: users } = await adminClient.auth.admin.listUsers();
+      const targetUser = users?.users?.find((u: any) => u.email === email);
+      if (!targetUser) {
+        return new Response(JSON.stringify({ error: "User not found" }), {
+          status: 404,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { error } = await adminClient.auth.admin.updateUserById(targetUser.id, { password });
+      if (error) {
+        return new Response(JSON.stringify({ error: error.message }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // All other actions require admin auth
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
@@ -49,9 +84,6 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-
-    const adminClient = createClient(supabaseUrl, serviceRoleKey);
-    const { action, ...params } = await req.json();
 
     if (action === "create_user") {
       const { email, password, full_name, role } = params;
