@@ -312,7 +312,7 @@ async function checkCommonVulnerabilities(url: string): Promise<VulnerabilityRes
     });
     
     const results = await Promise.all(checkPromises);
-    vulnerabilities.push(...results.filter((v): v is VulnerabilityResult => v !== null));
+    vulnerabilities.push(...(results.filter(v => v !== null) as VulnerabilityResult[]));
     
     // Check for directory listing
     const testDirs = ['/', '/images/', '/assets/', '/uploads/', '/backup/', '/admin/', '/api/'];
@@ -770,7 +770,7 @@ Deno.serve(async (req) => {
   } catch (error) {
     console.error('Scan error:', error);
     return new Response(
-      JSON.stringify({ error: error.message || 'Scan failed' }),
+      JSON.stringify({ error: (error as Error).message || 'Scan failed' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
