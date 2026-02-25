@@ -62,6 +62,9 @@ const AdminLogin = () => {
       return;
     }
 
+    // Clear any existing session first to avoid stale role checks
+    await signOut();
+
     const { error } = await signIn(formData.email, formData.password);
     if (error) {
       toast({
