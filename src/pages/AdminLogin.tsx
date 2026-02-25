@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { Shield, Mail, Lock, Eye, EyeOff, Loader2, ArrowRight, ShieldAlert } from 'lucide-react';
@@ -7,8 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { useAuth } from '@/hooks/useAuth';
-import { useUserRole } from '@/hooks/useUserRole';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import AnimatedBackground from '@/components/dashboard/AnimatedBackground';
 
 const loginSchema = z.object({
@@ -18,33 +18,13 @@ const loginSchema = z.object({
 
 const AdminLogin = () => {
   const navigate = useNavigate();
-  const { user, signIn, signOut } = useAuth();
-  const { role, loading: roleLoading } = useUserRole();
+  const { signIn, signOut } = useAuth();
   const { toast } = useToast();
 
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [loginAttempted, setLoginAttempted] = useState(false);
   const [formData, setFormData] = useState({ email: '', password: '' });
-
-  // Role-based redirect after login
-  useEffect(() => {
-    if (!loginAttempted || roleLoading || !user) return;
-
-    if (role === 'admin') {
-      navigate('/platform');
-    } else {
-      // Not admin - sign out and show error
-      toast({
-        title: 'Access Denied',
-        description: 'This portal is restricted to administrators only.',
-        variant: 'destructive',
-      });
-      signOut();
-      setLoginAttempted(false);
-    }
-  }, [role, roleLoading, user, loginAttempted, navigate, toast, signOut]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,7 +42,6 @@ const AdminLogin = () => {
       return;
     }
 
-    // Clear any existing session first to avoid stale role checks
     await signOut();
 
     const { error } = await signIn(formData.email, formData.password);
@@ -76,7 +55,33 @@ const AdminLogin = () => {
       return;
     }
 
-    setLoginAttempted(true);
+    // Fetch fresh session and check role directly
+    const { data: sessionData } = await supabase.auth.getSession();
+    const userId = sessionData?.session?.user?.id;
+
+    if (!userId) {
+      toast({ title: 'Login Failed', description: 'Could not establish session.', variant: 'destructive' });
+      setLoading(false);
+      return;
+    }
+
+    const { data: roleData } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', userId)
+      .single();
+
+    if (roleData?.role === 'admin') {
+      navigate('/platform');
+    } else {
+      toast({
+        title: 'Access Denied',
+        description: 'This portal is restricted to administrators only.',
+        variant: 'destructive',
+      });
+      await signOut();
+    }
+
     setLoading(false);
   };
 
@@ -144,9 +149,9 @@ const AdminLogin = () => {
               variant="cyber"
               size="lg"
               className="w-full"
-              disabled={loading || (loginAttempted && roleLoading)}
+              disabled={loading}
             >
-              {loading || (loginAttempted && roleLoading) ? (
+              {loading ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                   Authenticating...
