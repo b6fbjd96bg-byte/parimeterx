@@ -46,6 +46,7 @@ import InvitationsPage from "./pages/platform/InvitationsPage";
 import PlatformReportsPage from "./pages/platform/ReportsPage";
 import AuditLogsPage from "./pages/platform/AuditLogsPage";
 import ProgramDetailPage from "./pages/platform/ProgramDetailPage";
+import PentesterProgramDetailPage from "./pages/platform/PentesterProgramDetailPage";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -74,6 +75,7 @@ const App = () => (
             <Route path="/platform" element={<ProtectedRoute><PlatformDashboard /></ProtectedRoute>} />
             <Route path="/platform/programs" element={<ProtectedRoute><ProgramsPage /></ProtectedRoute>} />
             <Route path="/platform/programs/:id" element={<ProtectedRoute><ProgramDetailPage /></ProtectedRoute>} />
+            <Route path="/platform/programs/:id/pentest" element={<ProtectedRoute><PentesterProgramDetailPage /></ProtectedRoute>} />
             <Route path="/platform/vulnerabilities" element={<ProtectedRoute><PlatformVulnerabilitiesPage /></ProtectedRoute>} />
             <Route path="/platform/vulnerabilities/new" element={<ProtectedRoute><SubmitVulnerabilityPage /></ProtectedRoute>} />
             <Route path="/platform/vulnerabilities/:id" element={<ProtectedRoute><VulnerabilityDetailPage /></ProtectedRoute>} />
