@@ -1,6 +1,5 @@
-import { Linkedin, Twitter, Github, Mail, Phone, MapPin, Facebook, Youtube } from "lucide-react";
+import { Shield, Linkedin, Twitter, Github, Mail, Phone, MapPin, Facebook, Instagram, Youtube } from "lucide-react";
 import { Link } from "react-router-dom";
-import parameterxLogo from "@/assets/parameterx-logo.jpg";
 
 const Footer = () => {
   return (
@@ -10,7 +9,11 @@ const Footer = () => {
           {/* Brand */}
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <img src={parameterxLogo} alt="ParameterX" className="h-8 rounded" />
+              <Shield className="h-7 w-7 text-primary" />
+              <span className="text-lg font-bold tracking-wider">
+                <span className="text-foreground">PARAMETER</span>
+                <span className="text-primary"> X</span>
+              </span>
             </Link>
             <p className="text-muted-foreground text-sm max-w-md leading-relaxed">
               Defining the Next Edge of Defense. ParameterX delivers expert-driven cybersecurity solutions to protect your organization against modern cyber threats.
