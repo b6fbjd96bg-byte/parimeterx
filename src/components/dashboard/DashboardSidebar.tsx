@@ -38,9 +38,7 @@ const DashboardSidebar = () => {
       {/* Logo */}
       <div className="p-6 border-b border-border">
         <Link to="/" className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-            <Shield className="w-6 h-6 text-primary" />
-          </div>
+          <img src="/parameterx-logo.jpg" alt="ParameterX" className="h-10 rounded" />
           <div>
             <h1 className="font-bold text-lg">ParameterX</h1>
             <p className="text-xs text-muted-foreground">Scanner Dashboard</p>

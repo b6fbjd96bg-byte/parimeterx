@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Shield, LogIn } from "lucide-react";
+import { Menu, X, LogIn } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import parameterxLogo from "@/assets/parameterx-logo.jpg";
 import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
@@ -31,14 +32,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="relative">
-              <Shield className="h-8 w-8 text-primary transition-all duration-300 group-hover:text-glow" />
-              <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-            <span className="text-xl font-bold tracking-wider">
-              <span className="text-foreground">PARAMETER</span>
-              <span className="text-primary"> X</span>
-            </span>
+            <img src={parameterxLogo} alt="ParameterX" className="h-8 rounded transition-all duration-300" />
           </Link>
 
           {/* Desktop Navigation */}
