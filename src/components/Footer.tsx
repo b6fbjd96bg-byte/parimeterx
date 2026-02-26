@@ -9,7 +9,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <span className="text-2xl font-black text-primary tracking-tighter">X</span>
+              
               <span className="text-lg font-bold tracking-wider">
                 <span className="text-foreground">PARAMETER</span>
                 <span className="text-primary"> X</span>
