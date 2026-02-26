@@ -8,21 +8,27 @@ const FinalCTA = () => {
 
   return (
     <section className="py-24 relative overflow-hidden">
-      {/* Background effects */}
       <div className="absolute inset-0 bg-secondary/30" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px]" />
       
-      {/* Animated rings */}
+      {/* Animated glow orb */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] animate-pulse" style={{ animationDuration: '4s' }} />
+      
+      {/* Expanding rings */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-        <div className="absolute w-[200px] h-[200px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/10 animate-ping-slow" style={{ animationDuration: "4s" }} />
-        <div className="absolute w-[300px] h-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/10 animate-ping-slow" style={{ animationDuration: "5s", animationDelay: "1s" }} />
-        <div className="absolute w-[400px] h-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/10 animate-ping-slow" style={{ animationDuration: "6s", animationDelay: "2s" }} />
+        {[200, 300, 400].map((size, i) => (
+          <div key={i} className="absolute rounded-full border border-primary/10 animate-ping-slow"
+            style={{ 
+              width: size, height: size, 
+              top: -size/2, left: -size/2,
+              animationDuration: `${4 + i}s`, 
+              animationDelay: `${i}s` 
+            }} 
+          />
+        ))}
       </div>
       
-      {/* Animated background shield with rotation */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5">
-        <Shield className="w-[400px] h-[400px] animate-spin-slow" />
-      </div>
+      {/* Section divider */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
       
       <div className="container mx-auto px-4 relative z-10">
         <div 
@@ -31,17 +37,17 @@ const FinalCTA = () => {
             animation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          {/* Glowing shield icon with ripple */}
+          {/* Shield icon with ripple */}
           <div className="relative w-20 h-20 mx-auto mb-8">
             <div className="absolute inset-0 rounded-2xl bg-primary/20 animate-ping" style={{ animationDuration: "2s" }} />
             <div className="relative w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center animate-pulse-glow border border-primary/30">
-              <Shield className="w-10 h-10 text-primary animate-bounce-subtle" />
+              <Shield className="w-10 h-10 text-primary" />
             </div>
           </div>
           
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
             Ready to secure your{" "}
-            <span className="text-primary text-glow animate-pulse">digital perimeter?</span>
+            <span className="text-primary text-glow">digital perimeter?</span>
           </h2>
           
           <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
@@ -55,23 +61,22 @@ const FinalCTA = () => {
                   Request Free Security Audit
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-2" />
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/30 to-primary/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-foreground/10 to-primary/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
               </Button>
             </Link>
             <Link to="/#contact">
               <Button variant="cyberOutline" size="xl" className="w-full sm:w-auto group">
-                <MessageSquare className="mr-2 h-5 w-5 group-hover:animate-bounce" />
+                <MessageSquare className="mr-2 h-5 w-5" />
                 Contact Security Team
               </Button>
             </Link>
           </div>
           
-          {/* Trust badges with stagger animation */}
           <div className="mt-12 flex flex-wrap justify-center gap-4">
             {["OWASP Compliant", "NIST Framework", "ISO 27001", "SOC 2 Ready"].map((badge, index) => (
               <div 
                 key={badge}
-                className={`px-4 py-2 rounded-full border border-border/50 bg-card/30 backdrop-blur-sm hover:border-primary/50 hover:scale-105 transition-all duration-300 ${
+                className={`px-4 py-2 rounded-full border border-border/50 bg-card/30 backdrop-blur-sm hover:border-primary/50 hover:bg-primary/5 hover:scale-105 transition-all duration-300 ${
                   animation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
                 }`}
                 style={{ transitionDelay: `${500 + index * 100}ms` }}
@@ -85,25 +90,11 @@ const FinalCTA = () => {
       
       <style>{`
         @keyframes ping-slow {
-          0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-          100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+          0% { transform: scale(1); opacity: 0.5; }
+          100% { transform: scale(1.5); opacity: 0; }
         }
         .animate-ping-slow {
           animation: ping-slow 4s cubic-bezier(0, 0, 0.2, 1) infinite;
-        }
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        .animate-spin-slow {
-          animation: spin-slow 30s linear infinite;
-        }
-        @keyframes bounce-subtle {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-4px); }
-        }
-        .animate-bounce-subtle {
-          animation: bounce-subtle 2s ease-in-out infinite;
         }
       `}</style>
     </section>
