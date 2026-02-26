@@ -8,11 +8,10 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="md:col-span-2">
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              
-              <span className="text-lg font-bold tracking-wider">
-                <span className="text-foreground">PARAMETER</span>
-                <span className="text-primary"> X</span>
+            <Link to="/" className="flex items-center mb-4 group">
+              <span className="text-lg font-extrabold tracking-[0.2em] uppercase select-none">
+                <span className="bg-gradient-to-r from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent">PARAMETER</span>
+                <span className="bg-gradient-to-br from-primary via-primary to-primary/60 bg-clip-text text-transparent ml-1 drop-shadow-[0_0_8px_hsl(var(--primary)/0.4)]">X</span>
               </span>
             </Link>
             <p className="text-muted-foreground text-sm max-w-md leading-relaxed">

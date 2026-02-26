@@ -30,11 +30,10 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            
-            <span className="text-xl font-bold tracking-wider">
-              <span className="text-foreground">PARAMETER</span>
-              <span className="text-primary"> X</span>
+          <Link to="/" className="flex items-center group">
+            <span className="text-xl font-extrabold tracking-[0.2em] uppercase select-none">
+              <span className="bg-gradient-to-r from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent transition-all duration-300 group-hover:from-primary group-hover:to-foreground">PARAMETER</span>
+              <span className="bg-gradient-to-br from-primary via-primary to-primary/60 bg-clip-text text-transparent ml-1 drop-shadow-[0_0_8px_hsl(var(--primary)/0.4)] transition-all duration-300 group-hover:drop-shadow-[0_0_14px_hsl(var(--primary)/0.7)]">X</span>
             </span>
           </Link>
 
