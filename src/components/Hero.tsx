@@ -189,11 +189,12 @@ const Hero = () => {
         <div
           ref={statsAnimation.ref}
           className="relative z-20 mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+          <TooltipProvider delayDuration={200}>
           {[
-            { endValue: 700, suffix: "+", label: "Security Assessments", decimals: 0 },
-            { endValue: 99.9, suffix: "%", label: "Client Satisfaction", decimals: 1 },
-            { endValue: 24, suffix: "/7", label: "Security Monitoring", decimals: 0 },
-            { endValue: 100, suffix: "+", label: "Enterprise Clients", decimals: 0 }
+            { endValue: 700, suffix: "+", label: "Security Assessments", decimals: 0, tooltip: "Comprehensive assessments across web, mobile, cloud & network infrastructure" },
+            { endValue: 99.9, suffix: "%", label: "Client Satisfaction", decimals: 1, tooltip: "Based on post-engagement surveys from enterprise clients" },
+            { endValue: 24, suffix: "/7", label: "Security Monitoring", decimals: 0, tooltip: "Round-the-clock threat detection and incident response" },
+            { endValue: 100, suffix: "+", label: "Enterprise Clients", decimals: 0, tooltip: "Trusted by Fortune 500 companies and growing startups alike" }
           ].map((stat, index) => (
             <StatCard
               key={index}
@@ -203,11 +204,10 @@ const Hero = () => {
               decimals={stat.decimals}
               isVisible={statsAnimation.isVisible}
               delay={index * 120}
+              tooltip={stat.tooltip}
             />
           ))}
-        </div>
-      </div>
-
+          </TooltipProvider>
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-float">
         <ChevronDown className="w-6 h-6 text-primary/40" />
