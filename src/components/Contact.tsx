@@ -56,8 +56,8 @@ const Contact = () => {
           {/* Left Column - Info */}
           <div
             ref={leftAnimation.ref}
-            className={`transition-all duration-700 ${
-              leftAnimation.isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+            className={`transition-all duration-800 ease-out ${
+              leftAnimation.isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-5"
             }`}
           >
             <span className="text-primary text-sm font-semibold tracking-widest uppercase mb-4 block">Get In Touch</span>
