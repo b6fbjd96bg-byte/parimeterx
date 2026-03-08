@@ -29,7 +29,7 @@ const WhyUs = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div 
             ref={textAnimation.ref}
-            className={`transition-all duration-700 ${textAnimation.isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}
+            className={`transition-all duration-800 ease-out ${textAnimation.isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-5"}`}
           >
             <span className="text-primary text-sm font-semibold tracking-widest uppercase mb-4 block">Why Choose Us</span>
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
