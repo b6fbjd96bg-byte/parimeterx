@@ -714,9 +714,10 @@ const DetailedServicePageLayout = ({
         {/* CTA Section */}
         <section className="py-16 relative">
           <div className="container mx-auto px-4">
-            <div className={`bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 md:p-12 text-center relative overflow-hidden`}>
+            <div className={`bg-gradient-to-br from-[hsl(var(--${colorVar})/0.08)] via-card/50 to-card/30 backdrop-blur-sm border border-[hsl(var(--${colorVar})/0.2)] rounded-2xl p-8 md:p-12 text-center relative overflow-hidden`}>
               {/* Background glow */}
-              <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-[hsl(var(--${colorVar})/0.05)] blur-[100px]`} />
+              <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[hsl(var(--${colorVar})/0.08)] blur-[120px]`} />
+              <div className={`absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[hsl(var(--${colorVar})/0.5)] to-transparent`} />
               
               <div className="relative z-10">
                 <div className={`h-16 w-16 rounded-xl bg-[hsl(var(--${colorVar})/0.1)] flex items-center justify-center mx-auto mb-6`}>
