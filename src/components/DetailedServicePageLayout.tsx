@@ -20,7 +20,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
-type AccentColor = "red" | "blue" | "green" | "purple";
+type AccentColor = "red" | "blue" | "green" | "purple" | "amber" | "sky" | "teal" | "orange" | "violet";
 
 interface ProcessStep {
   icon: LucideIcon;
