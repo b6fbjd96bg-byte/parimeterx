@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Shield, Target, Cloud, Network, Code, Cpu, Brain, Building2, ArrowRight, Boxes } from "lucide-react";
+import { ScanEye, Crosshair, CloudCog, Router, Terminal, CircuitBoard, BrainCircuit, Castle, ArrowRight, Blocks } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useParallax } from "@/hooks/useParallax";
@@ -18,15 +18,15 @@ interface Service {
 }
 
 const services: Service[] = [
-  { icon: Shield, title: "Application Pentest", description: "Enhance the security of your applications and elevate your DevSecOps practice.", link: "/services/application-pentest", accent: "blue" },
-  { icon: Building2, title: "Enterprise Pentest", description: "Protect your organization from cyber threats with our comprehensive enterprise security solutions.", link: "/services/enterprise-pentest", accent: "green" },
-  { icon: Target, title: "Red Team Assessment", description: "Obtain a comprehensive perspective on your organization's defense capabilities against real-world attacks.", link: "/services/red-team-assessment", accent: "red" },
-  { icon: Cloud, title: "Cloud Pentest", description: "Evaluate and enhance cloud security posture with expert testing and analysis.", link: "/services/cloud-pentest", accent: "blue" },
-  { icon: Network, title: "Network Pentest", description: "Uncover potential network vulnerabilities and protect your sensitive systems and data.", link: "/services/network-pentest", accent: "green" },
-  { icon: Code, title: "Source Code Audit", description: "Ensure the integrity and security of your codebase with our source code audits.", link: "/services/source-code-audit", accent: "purple" },
-  { icon: Cpu, title: "IoT Pentest", description: "Secure interconnected devices and products by validating their resilience against potential attackers.", link: "/services/iot-pentest", accent: "green" },
-  { icon: Brain, title: "AI Security Assessment", description: "We identify critical vulnerabilities in production LLMs and AI systems that expose novel attack paths.", link: "/services/ai-security-assessment", accent: "purple" },
-  { icon: Boxes, title: "Blockchain Security", description: "Secure decentralized systems with smart contract audits, DeFi protocol testing, and Web3 security.", link: "/services/blockchain-security", accent: "purple" },
+  { icon: ScanEye, title: "Application Pentest", description: "Enhance the security of your applications and elevate your DevSecOps practice.", link: "/services/application-pentest", accent: "blue" },
+  { icon: Castle, title: "Enterprise Pentest", description: "Protect your organization from cyber threats with our comprehensive enterprise security solutions.", link: "/services/enterprise-pentest", accent: "green" },
+  { icon: Crosshair, title: "Red Team Assessment", description: "Obtain a comprehensive perspective on your organization's defense capabilities against real-world attacks.", link: "/services/red-team-assessment", accent: "red" },
+  { icon: CloudCog, title: "Cloud Pentest", description: "Evaluate and enhance cloud security posture with expert testing and analysis.", link: "/services/cloud-pentest", accent: "blue" },
+  { icon: Router, title: "Network Pentest", description: "Uncover potential network vulnerabilities and protect your sensitive systems and data.", link: "/services/network-pentest", accent: "green" },
+  { icon: Terminal, title: "Source Code Audit", description: "Ensure the integrity and security of your codebase with our source code audits.", link: "/services/source-code-audit", accent: "purple" },
+  { icon: CircuitBoard, title: "IoT Pentest", description: "Secure interconnected devices and products by validating their resilience against potential attackers.", link: "/services/iot-pentest", accent: "green" },
+  { icon: BrainCircuit, title: "AI Security Assessment", description: "We identify critical vulnerabilities in production LLMs and AI systems that expose novel attack paths.", link: "/services/ai-security-assessment", accent: "purple" },
+  { icon: Blocks, title: "Blockchain Security", description: "Secure decentralized systems with smart contract audits, DeFi protocol testing, and Web3 security.", link: "/services/blockchain-security", accent: "purple" },
 ];
 
 const accentColors: Record<AccentColor, string> = {
