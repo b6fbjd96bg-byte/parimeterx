@@ -599,8 +599,8 @@ const DetailedServicePageLayout = ({
 
         {/* Why Trust Us Section */}
          <section className="py-16 relative overflow-hidden">
-           <div className={`absolute top-1/2 left-0 w-32 h-32 rounded-full bg-[hsl(var(--${colorVar})/0.1)] blur-[60px] animate-pulse`} />
-           <div className={`absolute top-1/3 right-0 w-40 h-40 rounded-full bg-[hsl(var(--${colorVar})/0.1)] blur-[80px] animate-pulse`} style={{ animationDelay: '1.5s' }} />
+            <div className={`absolute top-1/2 left-0 w-32 h-32 rounded-full bg-[hsl(var(--${colorVar})/0.06)] blur-[60px]`} />
+            <div className={`absolute top-1/3 right-0 w-40 h-40 rounded-full bg-[hsl(var(--${colorVar})/0.06)] blur-[80px]`} />
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
                <div 
