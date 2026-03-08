@@ -333,4 +333,24 @@
   .bg-purple-blockchain {
     background-color: hsl(var(--color-purple-blockchain));
   }
+
+  .text-glow-amber {
+    text-shadow: 0 0 20px hsl(var(--color-amber-enterprise) / 0.5);
+  }
+
+  .text-glow-sky {
+    text-shadow: 0 0 20px hsl(var(--color-sky-cloud) / 0.5);
+  }
+
+  .text-glow-teal {
+    text-shadow: 0 0 20px hsl(var(--color-teal-code) / 0.5);
+  }
+
+  .text-glow-orange {
+    text-shadow: 0 0 20px hsl(var(--color-orange-iot) / 0.5);
+  }
+
+  .text-glow-violet {
+    text-shadow: 0 0 20px hsl(var(--color-violet-ai) / 0.5);
+  }
 }

@@ -111,6 +111,11 @@ const accentColors: Record<AccentColor, string> = {
   blue: "color-blue-ai",
   green: "color-green-secure",
   purple: "color-purple-blockchain",
+  amber: "color-amber-enterprise",
+  sky: "color-sky-cloud",
+  teal: "color-teal-code",
+  orange: "color-orange-iot",
+  violet: "color-violet-ai",
 };
 
 // Animated counter for stats — uses rAF for smooth 60fps
