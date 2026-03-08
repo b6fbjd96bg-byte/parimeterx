@@ -168,8 +168,8 @@ const ProcessStepComponent = ({
   return (
     <div 
       ref={ref}
-      className={`relative transition-all duration-700 ease-out ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
+      className={`relative transition-all duration-700 ease-out will-change-[transform,opacity] ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
       }`}
     >
       {/* Bug killing animation */}
