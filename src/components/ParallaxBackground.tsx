@@ -10,7 +10,7 @@ const ParallaxBackground = () => {
   useEffect(() => {
     let raf: number;
     const tick = () => {
-      setTime((t) => t + 0.008);
+      setTime((t) => t + 0.004);
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);

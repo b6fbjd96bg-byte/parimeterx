@@ -56,8 +56,8 @@ const Contact = () => {
           {/* Left Column - Info */}
           <div
             ref={leftAnimation.ref}
-            className={`transition-all duration-700 ${
-              leftAnimation.isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+            className={`transition-all duration-800 ease-out ${
+              leftAnimation.isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-5"
             }`}
           >
             <span className="text-primary text-sm font-semibold tracking-widest uppercase mb-4 block">Get In Touch</span>
@@ -103,8 +103,8 @@ const Contact = () => {
           {/* Right Column - Form */}
           <div 
             ref={rightAnimation.ref}
-            className={`bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 transition-all duration-700 delay-200 ${
-              rightAnimation.isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+            className={`bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 transition-all duration-800 ease-out delay-200 ${
+              rightAnimation.isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-5"
             }`}
           >
             {submitted ? (

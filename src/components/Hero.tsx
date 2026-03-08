@@ -133,12 +133,12 @@ const Hero = () => {
           ].map((stat, index) =>
             <div
               key={index}
-              className={`group p-4 rounded-xl border border-border/30 bg-card/20 backdrop-blur-sm hover:border-primary/40 hover:bg-primary/5 transition-all duration-500 ${
+              className={`group p-4 rounded-xl border border-border/30 bg-card/20 backdrop-blur-sm hover:border-primary/40 hover:bg-primary/5 transition-all duration-700 ease-out ${
                 statsAnimation.isVisible
                   ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-6"
+                  : "opacity-0 translate-y-4"
               }`}
-              style={{ transitionDelay: `${index * 100}ms` }}>
+              style={{ transitionDelay: `${index * 120}ms` }}>
               <div className="text-2xl md:text-3xl font-bold text-primary group-hover:text-glow transition-all duration-300">{stat.value}</div>
               <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
             </div>
@@ -147,7 +147,7 @@ const Hero = () => {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-float">
         <ChevronDown className="w-6 h-6 text-primary/40" />
       </div>
 

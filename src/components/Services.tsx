@@ -55,8 +55,8 @@ const Services = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div 
           ref={headerAnimation.ref}
-          className={`text-center max-w-2xl mx-auto mb-16 transition-all duration-700 ${
-            headerAnimation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          className={`text-center max-w-2xl mx-auto mb-16 transition-all duration-800 ease-out ${
+            headerAnimation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
           }`}
         >
           <span className="text-primary text-sm font-semibold tracking-widest uppercase mb-4 block">Our Services</span>
@@ -81,17 +81,17 @@ const Services = () => {
               <Link 
                 key={index} 
                 to={service.link}
-                className={`transition-all duration-700 ${
+                className={`transition-all duration-700 ease-out ${
                   cardsAnimation.isVisible 
                     ? "opacity-100 translate-y-0" 
-                    : "opacity-0 translate-y-10"
+                    : "opacity-0 translate-y-5"
                 }`}
-                style={{ transitionDelay: `${index * 80}ms` }}
+                style={{ transitionDelay: `${index * 60}ms` }}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 <Card 
-                  className="group h-full bg-card/50 backdrop-blur-sm border-border/30 transition-all duration-500 cursor-pointer hover:-translate-y-3 relative overflow-hidden"
+                  className="group h-full bg-card/50 backdrop-blur-sm border-border/30 transition-all duration-500 ease-out cursor-pointer hover:-translate-y-2 relative overflow-hidden"
                   style={{
                     borderColor: isHovered ? `hsl(${colorVar} / 0.5)` : undefined,
                     boxShadow: isHovered ? `0 20px 60px -15px hsl(${colorVar} / 0.2), 0 0 30px -10px hsl(${colorVar} / 0.1)` : undefined,

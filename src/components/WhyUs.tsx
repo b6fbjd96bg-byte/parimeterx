@@ -29,7 +29,7 @@ const WhyUs = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div 
             ref={textAnimation.ref}
-            className={`transition-all duration-700 ${textAnimation.isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}
+            className={`transition-all duration-800 ease-out ${textAnimation.isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-5"}`}
           >
             <span className="text-primary text-sm font-semibold tracking-widest uppercase mb-4 block">Why Choose Us</span>
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
@@ -66,10 +66,10 @@ const WhyUs = () => {
             {features.map((feature, index) => (
               <div 
                 key={index} 
-                className={`group p-5 rounded-xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden ${
-                  featuresAnimation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                className={`group p-5 rounded-xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-600 ease-out hover:-translate-y-1.5 relative overflow-hidden ${
+                  featuresAnimation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
+                style={{ transitionDelay: `${index * 80}ms` }}
               >
                 {/* Hover glow */}
                 <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-primary/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

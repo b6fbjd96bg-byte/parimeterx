@@ -33,14 +33,14 @@ const FinalCTA = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div 
           ref={animation.ref}
-          className={`max-w-3xl mx-auto text-center transition-all duration-700 ${
-            animation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          className={`max-w-3xl mx-auto text-center transition-all duration-800 ease-out ${
+            animation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
           }`}
         >
-          {/* Shield icon with ripple */}
+          {/* Shield icon with subtle glow */}
           <div className="relative w-20 h-20 mx-auto mb-8">
-            <div className="absolute inset-0 rounded-2xl bg-primary/20 animate-ping" style={{ animationDuration: "2s" }} />
-            <div className="relative w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center animate-pulse-glow border border-primary/30">
+            <div className="absolute inset-0 rounded-2xl bg-primary/10 blur-xl animate-pulse-glow" />
+            <div className="relative w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/30">
               <Shield className="w-10 h-10 text-primary" />
             </div>
           </div>
