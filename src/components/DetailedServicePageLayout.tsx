@@ -300,7 +300,7 @@ const DetailedServicePageLayout = ({
       <main>
         {/* Hero Section */}
          <section className="pt-32 pb-16 relative overflow-hidden animate-fade-in">
-           <div className="absolute inset-0 gradient-radial opacity-30 animate-pulse" style={{ animationDuration: '4s' }} />
+           <div className="absolute inset-0 gradient-radial opacity-20" />
            <div 
              className="absolute inset-0 opacity-[0.03]"
              style={{
