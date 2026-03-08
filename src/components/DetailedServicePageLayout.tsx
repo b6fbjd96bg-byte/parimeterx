@@ -429,7 +429,7 @@ const DetailedServicePageLayout = ({
 
         {/* Approach Section */}
          <section className="py-16 relative border-t border-border/30 overflow-hidden">
-           <div className={`absolute top-0 left-0 h-[2px] bg-gradient-to-r from-transparent via-[hsl(var(--${colorVar}))] to-transparent animate-scan`} style={{ width: '100%' }} />
+           <div className={`absolute top-0 left-0 h-px bg-gradient-to-r from-transparent via-[hsl(var(--${colorVar})/0.4)] to-transparent w-full`} />
           <div className="container mx-auto px-4">
              <div className="max-w-3xl mx-auto text-center mb-12 animate-fade-in">
               <h2 className="text-2xl md:text-3xl font-bold mb-4">
