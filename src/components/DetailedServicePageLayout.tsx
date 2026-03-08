@@ -305,6 +305,8 @@ const DetailedServicePageLayout = ({
       <main>
         {/* Hero Section */}
          <section className="pt-32 pb-16 relative overflow-hidden animate-fade-in">
+           {/* Themed gradient background */}
+           <div className={`absolute inset-0 bg-gradient-to-br from-[hsl(var(--${colorVar})/0.06)] via-transparent to-[hsl(var(--${colorVar})/0.03)]`} />
            <div className="absolute inset-0 gradient-radial opacity-20" />
            <div 
              className="absolute inset-0 opacity-[0.03]"
@@ -313,8 +315,9 @@ const DetailedServicePageLayout = ({
                backgroundSize: '40px 40px',
              }}
            />
-            <div className={`absolute top-20 left-10 w-64 h-64 rounded-full bg-[hsl(var(--${colorVar})/0.08)] blur-[80px]`} />
-            <div className={`absolute bottom-20 right-10 w-48 h-48 rounded-full bg-[hsl(var(--${colorVar})/0.08)] blur-[60px]`} />
+            <div className={`absolute top-20 left-10 w-72 h-72 rounded-full bg-[hsl(var(--${colorVar})/0.1)] blur-[100px] animate-pulse-glow`} />
+            <div className={`absolute bottom-20 right-10 w-56 h-56 rounded-full bg-[hsl(var(--${colorVar})/0.08)] blur-[80px]`} />
+            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[hsl(var(--${colorVar})/0.04)] blur-[120px]`} />
           <div className="container mx-auto px-4 relative z-10">
             <Link to="/#services">
               <Button variant="ghost" className="mb-8 text-muted-foreground hover:text-primary">
