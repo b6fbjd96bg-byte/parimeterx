@@ -166,7 +166,7 @@ const AISecurityAssessment = () => {
       ctaTitle="Secure Your AI Before Attackers Exploit It"
       ctaDescription="AI systems face novel threats that traditional security can't detect. ParameterX provides specialized AI security testing to protect your AI investment and your users' data."
       ctaButtonText="Start AI Assessment"
-      accentColor="purple"
+      accentColor="violet"
     />
   );
 };

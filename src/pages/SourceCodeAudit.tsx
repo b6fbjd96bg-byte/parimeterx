@@ -167,7 +167,7 @@ const SourceCodeAudit = () => {
       ctaTitle="Secure Your Code Before Deployment"
       ctaDescription="Vulnerabilities in source code are 10x cheaper to fix during development than after a breach. Invest in code security now with ParameterX."
       ctaButtonText="Start Code Audit"
-      accentColor="purple"
+      accentColor="teal"
     />
   );
 };
