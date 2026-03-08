@@ -575,10 +575,10 @@ const DetailedServicePageLayout = ({
                 {deliverables.map((item, index) => (
                    <Card 
                      key={index} 
-                     className={`bg-card/50 backdrop-blur-sm border-border/50 hover:border-[hsl(var(--${colorVar})/0.5)] hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 ${
-                       deliverablesAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
-                     }`}
-                     style={{ transitionDelay: `${index * 60}ms` }}
+                      className={`bg-card/50 border-border/50 hover:border-[hsl(var(--${colorVar})/0.5)] hover:scale-[1.01] transition-all duration-300 ${
+                        deliverablesAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+                      }`}
+                      style={{ transitionDelay: `${index * 40}ms` }}
                    >
                     <CardContent className="p-4 flex items-center gap-3">
                       <CheckCircle className={`h-5 w-5 text-[hsl(var(--${colorVar}))] flex-shrink-0`} />
