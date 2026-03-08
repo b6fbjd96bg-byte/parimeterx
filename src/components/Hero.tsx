@@ -32,14 +32,14 @@ const StatCard = ({ endValue, suffix, label, decimals, isVisible, delay }: {
 
   return (
     <div
-      className={`group relative p-5 rounded-xl border border-primary/20 bg-card/30 backdrop-blur-md hover:border-primary/60 transition-all duration-700 ease-out overflow-hidden hover:-translate-y-1 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-      }`}
-      style={{ transitionDelay: `${delay}ms` }}
+      className={`group relative p-5 rounded-xl border bg-card/30 backdrop-blur-md hover:border-primary/60 transition-all duration-700 ease-out overflow-hidden hover:-translate-y-1 ${
+        isVisible ? "opacity-100 translate-y-0 border-primary/20" : "opacity-0 translate-y-4 border-primary/20"
+      } ${isVisible ? "animate-border-pulse" : ""}`}
+      style={{ transitionDelay: `${delay}ms`, animationDelay: `${delay + 300}ms` }}
     >
       {/* Glow border effect */}
-      <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ boxShadow: 'inset 0 0 20px hsl(var(--primary) / 0.15), 0 0 30px hsl(var(--primary) / 0.1)' }} />
+      <div className={`absolute inset-0 rounded-xl transition-opacity duration-500 ${isVisible ? "animate-glow-pulse" : "opacity-0"} group-hover:opacity-100`}
+        style={{ boxShadow: 'inset 0 0 20px hsl(var(--primary) / 0.15), 0 0 30px hsl(var(--primary) / 0.1)', animationDelay: `${delay + 300}ms` }} />
       
       {/* Top accent line */}
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
@@ -216,6 +216,24 @@ const Hero = () => {
         }
         .animate-gradient-shift {
           animation: gradient-shift 4s ease-in-out infinite;
+        }
+        @keyframes border-pulse {
+          0% { border-color: hsl(var(--primary) / 0.2); }
+          30% { border-color: hsl(var(--primary) / 0.7); }
+          60% { border-color: hsl(var(--primary) / 0.3); }
+          100% { border-color: hsl(var(--primary) / 0.2); }
+        }
+        .animate-border-pulse {
+          animation: border-pulse 1.5s ease-out forwards;
+        }
+        @keyframes glow-pulse {
+          0% { opacity: 0; }
+          30% { opacity: 0.8; }
+          60% { opacity: 0.2; }
+          100% { opacity: 0; }
+        }
+        .animate-glow-pulse {
+          animation: glow-pulse 1.5s ease-out forwards;
         }
       `}</style>
     </section>
