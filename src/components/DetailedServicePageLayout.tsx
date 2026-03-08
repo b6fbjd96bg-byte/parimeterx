@@ -308,8 +308,8 @@ const DetailedServicePageLayout = ({
                backgroundSize: '40px 40px',
              }}
            />
-           <div className={`absolute top-20 left-10 w-64 h-64 rounded-full bg-[hsl(var(--${colorVar})/0.1)] blur-[80px] animate-float`} />
-           <div className={`absolute bottom-20 right-10 w-48 h-48 rounded-full bg-[hsl(var(--${colorVar})/0.1)] blur-[60px] animate-float`} style={{ animationDelay: '2s' }} />
+            <div className={`absolute top-20 left-10 w-64 h-64 rounded-full bg-[hsl(var(--${colorVar})/0.08)] blur-[80px]`} />
+            <div className={`absolute bottom-20 right-10 w-48 h-48 rounded-full bg-[hsl(var(--${colorVar})/0.08)] blur-[60px]`} />
           <div className="container mx-auto px-4 relative z-10">
             <Link to="/#services">
               <Button variant="ghost" className="mb-8 text-muted-foreground hover:text-primary">
