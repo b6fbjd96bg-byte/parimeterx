@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import XShieldAnimation from "./XShieldAnimation";
 import TypingText from "./TypingText";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const Hero = () => {
   const statsAnimation = useScrollAnimation({ threshold: 0.3 });
