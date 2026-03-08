@@ -217,6 +217,24 @@ const Hero = () => {
         .animate-gradient-shift {
           animation: gradient-shift 4s ease-in-out infinite;
         }
+        @keyframes border-pulse {
+          0% { border-color: hsl(var(--primary) / 0.2); }
+          30% { border-color: hsl(var(--primary) / 0.7); }
+          60% { border-color: hsl(var(--primary) / 0.3); }
+          100% { border-color: hsl(var(--primary) / 0.2); }
+        }
+        .animate-border-pulse {
+          animation: border-pulse 1.5s ease-out forwards;
+        }
+        @keyframes glow-pulse {
+          0% { opacity: 0; }
+          30% { opacity: 0.8; }
+          60% { opacity: 0.2; }
+          100% { opacity: 0; }
+        }
+        .animate-glow-pulse {
+          animation: glow-pulse 1.5s ease-out forwards;
+        }
       `}</style>
     </section>
   );
