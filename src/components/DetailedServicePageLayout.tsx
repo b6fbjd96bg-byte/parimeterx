@@ -173,20 +173,17 @@ const ProcessStepComponent = ({
       }`}
     >
       {/* Bug killing animation */}
-      <div className={`absolute -top-4 -right-4 z-20 transition-all duration-500 ${
+      <div className={`absolute -top-4 -right-4 z-20 transition-all duration-500 ease-out will-change-transform ${
         isVisible && !isBugKilled ? "opacity-100 scale-100" : "opacity-0 scale-0"
       }`}>
-        <Bug className="h-8 w-8 text-[hsl(var(--color-red-team))] animate-pulse" />
+        <Bug className="h-8 w-8 text-[hsl(var(--color-red-team))]" />
       </div>
       
       {/* Squash effect */}
-      <div className={`absolute -top-2 -right-2 z-30 transition-all duration-300 ${
+      <div className={`absolute -top-2 -right-2 z-30 transition-all duration-500 ease-out will-change-transform ${
         isBugKilled ? "opacity-100 scale-100" : "opacity-0 scale-0"
       }`}>
-        <div className="relative">
-          <div className="absolute inset-0 bg-[hsl(var(--color-green-secure))] rounded-full animate-ping opacity-75 h-6 w-6" />
-          <CheckCircle className="h-6 w-6 text-[hsl(var(--color-green-secure))] relative z-10" />
-        </div>
+        <CheckCircle className="h-6 w-6 text-[hsl(var(--color-green-secure))]" />
       </div>
 
       <Card className={`bg-card/50 backdrop-blur-sm border transition-all duration-500 ${
