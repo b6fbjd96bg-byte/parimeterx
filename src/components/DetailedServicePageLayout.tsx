@@ -406,10 +406,10 @@ const DetailedServicePageLayout = ({
                   return (
                     <div
                       key={index}
-                      className={`group relative p-6 rounded-xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-[hsl(var(--${colorVar})/0.5)] transition-all duration-500 ease-out hover:-translate-y-1.5 overflow-hidden ${
-                        featuresAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
+                      className={`group relative p-6 rounded-xl bg-card/50 border border-border/50 hover:border-[hsl(var(--${colorVar})/0.5)] transition-all duration-500 ease-out hover:-translate-y-1 will-change-[transform,opacity] ${
+                        featuresAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
                       }`}
-                      style={{ transitionDelay: `${index * 80}ms` }}
+                      style={{ transitionDelay: `${index * 60}ms` }}
                     >
                       <div className={`absolute -top-10 -right-10 w-24 h-24 rounded-full bg-[hsl(var(--${colorVar})/0.08)] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                       <div className="relative z-10">
