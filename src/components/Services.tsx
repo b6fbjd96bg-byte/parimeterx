@@ -55,8 +55,8 @@ const Services = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div 
           ref={headerAnimation.ref}
-          className={`text-center max-w-2xl mx-auto mb-16 transition-all duration-700 ${
-            headerAnimation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          className={`text-center max-w-2xl mx-auto mb-16 transition-all duration-800 ease-out ${
+            headerAnimation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
           }`}
         >
           <span className="text-primary text-sm font-semibold tracking-widest uppercase mb-4 block">Our Services</span>
