@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Shield, Target, Cloud, Network, Code, Cpu, Brain, Building2, ArrowRight, Boxes } from "lucide-react";
+import { ScanEye, Crosshair, CloudCog, Router, Terminal, CircuitBoard, BrainCircuit, Castle, ArrowRight, Blocks } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useParallax } from "@/hooks/useParallax";
