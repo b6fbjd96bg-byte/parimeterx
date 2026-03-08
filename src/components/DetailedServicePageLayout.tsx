@@ -684,10 +684,10 @@ const DetailedServicePageLayout = ({
                 return (
                    <div 
                      key={index} 
-                     className={`text-center group transition-all duration-700 ease-out ${
-                       statsAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
-                     }`}
-                     style={{ transitionDelay: `${index * 100}ms` }}
+                      className={`text-center group transition-all duration-500 ease-out ${
+                        statsAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+                      }`}
+                      style={{ transitionDelay: `${index * 80}ms` }}
                    >
                      <div className={`h-12 w-12 rounded-lg bg-[hsl(var(--${colorVar})/0.1)] flex items-center justify-center mx-auto mb-3 group-hover:scale-110 group-hover:shadow-[0_0_20px_hsl(var(--${colorVar})/0.3)] transition-all duration-300`}>
                       <Icon className={`h-6 w-6 text-[hsl(var(--${colorVar}))]`} />
