@@ -91,7 +91,7 @@ const Services = () => {
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 <Card 
-                  className="group h-full bg-card/50 backdrop-blur-sm border-border/30 transition-all duration-500 cursor-pointer hover:-translate-y-3 relative overflow-hidden"
+                  className="group h-full bg-card/50 backdrop-blur-sm border-border/30 transition-all duration-500 ease-out cursor-pointer hover:-translate-y-2 relative overflow-hidden"
                   style={{
                     borderColor: isHovered ? `hsl(${colorVar} / 0.5)` : undefined,
                     boxShadow: isHovered ? `0 20px 60px -15px hsl(${colorVar} / 0.2), 0 0 30px -10px hsl(${colorVar} / 0.1)` : undefined,

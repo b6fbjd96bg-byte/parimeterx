@@ -103,8 +103,8 @@ const Contact = () => {
           {/* Right Column - Form */}
           <div 
             ref={rightAnimation.ref}
-            className={`bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 transition-all duration-700 delay-200 ${
-              rightAnimation.isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+            className={`bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 transition-all duration-800 ease-out delay-200 ${
+              rightAnimation.isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-5"
             }`}
           >
             {submitted ? (

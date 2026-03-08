@@ -54,10 +54,10 @@ const TrustMetrics = () => {
           {metrics.map((metric, index) => (
             <div 
               key={index}
-              className={`relative group p-6 md:p-8 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/50 transition-all duration-500 text-center hover:-translate-y-3 overflow-hidden ${
-                animation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              className={`relative group p-6 md:p-8 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/50 transition-all duration-600 ease-out text-center hover:-translate-y-1.5 overflow-hidden ${
+                animation.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}
-              style={{ transitionDelay: `${index * 150}ms` }}
+              style={{ transitionDelay: `${index * 120}ms` }}
             >
               {/* Top accent line */}
               <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
