@@ -58,6 +58,11 @@
     --color-blue-ai: 210 100% 56%;
     --color-green-secure: 142 70% 45%;
     --color-purple-blockchain: 270 70% 60%;
+    --color-amber-enterprise: 38 92% 50%;
+    --color-sky-cloud: 198 93% 60%;
+    --color-teal-code: 172 66% 50%;
+    --color-orange-iot: 24 95% 53%;
+    --color-violet-ai: 258 90% 66%;
   }
 
   .dark {
@@ -327,5 +332,25 @@
   
   .bg-purple-blockchain {
     background-color: hsl(var(--color-purple-blockchain));
+  }
+
+  .text-glow-amber {
+    text-shadow: 0 0 20px hsl(var(--color-amber-enterprise) / 0.5);
+  }
+
+  .text-glow-sky {
+    text-shadow: 0 0 20px hsl(var(--color-sky-cloud) / 0.5);
+  }
+
+  .text-glow-teal {
+    text-shadow: 0 0 20px hsl(var(--color-teal-code) / 0.5);
+  }
+
+  .text-glow-orange {
+    text-shadow: 0 0 20px hsl(var(--color-orange-iot) / 0.5);
+  }
+
+  .text-glow-violet {
+    text-shadow: 0 0 20px hsl(var(--color-violet-ai) / 0.5);
   }
 }

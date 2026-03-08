@@ -20,7 +20,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
-type AccentColor = "red" | "blue" | "green" | "purple";
+type AccentColor = "red" | "blue" | "green" | "purple" | "amber" | "sky" | "teal" | "orange" | "violet";
 
 interface ProcessStep {
   icon: LucideIcon;
@@ -111,6 +111,11 @@ const accentColors: Record<AccentColor, string> = {
   blue: "color-blue-ai",
   green: "color-green-secure",
   purple: "color-purple-blockchain",
+  amber: "color-amber-enterprise",
+  sky: "color-sky-cloud",
+  teal: "color-teal-code",
+  orange: "color-orange-iot",
+  violet: "color-violet-ai",
 };
 
 // Animated counter for stats — uses rAF for smooth 60fps
@@ -300,6 +305,8 @@ const DetailedServicePageLayout = ({
       <main>
         {/* Hero Section */}
          <section className="pt-32 pb-16 relative overflow-hidden animate-fade-in">
+           {/* Themed gradient background */}
+           <div className={`absolute inset-0 bg-gradient-to-br from-[hsl(var(--${colorVar})/0.06)] via-transparent to-[hsl(var(--${colorVar})/0.03)]`} />
            <div className="absolute inset-0 gradient-radial opacity-20" />
            <div 
              className="absolute inset-0 opacity-[0.03]"
@@ -308,8 +315,9 @@ const DetailedServicePageLayout = ({
                backgroundSize: '40px 40px',
              }}
            />
-            <div className={`absolute top-20 left-10 w-64 h-64 rounded-full bg-[hsl(var(--${colorVar})/0.08)] blur-[80px]`} />
-            <div className={`absolute bottom-20 right-10 w-48 h-48 rounded-full bg-[hsl(var(--${colorVar})/0.08)] blur-[60px]`} />
+            <div className={`absolute top-20 left-10 w-72 h-72 rounded-full bg-[hsl(var(--${colorVar})/0.1)] blur-[100px] animate-pulse-glow`} />
+            <div className={`absolute bottom-20 right-10 w-56 h-56 rounded-full bg-[hsl(var(--${colorVar})/0.08)] blur-[80px]`} />
+            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[hsl(var(--${colorVar})/0.04)] blur-[120px]`} />
           <div className="container mx-auto px-4 relative z-10">
             <Link to="/#services">
               <Button variant="ghost" className="mb-8 text-muted-foreground hover:text-primary">
@@ -706,9 +714,10 @@ const DetailedServicePageLayout = ({
         {/* CTA Section */}
         <section className="py-16 relative">
           <div className="container mx-auto px-4">
-            <div className={`bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 md:p-12 text-center relative overflow-hidden`}>
+            <div className={`bg-gradient-to-br from-[hsl(var(--${colorVar})/0.08)] via-card/50 to-card/30 backdrop-blur-sm border border-[hsl(var(--${colorVar})/0.2)] rounded-2xl p-8 md:p-12 text-center relative overflow-hidden`}>
               {/* Background glow */}
-              <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-[hsl(var(--${colorVar})/0.05)] blur-[100px]`} />
+              <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[hsl(var(--${colorVar})/0.08)] blur-[120px]`} />
+              <div className={`absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[hsl(var(--${colorVar})/0.5)] to-transparent`} />
               
               <div className="relative z-10">
                 <div className={`h-16 w-16 rounded-xl bg-[hsl(var(--${colorVar})/0.1)] flex items-center justify-center mx-auto mb-6`}>

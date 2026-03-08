@@ -6,7 +6,7 @@ const SourceCodeAudit = () => {
   return (
     <DetailedServicePageLayout
       heroAnimation={<SourceCodeAuditAnimation />}
-      icon={<Code className="h-8 w-8 text-[hsl(var(--color-purple-blockchain))]" />}
+      icon={<Code className="h-8 w-8 text-[hsl(var(--color-teal-code))]" />}
       title="Ensure Code Security From the Source"
       subtitle="Source Code Security Audit"
       tagline="Security vulnerabilities in source code are the root cause of most application breaches. Finding them before deployment is critical."
@@ -167,7 +167,7 @@ const SourceCodeAudit = () => {
       ctaTitle="Secure Your Code Before Deployment"
       ctaDescription="Vulnerabilities in source code are 10x cheaper to fix during development than after a breach. Invest in code security now with ParameterX."
       ctaButtonText="Start Code Audit"
-      accentColor="purple"
+      accentColor="teal"
     />
   );
 };
