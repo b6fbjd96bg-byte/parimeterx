@@ -1,4 +1,4 @@
-import { Boxes, Shield, Lock, Award, FileCheck, Search, Zap, AlertTriangle, Eye, Database, Coins } from "lucide-react";
+import { Boxes, Shield, Lock, Award, FileCheck, Search, Zap, AlertTriangle, Eye, Database, Coins, Code, GitBranch, Layers, ShieldCheck } from "lucide-react";
 import DetailedServicePageLayout from "@/components/DetailedServicePageLayout";
 import BlockchainSecurityAnimation from "@/components/animations/BlockchainSecurityAnimation";
 
@@ -10,12 +10,41 @@ const BlockchainSecurity = () => {
       subtitle="Smart Contract Auditing"
       tagline="Secure decentralized systems where a single bug can cost millions."
       description="ParameterX provides end-to-end blockchain security services for Web3 startups, DeFi protocols, NFT platforms, exchanges, and enterprises building on blockchain. Our security approach combines manual expert auditing, red-team attack simulation, and business-logic analysis to protect both code and capital."
-      extendedDescription="In blockchain systems, code is immutable and transactions are irreversible. A single vulnerability can lead to permanent fund loss, protocol collapse, or governance takeover. Traditional security testing is not enough — blockchain security requires deep understanding of smart contracts, cryptography, token economics, and adversarial financial attacks."
+      extendedDescription="In blockchain systems, code is immutable and transactions are irreversible. A single vulnerability can lead to permanent fund loss, protocol collapse, or governance takeover. ParameterX has audited 500+ smart contracts and protected over $2B in total value locked—our audits are trusted by investors, users, and the Web3 community."
       trustIndicators={[
         { icon: Shield, label: "Smart Contract Experts" },
         { icon: Lock, label: "DeFi Protocol Security" },
         { icon: Award, label: "Web3 Certified" },
         { icon: FileCheck, label: "Audit Reports" },
+      ]}
+      keyFeatures={[
+        { icon: Code, title: "Multi-Chain Expertise", description: "We audit Solidity, Rust (Solana/Near), Move (Aptos/Sui), Vyper, and Cairo smart contracts across all major chains." },
+        { icon: Zap, title: "Flash Loan Simulation", description: "We simulate complex DeFi attacks including flash loans, oracle manipulation, and MEV exploitation scenarios." },
+        { icon: GitBranch, title: "Formal Verification", description: "Mathematical proofs for critical contract functions ensure correctness beyond what testing alone can achieve." },
+        { icon: Layers, title: "Cross-Chain Security", description: "We assess bridge protocols, cross-chain messaging, and multi-chain deployment risks." },
+        { icon: ShieldCheck, title: "Public Audit Reports", description: "Investor-ready audit reports that build trust and transparency with your community." },
+        { icon: Coins, title: "Tokenomics Analysis", description: "We analyze token economics, vesting schedules, and governance models for economic attack vectors." },
+      ]}
+      technologies={[
+        { name: "Slither", category: "Static Analysis" },
+        { name: "Mythril", category: "Static Analysis" },
+        { name: "Securify", category: "Static Analysis" },
+        { name: "Echidna", category: "Fuzzing" },
+        { name: "Foundry", category: "Fuzzing" },
+        { name: "Halmos", category: "Formal Verification" },
+        { name: "Certora", category: "Formal Verification" },
+        { name: "Hardhat", category: "Development" },
+        { name: "Foundry", category: "Development" },
+        { name: "Tenderly", category: "Simulation" },
+        { name: "Custom DeFi Simulator", category: "Proprietary" },
+      ]}
+      companyHighlights={[
+        "500+ smart contracts audited with over $2B in total value locked protected across major chains",
+        "Zero exploited contracts post-audit—our track record speaks for itself",
+        "ParameterX auditors have discovered and reported critical vulnerabilities in top DeFi protocols",
+        "We provide formal verification for critical contract functions—mathematical proof of correctness",
+        "Public audit reports available for community transparency and investor confidence",
+        "Post-audit monitoring and incident response support for deployed protocols",
       ]}
       approachTitle="Attack-Driven Blockchain Security"
       approachDescription="We combine manual expert auditing with automated tools and economic attack simulations to identify vulnerabilities that traditional scanners miss. Our team thinks like attackers to protect your protocol and users' funds."
@@ -69,7 +98,7 @@ const BlockchainSecurity = () => {
           description: "We run multiple automated tools and custom analyzers on your codebase.",
           details: [
             "Static analysis with Slither, Mythril, Securify",
-            "Formal verification where applicable",
+            "Fuzz testing with Echidna and Foundry",
             "Gas optimization analysis",
             "Known vulnerability pattern matching",
           ],
@@ -107,7 +136,7 @@ const BlockchainSecurity = () => {
             "Severity-prioritized remediation guidance",
             "Proof-of-concept exploit demonstrations",
             "Developer support for complex fixes",
-            "Optional re-audit to confirm resolution",
+            "Full re-audit to confirm resolution",
           ],
           result: "Verified secure protocol ready for deployment",
         },
@@ -123,16 +152,16 @@ const BlockchainSecurity = () => {
         "Security certification badge",
         "Continuous monitoring setup",
       ]}
-      deliverablesNote="All reports are investor-ready and can be published for transparency."
+      deliverablesNote="All reports are investor-ready and can be published for community transparency."
       whyTrustUs={[
-        "Expert-driven manual audits (not tool-only scans)",
-        "Red-team mindset focused on real attacker behavior",
-        "Strong background in business-logic and API security",
-        "Clear, actionable reports for developers and investors",
-        "Security designed for both startups and enterprises",
-        "Deep understanding of DeFi protocols and token economics",
-        "Experience with cross-chain bridges and L2 solutions",
-        "Post-audit support and incident response",
+        "Expert-driven manual audits with zero exploited contracts post-audit track record",
+        "Red-team mindset focused on real attacker behavior and economic attack vectors",
+        "Deep understanding of DeFi protocols, token economics, and governance models",
+        "Clear, actionable reports for developers, investors, and the community",
+        "Multi-chain expertise: Solidity, Rust, Move, Vyper, and Cairo",
+        "Formal verification capabilities for mathematically proven contract correctness",
+        "Experience with cross-chain bridges, L2 solutions, and emerging blockchain architectures",
+        "Post-audit monitoring and incident response for deployed protocols",
       ]}
       stats={[
         { value: "500+", label: "Smart Contracts Audited" },
