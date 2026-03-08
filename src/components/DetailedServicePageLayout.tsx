@@ -113,7 +113,7 @@ const accentColors: Record<AccentColor, string> = {
   purple: "color-purple-blockchain",
 };
 
-// Animated counter for stats
+// Animated counter for stats — uses rAF for smooth 60fps
 const AnimatedStatCounter = ({ value, isVisible }: { value: string; isVisible: boolean }) => {
   const [displayValue, setDisplayValue] = useState("0");
   const hasAnimated = useRef(false);
@@ -126,20 +126,24 @@ const AnimatedStatCounter = ({ value, isVisible }: { value: string; isVisible: b
       const target = parseFloat(numericMatch[1]);
       const suffix = value.replace(numericMatch[1], "");
       const isFloat = value.includes(".");
-      const duration = 1800;
-      const steps = 50;
-      const increment = target / steps;
-      let current = 0;
-      const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
+      const duration = 1600;
+      let start: number | null = null;
+      let rafId: number;
+      const step = (timestamp: number) => {
+        if (!start) start = timestamp;
+        const progress = Math.min((timestamp - start) / duration, 1);
+        // ease-out cubic for smooth deceleration
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = eased * target;
+        if (progress >= 1) {
           setDisplayValue(value);
-          clearInterval(timer);
         } else {
           setDisplayValue((isFloat ? current.toFixed(1) : Math.floor(current).toString()) + suffix);
+          rafId = requestAnimationFrame(step);
         }
-      }, duration / steps);
-      return () => clearInterval(timer);
+      };
+      rafId = requestAnimationFrame(step);
+      return () => cancelAnimationFrame(rafId);
     }
   }, [isVisible, value]);
 
