@@ -564,7 +564,7 @@ const DetailedServicePageLayout = ({
             <div className="max-w-4xl mx-auto">
                <div 
                  ref={deliverablesAnim.ref}
-                 className={`text-center mb-12 transition-all duration-800 ease-out ${deliverablesAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+                 className={`text-center mb-12 transition-all duration-700 ease-out ${deliverablesAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}
                >
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">
                   What You <span className={`text-[hsl(var(--${colorVar}))]`}>Receive</span>
