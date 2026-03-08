@@ -124,7 +124,7 @@ const Hero = () => {
         {/* Stats Section */}
         <div
           ref={statsAnimation.ref}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+          className="relative z-20 mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
             { value: "700+", label: "Security Assessments" },
             { value: "99.9%", label: "Client Satisfaction" },
