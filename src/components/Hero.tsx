@@ -4,7 +4,64 @@ import { Link } from "react-router-dom";
 import XShieldAnimation from "./XShieldAnimation";
 import TypingText from "./TypingText";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+
+const StatCard = ({ endValue, suffix, label, decimals, isVisible, delay }: {
+  endValue: number; suffix: string; label: string; decimals: number; isVisible: boolean; delay: number;
+}) => {
+  const [count, setCount] = useState(0);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    if (isVisible && !hasAnimated.current) {
+      hasAnimated.current = true;
+      const duration = 2000;
+      const steps = 60;
+      const increment = endValue / steps;
+      let current = 0;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= endValue) { setCount(endValue); clearInterval(timer); }
+        else setCount(current);
+      }, duration / steps);
+      return () => clearInterval(timer);
+    }
+  }, [isVisible, endValue]);
+
+  const displayValue = decimals === 0 ? Math.floor(count) : count.toFixed(decimals);
+
+  return (
+    <div
+      className={`group relative p-5 rounded-xl border border-primary/20 bg-card/30 backdrop-blur-md hover:border-primary/60 transition-all duration-700 ease-out overflow-hidden hover:-translate-y-1 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+      }`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {/* Glow border effect */}
+      <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{ boxShadow: 'inset 0 0 20px hsl(var(--primary) / 0.15), 0 0 30px hsl(var(--primary) / 0.1)' }} />
+      
+      {/* Top accent line */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+      
+      {/* Corner accents */}
+      <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-primary/40 rounded-tl-lg group-hover:border-primary/80 transition-colors duration-300" />
+      <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-primary/40 rounded-tr-lg group-hover:border-primary/80 transition-colors duration-300" />
+      <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-primary/40 rounded-bl-lg group-hover:border-primary/80 transition-colors duration-300" />
+      <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-primary/40 rounded-br-lg group-hover:border-primary/80 transition-colors duration-300" />
+
+      {/* Background glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-primary/10 blur-[30px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+      <div className="relative z-10">
+        <div className="text-3xl md:text-4xl font-bold text-primary drop-shadow-[0_0_10px_hsl(var(--primary)/0.3)] group-hover:drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)] transition-all duration-300">
+          {displayValue}{suffix}
+        </div>
+        <div className="text-sm text-muted-foreground mt-1.5 tracking-wide">{label}</div>
+      </div>
+    </div>
+  );
+};
 
 const Hero = () => {
   const statsAnimation = useScrollAnimation({ threshold: 0.3 });
@@ -126,23 +183,21 @@ const Hero = () => {
           ref={statsAnimation.ref}
           className="relative z-20 mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
-            { value: "700+", label: "Security Assessments" },
-            { value: "99.9%", label: "Client Satisfaction" },
-            { value: "24/7", label: "Security Monitoring" },
-            { value: "100+", label: "Enterprise Clients" }
-          ].map((stat, index) =>
-            <div
+            { endValue: 700, suffix: "+", label: "Security Assessments", decimals: 0 },
+            { endValue: 99.9, suffix: "%", label: "Client Satisfaction", decimals: 1 },
+            { endValue: 24, suffix: "/7", label: "Security Monitoring", decimals: 0 },
+            { endValue: 100, suffix: "+", label: "Enterprise Clients", decimals: 0 }
+          ].map((stat, index) => (
+            <StatCard
               key={index}
-              className={`group p-4 rounded-xl border border-border/30 bg-card/20 backdrop-blur-sm hover:border-primary/40 hover:bg-primary/5 transition-all duration-700 ease-out ${
-                statsAnimation.isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
-              style={{ transitionDelay: `${index * 120}ms` }}>
-              <div className="text-2xl md:text-3xl font-bold text-primary group-hover:text-glow transition-all duration-300">{stat.value}</div>
-              <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
-            </div>
-          )}
+              endValue={stat.endValue}
+              suffix={stat.suffix}
+              label={stat.label}
+              decimals={stat.decimals}
+              isVisible={statsAnimation.isVisible}
+              delay={index * 120}
+            />
+          ))}
         </div>
       </div>
 
