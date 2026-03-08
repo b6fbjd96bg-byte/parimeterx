@@ -505,7 +505,7 @@ const DetailedServicePageLayout = ({
                 ).map(([category, tools], catIndex) => (
                   <div 
                     key={category} 
-                    className={`mb-6 transition-all duration-700 ease-out ${techAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+                    className={`mb-6 transition-all duration-500 ease-out ${techAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}
                     style={{ transitionDelay: `${catIndex * 100}ms` }}
                   >
                     <h3 className="text-sm font-semibold tracking-wider uppercase text-muted-foreground mb-3">{category}</h3>
