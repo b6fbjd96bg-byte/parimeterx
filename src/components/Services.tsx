@@ -81,12 +81,12 @@ const Services = () => {
               <Link 
                 key={index} 
                 to={service.link}
-                className={`transition-all duration-700 ${
+                className={`transition-all duration-700 ease-out ${
                   cardsAnimation.isVisible 
                     ? "opacity-100 translate-y-0" 
-                    : "opacity-0 translate-y-10"
+                    : "opacity-0 translate-y-5"
                 }`}
-                style={{ transitionDelay: `${index * 80}ms` }}
+                style={{ transitionDelay: `${index * 60}ms` }}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
