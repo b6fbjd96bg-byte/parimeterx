@@ -5,9 +5,10 @@ import XShieldAnimation from "./XShieldAnimation";
 import TypingText from "./TypingText";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useEffect, useState, useRef } from "react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
-const StatCard = ({ endValue, suffix, label, decimals, isVisible, delay }: {
-  endValue: number; suffix: string; label: string; decimals: number; isVisible: boolean; delay: number;
+const StatCard = ({ endValue, suffix, label, decimals, isVisible, delay, tooltip }: {
+  endValue: number; suffix: string; label: string; decimals: number; isVisible: boolean; delay: number; tooltip: string;
 }) => {
   const [count, setCount] = useState(0);
   const hasAnimated = useRef(false);
@@ -31,38 +32,44 @@ const StatCard = ({ endValue, suffix, label, decimals, isVisible, delay }: {
   const displayValue = decimals === 0 ? Math.floor(count) : count.toFixed(decimals);
 
   return (
-    <div
-      className={`group relative p-5 rounded-xl border bg-card/30 backdrop-blur-md hover:border-primary/60 transition-all duration-700 ease-out overflow-hidden hover:-translate-y-1 ${
-        isVisible ? "opacity-100 translate-y-0 border-primary/20" : "opacity-0 translate-y-4 border-primary/20"
-      } ${isVisible ? "animate-border-pulse" : ""}`}
-      style={{ transitionDelay: `${delay}ms`, animationDelay: `${delay + 300}ms` }}
-    >
-      {/* Glow border effect */}
-      <div className={`absolute inset-0 rounded-xl transition-opacity duration-500 ${isVisible ? "animate-glow-pulse" : "opacity-0"} group-hover:opacity-100`}
-        style={{ boxShadow: 'inset 0 0 20px hsl(var(--primary) / 0.15), 0 0 30px hsl(var(--primary) / 0.1)', animationDelay: `${delay + 300}ms` }} />
-      
-      {/* Top accent line */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-      
-      {/* Corner accents */}
-      <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-primary/40 rounded-tl-lg group-hover:border-primary/80 transition-colors duration-300" />
-      <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-primary/40 rounded-tr-lg group-hover:border-primary/80 transition-colors duration-300" />
-      <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-primary/40 rounded-bl-lg group-hover:border-primary/80 transition-colors duration-300" />
-      <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-primary/40 rounded-br-lg group-hover:border-primary/80 transition-colors duration-300" />
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <div
+          className={`group relative p-5 rounded-xl border bg-card/30 backdrop-blur-md hover:border-primary/60 transition-all duration-700 ease-out overflow-hidden hover:-translate-y-1 cursor-default ${
+            isVisible ? "opacity-100 translate-y-0 border-primary/20" : "opacity-0 translate-y-4 border-primary/20"
+          } ${isVisible ? "animate-border-pulse" : ""}`}
+          style={{ transitionDelay: `${delay}ms`, animationDelay: `${delay + 300}ms` }}
+        >
+          {/* Glow border effect */}
+          <div className={`absolute inset-0 rounded-xl transition-opacity duration-500 ${isVisible ? "animate-glow-pulse" : "opacity-0"} group-hover:opacity-100`}
+            style={{ boxShadow: 'inset 0 0 20px hsl(var(--primary) / 0.15), 0 0 30px hsl(var(--primary) / 0.1)', animationDelay: `${delay + 300}ms` }} />
+          
+          {/* Top accent line */}
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+          
+          {/* Corner accents */}
+          <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-primary/40 rounded-tl-lg group-hover:border-primary/80 transition-colors duration-300" />
+          <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-primary/40 rounded-tr-lg group-hover:border-primary/80 transition-colors duration-300" />
+          <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-primary/40 rounded-bl-lg group-hover:border-primary/80 transition-colors duration-300" />
+          <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-primary/40 rounded-br-lg group-hover:border-primary/80 transition-colors duration-300" />
 
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-primary/10 blur-[30px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          {/* Background glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-primary/10 blur-[30px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-      <div className="relative z-10">
-        <div className="text-3xl md:text-4xl font-bold text-primary drop-shadow-[0_0_10px_hsl(var(--primary)/0.3)] group-hover:drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)] transition-all duration-300">
-          {displayValue}{suffix}
+          <div className="relative z-10">
+            <div className="text-3xl md:text-4xl font-bold text-primary drop-shadow-[0_0_10px_hsl(var(--primary)/0.3)] group-hover:drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)] transition-all duration-300">
+              {displayValue}{suffix}
+            </div>
+            <div className="text-sm text-muted-foreground mt-1.5 tracking-wide">{label}</div>
+          </div>
         </div>
-        <div className="text-sm text-muted-foreground mt-1.5 tracking-wide">{label}</div>
-      </div>
-    </div>
+      </TooltipTrigger>
+      <TooltipContent side="bottom" className="max-w-[200px] text-center">
+        <p>{tooltip}</p>
+      </TooltipContent>
+    </Tooltip>
   );
 };
-
 const Hero = () => {
   const statsAnimation = useScrollAnimation({ threshold: 0.3 });
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -182,11 +189,12 @@ const Hero = () => {
         <div
           ref={statsAnimation.ref}
           className="relative z-20 mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+          <TooltipProvider delayDuration={200}>
           {[
-            { endValue: 700, suffix: "+", label: "Security Assessments", decimals: 0 },
-            { endValue: 99.9, suffix: "%", label: "Client Satisfaction", decimals: 1 },
-            { endValue: 24, suffix: "/7", label: "Security Monitoring", decimals: 0 },
-            { endValue: 100, suffix: "+", label: "Enterprise Clients", decimals: 0 }
+            { endValue: 700, suffix: "+", label: "Security Assessments", decimals: 0, tooltip: "Comprehensive assessments across web, mobile, cloud & network infrastructure" },
+            { endValue: 99.9, suffix: "%", label: "Client Satisfaction", decimals: 1, tooltip: "Based on post-engagement surveys from enterprise clients" },
+            { endValue: 24, suffix: "/7", label: "Security Monitoring", decimals: 0, tooltip: "Round-the-clock threat detection and incident response" },
+            { endValue: 100, suffix: "+", label: "Enterprise Clients", decimals: 0, tooltip: "Trusted by Fortune 500 companies and growing startups alike" }
           ].map((stat, index) => (
             <StatCard
               key={index}
@@ -196,12 +204,13 @@ const Hero = () => {
               decimals={stat.decimals}
               isVisible={statsAnimation.isVisible}
               delay={index * 120}
+              tooltip={stat.tooltip}
             />
           ))}
+          </TooltipProvider>
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-float">
         <ChevronDown className="w-6 h-6 text-primary/40" />
       </div>
