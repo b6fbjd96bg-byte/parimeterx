@@ -126,23 +126,21 @@ const Hero = () => {
           ref={statsAnimation.ref}
           className="relative z-20 mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
-            { value: "700+", label: "Security Assessments" },
-            { value: "99.9%", label: "Client Satisfaction" },
-            { value: "24/7", label: "Security Monitoring" },
-            { value: "100+", label: "Enterprise Clients" }
-          ].map((stat, index) =>
-            <div
+            { endValue: 700, suffix: "+", label: "Security Assessments", decimals: 0 },
+            { endValue: 99.9, suffix: "%", label: "Client Satisfaction", decimals: 1 },
+            { endValue: 24, suffix: "/7", label: "Security Monitoring", decimals: 0 },
+            { endValue: 100, suffix: "+", label: "Enterprise Clients", decimals: 0 }
+          ].map((stat, index) => (
+            <StatCard
               key={index}
-              className={`group p-4 rounded-xl border border-border/30 bg-card/20 backdrop-blur-sm hover:border-primary/40 hover:bg-primary/5 transition-all duration-700 ease-out ${
-                statsAnimation.isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
-              style={{ transitionDelay: `${index * 120}ms` }}>
-              <div className="text-2xl md:text-3xl font-bold text-primary group-hover:text-glow transition-all duration-300">{stat.value}</div>
-              <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
-            </div>
-          )}
+              endValue={stat.endValue}
+              suffix={stat.suffix}
+              label={stat.label}
+              decimals={stat.decimals}
+              isVisible={statsAnimation.isVisible}
+              delay={index * 120}
+            />
+          ))}
         </div>
       </div>
 
