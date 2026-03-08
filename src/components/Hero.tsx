@@ -124,7 +124,7 @@ const Hero = () => {
         {/* Stats Section */}
         <div
           ref={statsAnimation.ref}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+          className="relative z-20 mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
             { value: "700+", label: "Security Assessments" },
             { value: "99.9%", label: "Client Satisfaction" },
@@ -152,7 +152,7 @@ const Hero = () => {
       </div>
 
       {/* Bottom Gradient Fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background to-transparent z-10" />
 
       <style>{`
         @keyframes gradient-shift {
