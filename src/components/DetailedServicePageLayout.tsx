@@ -486,7 +486,7 @@ const DetailedServicePageLayout = ({
             <div className="container mx-auto px-4">
               <div 
                 ref={techAnim.ref}
-                className={`text-center mb-12 transition-all duration-800 ease-out ${techAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+                className={`text-center mb-12 transition-all duration-700 ease-out ${techAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}
               >
                 <span className={`text-sm font-semibold tracking-widest uppercase mb-4 block text-[hsl(var(--${colorVar}))]`}>Tools & Technologies</span>
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">
