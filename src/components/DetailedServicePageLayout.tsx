@@ -616,10 +616,10 @@ const DetailedServicePageLayout = ({
                 {whyTrustUs.map((reason, index) => (
                    <div 
                      key={index} 
-                     className={`flex items-start gap-3 bg-card/30 backdrop-blur-sm border border-border/50 rounded-lg p-4 hover:border-[hsl(var(--${colorVar})/0.5)] hover:scale-[1.02] transition-all duration-300 ${
-                       trustAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                     }`}
-                     style={{ transitionDelay: `${index * 80}ms` }}
+                      className={`flex items-start gap-3 bg-card/30 border border-border/50 rounded-lg p-4 hover:border-[hsl(var(--${colorVar})/0.5)] transition-all duration-300 ${
+                        trustAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+                      }`}
+                      style={{ transitionDelay: `${index * 60}ms` }}
                    >
                     <Shield className={`h-5 w-5 text-[hsl(var(--${colorVar}))] mt-0.5 flex-shrink-0`} />
                     <p className="text-muted-foreground">{reason}</p>
