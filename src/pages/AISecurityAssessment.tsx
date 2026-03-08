@@ -6,7 +6,7 @@ const AISecurityAssessment = () => {
   return (
     <DetailedServicePageLayout
       heroAnimation={<AISecurityAnimation />}
-      icon={<Brain className="h-8 w-8 text-[hsl(var(--color-purple-blockchain))]" />}
+      icon={<Brain className="h-8 w-8 text-[hsl(var(--color-violet-ai))]" />}
       title="Secure Your AI Systems Against Novel Attacks"
       subtitle="AI Security Assessment"
       tagline="Large Language Models and AI systems introduce entirely new attack surfaces—from prompt injection to model manipulation and data poisoning."
