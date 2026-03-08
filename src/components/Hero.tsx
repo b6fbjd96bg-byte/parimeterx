@@ -30,13 +30,9 @@ const StatCard = ({ endValue, suffix, label, decimals, isVisible, delay }: {
 
   const displayValue = decimals === 0 ? Math.floor(count) : count.toFixed(decimals);
 
-  return (
-    <div
-      className={`group relative p-5 rounded-xl border bg-card/30 backdrop-blur-md hover:border-primary/60 transition-all duration-700 ease-out overflow-hidden hover:-translate-y-1 ${
-        isVisible ? "opacity-100 translate-y-0 border-primary/20" : "opacity-0 translate-y-4 border-primary/20"
-      } ${isVisible ? "animate-border-pulse" : ""}`}
-      style={{ transitionDelay: `${delay}ms`, animationDelay: `${delay + 300}ms` }}
-    >
+const StatCard = ({ endValue, suffix, label, decimals, isVisible, delay, tooltip }: {
+  endValue: number; suffix: string; label: string; decimals: number; isVisible: boolean; delay: number; tooltip: string;
+}) => {
       {/* Glow border effect */}
       <div className={`absolute inset-0 rounded-xl transition-opacity duration-500 ${isVisible ? "animate-glow-pulse" : "opacity-0"} group-hover:opacity-100`}
         style={{ boxShadow: 'inset 0 0 20px hsl(var(--primary) / 0.15), 0 0 30px hsl(var(--primary) / 0.1)', animationDelay: `${delay + 300}ms` }} />
