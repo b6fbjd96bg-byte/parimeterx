@@ -11,11 +11,14 @@ import {
   Bug,
   Clock,
   Users,
-  LucideIcon
+  LucideIcon,
+  Sparkles,
+  ArrowRight
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 type AccentColor = "red" | "blue" | "green" | "purple";
 
@@ -30,6 +33,17 @@ interface ProcessStep {
 interface TrustIndicator {
   icon: LucideIcon;
   label: string;
+}
+
+interface KeyFeature {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
+
+interface Technology {
+  name: string;
+  category: string;
 }
 
 interface DetailedServicePageLayoutProps {
@@ -58,6 +72,9 @@ interface DetailedServicePageLayoutProps {
   ctaButtonText: string;
   accentColor?: AccentColor;
   heroAnimation?: ReactNode;
+  keyFeatures?: KeyFeature[];
+  technologies?: Technology[];
+  companyHighlights?: string[];
 }
 
 // Custom hook for individual step animation
@@ -96,6 +113,39 @@ const accentColors: Record<AccentColor, string> = {
   purple: "color-purple-blockchain",
 };
 
+// Animated counter for stats
+const AnimatedStatCounter = ({ value, isVisible }: { value: string; isVisible: boolean }) => {
+  const [displayValue, setDisplayValue] = useState("0");
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    if (isVisible && !hasAnimated.current) {
+      hasAnimated.current = true;
+      const numericMatch = value.match(/^([\d.]+)/);
+      if (!numericMatch) { setDisplayValue(value); return; }
+      const target = parseFloat(numericMatch[1]);
+      const suffix = value.replace(numericMatch[1], "");
+      const isFloat = value.includes(".");
+      const duration = 1800;
+      const steps = 50;
+      const increment = target / steps;
+      let current = 0;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          setDisplayValue(value);
+          clearInterval(timer);
+        } else {
+          setDisplayValue((isFloat ? current.toFixed(1) : Math.floor(current).toString()) + suffix);
+        }
+      }, duration / steps);
+      return () => clearInterval(timer);
+    }
+  }, [isVisible, value]);
+
+  return <span>{isVisible ? displayValue : "0"}</span>;
+};
+
 // Bug killing animation component for each step
 const ProcessStepComponent = ({ 
   step, 
@@ -114,8 +164,8 @@ const ProcessStepComponent = ({
   return (
     <div 
       ref={ref}
-      className={`relative transition-all duration-700 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      className={`relative transition-all duration-700 ease-out ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
       }`}
     >
       {/* Bug killing animation */}
@@ -231,8 +281,17 @@ const DetailedServicePageLayout = ({
   ctaButtonText,
   accentColor = "blue",
   heroAnimation,
+  keyFeatures,
+  technologies,
+  companyHighlights,
 }: DetailedServicePageLayoutProps) => {
   const colorVar = accentColors[accentColor];
+  const featuresAnim = useScrollAnimation({ threshold: 0.1 });
+  const techAnim = useScrollAnimation({ threshold: 0.1 });
+  const statsAnim = useScrollAnimation({ threshold: 0.2 });
+  const highlightsAnim = useScrollAnimation({ threshold: 0.2 });
+  const deliverablesAnim = useScrollAnimation({ threshold: 0.1 });
+  const trustAnim = useScrollAnimation({ threshold: 0.1 });
 
   return (
      <div className="min-h-screen bg-background overflow-hidden">
@@ -240,7 +299,6 @@ const DetailedServicePageLayout = ({
       <main>
         {/* Hero Section */}
          <section className="pt-32 pb-16 relative overflow-hidden animate-fade-in">
-           {/* Animated background elements */}
            <div className="absolute inset-0 gradient-radial opacity-30 animate-pulse" style={{ animationDuration: '4s' }} />
            <div 
              className="absolute inset-0 opacity-[0.03]"
@@ -249,7 +307,6 @@ const DetailedServicePageLayout = ({
                backgroundSize: '40px 40px',
              }}
            />
-           {/* Floating orbs */}
            <div className={`absolute top-20 left-10 w-64 h-64 rounded-full bg-[hsl(var(--${colorVar})/0.1)] blur-[80px] animate-float`} />
            <div className={`absolute bottom-20 right-10 w-48 h-48 rounded-full bg-[hsl(var(--${colorVar})/0.1)] blur-[60px] animate-float`} style={{ animationDelay: '2s' }} />
           <div className="container mx-auto px-4 relative z-10">
@@ -262,7 +319,7 @@ const DetailedServicePageLayout = ({
             
             <div className="grid lg:grid-cols-2 gap-12 items-center">
                <div className="max-w-2xl animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                 <div className={`h-16 w-16 rounded-xl bg-[hsl(var(--${colorVar})/0.1)] flex items-center justify-center mb-6 animate-pulse-glow shadow-[0_0_30px_hsl(var(--${colorVar})/0.3)] hover:scale-110 transition-transform duration-300`}>
+                 <div className={`h-16 w-16 rounded-xl bg-[hsl(var(--${colorVar})/0.1)] flex items-center justify-center mb-6 shadow-[0_0_30px_hsl(var(--${colorVar})/0.3)] hover:scale-110 transition-transform duration-300`}>
                   {icon}
                 </div>
                  <span className={`text-sm font-semibold tracking-widest uppercase mb-4 block text-[hsl(var(--${colorVar}))] animate-fade-in`} style={{ animationDelay: '0.3s' }}>
@@ -271,12 +328,17 @@ const DetailedServicePageLayout = ({
                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in" style={{ animationDelay: '0.4s' }}>
                   {title.split(' ').slice(0, -2).join(' ')} <span className={`text-[hsl(var(--${colorVar}))]`}>{title.split(' ').slice(-2).join(' ')}</span>
                 </h1>
-                 <p className="text-xl text-muted-foreground leading-relaxed mb-6 animate-fade-in" style={{ animationDelay: '0.5s' }}>
+                 <p className="text-xl text-muted-foreground leading-relaxed mb-4 animate-fade-in" style={{ animationDelay: '0.5s' }}>
                   {tagline}
                 </p>
-                 <p className="text-lg text-muted-foreground leading-relaxed mb-8 animate-fade-in" style={{ animationDelay: '0.6s' }}>
+                 <p className="text-lg text-muted-foreground leading-relaxed mb-4 animate-fade-in" style={{ animationDelay: '0.6s' }}>
                   {description}
                 </p>
+                {extendedDescription && (
+                  <p className="text-base text-muted-foreground/80 leading-relaxed mb-8 animate-fade-in" style={{ animationDelay: '0.65s' }}>
+                    {extendedDescription}
+                  </p>
+                )}
                 
                 {/* Trust Indicators */}
                  <div className="flex flex-wrap gap-4 animate-fade-in" style={{ animationDelay: '0.7s' }}>
@@ -284,12 +346,26 @@ const DetailedServicePageLayout = ({
                      <div 
                        key={index} 
                        className={`flex items-center gap-2 bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg px-4 py-2 hover:border-[hsl(var(--${colorVar})/0.5)] hover:scale-105 transition-all duration-300`}
-                       style={{ animationDelay: `${0.8 + index * 0.1}s` }}
                      >
                       <item.icon className={`h-4 w-4 text-[hsl(var(--${colorVar}))]`} />
                       <span className="text-sm text-muted-foreground">{item.label}</span>
                     </div>
                   ))}
+                </div>
+
+                {/* CTA in hero */}
+                <div className="flex flex-wrap gap-4 mt-8 animate-fade-in" style={{ animationDelay: '0.8s' }}>
+                  <Link to="/get-security-audit">
+                    <Button variant="cyber" size="lg" className="group">
+                      {ctaButtonText}
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
+                  <Link to="/#contact">
+                    <Button variant="cyberOutline" size="lg">
+                      Talk to an Expert
+                    </Button>
+                  </Link>
                 </div>
               </div>
               
@@ -305,9 +381,53 @@ const DetailedServicePageLayout = ({
           </div>
         </section>
 
+        {/* Key Features Section */}
+        {keyFeatures && keyFeatures.length > 0 && (
+          <section className="py-20 relative border-t border-border/30 overflow-hidden">
+            <div className={`absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[hsl(var(--${colorVar})/0.4)] to-transparent`} />
+            <div className="container mx-auto px-4">
+              <div 
+                ref={featuresAnim.ref}
+                className={`text-center mb-14 transition-all duration-800 ease-out ${featuresAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+              >
+                <span className={`text-sm font-semibold tracking-widest uppercase mb-4 block text-[hsl(var(--${colorVar}))]`}>Key Capabilities</span>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">
+                  What Sets Our <span className={`text-[hsl(var(--${colorVar}))]`}>Service Apart</span>
+                </h2>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  ParameterX delivers enterprise-grade security with a unique combination of AI-powered tools and expert-driven methodology.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {keyFeatures.map((feature, index) => {
+                  const FeatureIcon = feature.icon;
+                  return (
+                    <div
+                      key={index}
+                      className={`group relative p-6 rounded-xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-[hsl(var(--${colorVar})/0.5)] transition-all duration-500 ease-out hover:-translate-y-1.5 overflow-hidden ${
+                        featuresAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
+                      }`}
+                      style={{ transitionDelay: `${index * 80}ms` }}
+                    >
+                      <div className={`absolute -top-10 -right-10 w-24 h-24 rounded-full bg-[hsl(var(--${colorVar})/0.08)] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                      <div className="relative z-10">
+                        <div className={`h-12 w-12 rounded-lg bg-[hsl(var(--${colorVar})/0.1)] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-transparent group-hover:border-[hsl(var(--${colorVar})/0.2)]`}>
+                          <FeatureIcon className={`h-6 w-6 text-[hsl(var(--${colorVar}))]`} />
+                        </div>
+                        <h3 className="font-semibold text-lg mb-2 group-hover:text-[hsl(var(--${colorVar}))] transition-colors duration-300">{feature.title}</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Approach Section */}
          <section className="py-16 relative border-t border-border/30 overflow-hidden">
-           {/* Animated accent line */}
            <div className={`absolute top-0 left-0 h-[2px] bg-gradient-to-r from-transparent via-[hsl(var(--${colorVar}))] to-transparent animate-scan`} style={{ width: '100%' }} />
           <div className="container mx-auto px-4">
              <div className="max-w-3xl mx-auto text-center mb-12 animate-fade-in">
@@ -334,7 +454,7 @@ const DetailedServicePageLayout = ({
                 </p>
               </div>
               
-               <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:border-[hsl(var(--${colorVar})/0.3)] transition-colors duration-300 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+               <Card className={`bg-card/50 backdrop-blur-sm border-border/50 hover:border-[hsl(var(--${colorVar})/0.3)] transition-colors duration-300 animate-fade-in`} style={{ animationDelay: '0.2s' }}>
                 <CardContent className="p-8">
                   <h3 className="text-xl font-bold mb-6 flex items-center gap-3">
                     <Shield className={`h-5 w-5 text-[hsl(var(--${colorVar}))]`} />
@@ -358,6 +478,52 @@ const DetailedServicePageLayout = ({
             </div>
           </div>
         </section>
+
+        {/* Technologies Section */}
+        {technologies && technologies.length > 0 && (
+          <section className="py-16 relative border-t border-border/30 overflow-hidden">
+            <div className="container mx-auto px-4">
+              <div 
+                ref={techAnim.ref}
+                className={`text-center mb-12 transition-all duration-800 ease-out ${techAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+              >
+                <span className={`text-sm font-semibold tracking-widest uppercase mb-4 block text-[hsl(var(--${colorVar}))]`}>Tools & Technologies</span>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">
+                  Industry-Leading <span className={`text-[hsl(var(--${colorVar}))]`}>Security Stack</span>
+                </h2>
+              </div>
+
+              <div className="max-w-4xl mx-auto">
+                {/* Group by category */}
+                {Object.entries(
+                  technologies.reduce((acc, tech) => {
+                    if (!acc[tech.category]) acc[tech.category] = [];
+                    acc[tech.category].push(tech.name);
+                    return acc;
+                  }, {} as Record<string, string[]>)
+                ).map(([category, tools], catIndex) => (
+                  <div 
+                    key={category} 
+                    className={`mb-6 transition-all duration-700 ease-out ${techAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+                    style={{ transitionDelay: `${catIndex * 100}ms` }}
+                  >
+                    <h3 className="text-sm font-semibold tracking-wider uppercase text-muted-foreground mb-3">{category}</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {tools.map((tool, i) => (
+                        <span
+                          key={i}
+                          className={`px-3 py-1.5 rounded-md text-sm border border-border/50 bg-card/50 hover:border-[hsl(var(--${colorVar})/0.5)] hover:bg-[hsl(var(--${colorVar})/0.05)] transition-all duration-300`}
+                        >
+                          {tool}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Process Section with Bug Killing Animation */}
         <section className="py-16 relative border-t border-border/30">
@@ -395,18 +561,23 @@ const DetailedServicePageLayout = ({
            <div className={`absolute top-0 left-0 h-[2px] bg-gradient-to-r from-transparent via-[hsl(var(--${colorVar}))] to-transparent animate-scan`} style={{ width: '100%', animationDelay: '1s' }} />
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-               <div className="text-center mb-12 animate-fade-in">
+               <div 
+                 ref={deliverablesAnim.ref}
+                 className={`text-center mb-12 transition-all duration-800 ease-out ${deliverablesAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+               >
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">
                   What You <span className={`text-[hsl(var(--${colorVar}))]`}>Receive</span>
                 </h2>
               </div>
               
-               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
                 {deliverables.map((item, index) => (
                    <Card 
                      key={index} 
-                     className={`bg-card/50 backdrop-blur-sm border-border/50 hover:border-[hsl(var(--${colorVar})/0.5)] hover:scale-105 hover:-translate-y-1 transition-all duration-300`}
-                     style={{ animationDelay: `${0.3 + index * 0.05}s` }}
+                     className={`bg-card/50 backdrop-blur-sm border-border/50 hover:border-[hsl(var(--${colorVar})/0.5)] hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 ${
+                       deliverablesAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
+                     }`}
+                     style={{ transitionDelay: `${index * 60}ms` }}
                    >
                     <CardContent className="p-4 flex items-center gap-3">
                       <CheckCircle className={`h-5 w-5 text-[hsl(var(--${colorVar}))] flex-shrink-0`} />
@@ -431,18 +602,23 @@ const DetailedServicePageLayout = ({
            <div className={`absolute top-1/3 right-0 w-40 h-40 rounded-full bg-[hsl(var(--${colorVar})/0.1)] blur-[80px] animate-pulse`} style={{ animationDelay: '1.5s' }} />
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-               <div className="text-center mb-12 animate-fade-in">
+               <div 
+                 ref={trustAnim.ref}
+                 className={`text-center mb-12 transition-all duration-800 ease-out ${trustAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+               >
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">
                   Why Organizations <span className={`text-[hsl(var(--${colorVar}))]`}>Trust Us</span>
                 </h2>
               </div>
               
-               <div className="grid md:grid-cols-2 gap-4 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+               <div className="grid md:grid-cols-2 gap-4">
                 {whyTrustUs.map((reason, index) => (
                    <div 
                      key={index} 
-                     className={`flex items-start gap-3 bg-card/30 backdrop-blur-sm border border-border/50 rounded-lg p-4 hover:border-[hsl(var(--${colorVar})/0.5)] hover:scale-[1.02] transition-all duration-300`}
-                     style={{ animationDelay: `${0.3 + index * 0.1}s` }}
+                     className={`flex items-start gap-3 bg-card/30 backdrop-blur-sm border border-border/50 rounded-lg p-4 hover:border-[hsl(var(--${colorVar})/0.5)] hover:scale-[1.02] transition-all duration-300 ${
+                       trustAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                     }`}
+                     style={{ transitionDelay: `${index * 80}ms` }}
                    >
                     <Shield className={`h-5 w-5 text-[hsl(var(--${colorVar}))] mt-0.5 flex-shrink-0`} />
                     <p className="text-muted-foreground">{reason}</p>
@@ -453,29 +629,71 @@ const DetailedServicePageLayout = ({
           </div>
         </section>
 
+        {/* ParameterX Advantage Section */}
+        {companyHighlights && companyHighlights.length > 0 && (
+          <section className="py-16 relative border-t border-border/30 overflow-hidden">
+            <div className="container mx-auto px-4">
+              <div 
+                ref={highlightsAnim.ref}
+                className={`text-center mb-12 transition-all duration-800 ease-out ${highlightsAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+              >
+                <span className={`text-sm font-semibold tracking-widest uppercase mb-4 block text-[hsl(var(--${colorVar}))]`}>The ParameterX Advantage</span>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">
+                  Why <span className={`text-[hsl(var(--${colorVar}))]`}>ParameterX</span>
+                </h2>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  We combine cutting-edge technology with deep security expertise to deliver results that matter.
+                </p>
+              </div>
+
+              <div className="max-w-3xl mx-auto space-y-3">
+                {companyHighlights.map((highlight, index) => (
+                  <div
+                    key={index}
+                    className={`flex items-start gap-3 p-4 rounded-lg bg-card/30 border border-border/30 hover:border-[hsl(var(--${colorVar})/0.3)] transition-all duration-500 ease-out ${
+                      highlightsAnim.isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
+                    }`}
+                    style={{ transitionDelay: `${index * 80}ms` }}
+                  >
+                    <Sparkles className={`h-5 w-5 text-[hsl(var(--${colorVar}))] mt-0.5 flex-shrink-0`} />
+                    <p className="text-muted-foreground">{highlight}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Stats Section */}
          <section className="py-16 relative border-t border-border/30 overflow-hidden">
            <div className={`absolute top-0 left-0 h-[2px] bg-gradient-to-r from-transparent via-[hsl(var(--${colorVar}))] to-transparent animate-scan`} style={{ width: '100%', animationDelay: '2s' }} />
           <div className="container mx-auto px-4">
-             <div className="text-center mb-12 animate-fade-in">
+             <div 
+               ref={statsAnim.ref}
+               className={`text-center mb-12 transition-all duration-800 ease-out ${statsAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+             >
               <h2 className="text-2xl md:text-3xl font-bold">
                 Measurable <span className={`text-[hsl(var(--${colorVar}))]`}>Results</span>
               </h2>
             </div>
-             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {stats.map((stat, index) => {
                 const icons = [Shield, Users, Clock, Award];
                 const Icon = icons[index % icons.length];
                 return (
                    <div 
                      key={index} 
-                     className="text-center group animate-fade-in" 
-                     style={{ animationDelay: `${0.3 + index * 0.1}s` }}
+                     className={`text-center group transition-all duration-700 ease-out ${
+                       statsAnim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
+                     }`}
+                     style={{ transitionDelay: `${index * 100}ms` }}
                    >
                      <div className={`h-12 w-12 rounded-lg bg-[hsl(var(--${colorVar})/0.1)] flex items-center justify-center mx-auto mb-3 group-hover:scale-110 group-hover:shadow-[0_0_20px_hsl(var(--${colorVar})/0.3)] transition-all duration-300`}>
                       <Icon className={`h-6 w-6 text-[hsl(var(--${colorVar}))]`} />
                     </div>
-                     <div className={`text-3xl font-bold text-[hsl(var(--${colorVar}))] mb-1 group-hover:scale-110 transition-transform duration-300`}>{stat.value}</div>
+                     <div className={`text-3xl font-bold text-[hsl(var(--${colorVar}))] mb-1 group-hover:scale-110 transition-transform duration-300`}>
+                       <AnimatedStatCounter value={stat.value} isVisible={statsAnim.isVisible} />
+                     </div>
                     <p className="text-sm text-muted-foreground">{stat.label}</p>
                   </div>
                 );
@@ -487,27 +705,33 @@ const DetailedServicePageLayout = ({
         {/* CTA Section */}
         <section className="py-16 relative">
           <div className="container mx-auto px-4">
-            <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 md:p-12 text-center">
-              <div className={`h-16 w-16 rounded-xl bg-[hsl(var(--${colorVar})/0.1)] flex items-center justify-center mx-auto mb-6`}>
-                <Lock className={`h-8 w-8 text-[hsl(var(--${colorVar}))]`} />
-              </div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">
-                {ctaTitle.split(' ').slice(0, -2).join(' ')} <span className={`text-[hsl(var(--${colorVar}))]`}>{ctaTitle.split(' ').slice(-2).join(' ')}</span>
-              </h2>
-              <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-                {ctaDescription}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/get-security-audit">
-                  <Button size="lg" className="w-full sm:w-auto">
-                    {ctaButtonText}
-                  </Button>
-                </Link>
-                <Link to="/#services">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                    View All Security Services
-                  </Button>
-                </Link>
+            <div className={`bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 md:p-12 text-center relative overflow-hidden`}>
+              {/* Background glow */}
+              <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-[hsl(var(--${colorVar})/0.05)] blur-[100px]`} />
+              
+              <div className="relative z-10">
+                <div className={`h-16 w-16 rounded-xl bg-[hsl(var(--${colorVar})/0.1)] flex items-center justify-center mx-auto mb-6`}>
+                  <Lock className={`h-8 w-8 text-[hsl(var(--${colorVar}))]`} />
+                </div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">
+                  {ctaTitle.split(' ').slice(0, -2).join(' ')} <span className={`text-[hsl(var(--${colorVar}))]`}>{ctaTitle.split(' ').slice(-2).join(' ')}</span>
+                </h2>
+                <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+                  {ctaDescription}
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link to="/get-security-audit">
+                    <Button variant="cyber" size="lg" className="w-full sm:w-auto group">
+                      {ctaButtonText}
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
+                  <Link to="/#services">
+                    <Button size="lg" variant="cyberOutline" className="w-full sm:w-auto">
+                      View All Security Services
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
