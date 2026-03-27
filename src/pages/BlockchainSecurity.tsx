@@ -9,7 +9,7 @@ const BlockchainSecurity = () => {
       title="Web3 & Blockchain Security"
       subtitle="Smart Contract Auditing"
       tagline="Secure decentralized systems where a single bug can cost millions."
-      description="ParameterX provides end-to-end blockchain security services for Web3 startups, DeFi protocols, NFT platforms, exchanges, and enterprises building on blockchain. Our security approach combines manual expert auditing, red-team attack simulation, and business-logic analysis to protect both code and capital."
+      description="Smart contract auditing, DeFi protocol security, and full Web3 stack assessments across all major chains."
       extendedDescription="In blockchain systems, code is immutable and transactions are irreversible. A single vulnerability can lead to permanent fund loss, protocol collapse, or governance takeover. ParameterX has audited 500+ smart contracts and protected over $2B in total value locked—our audits are trusted by investors, users, and the Web3 community."
       trustIndicators={[
         { icon: Shield, label: "Smart Contract Experts" },

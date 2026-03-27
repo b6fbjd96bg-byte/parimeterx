@@ -9,8 +9,8 @@ const RedTeamAssessment = () => {
       icon={<Target className="h-8 w-8 text-[hsl(var(--color-red-team))]" />}
       title="Test Your Defenses Against Real-World Attacks"
       subtitle="Red Team Assessment"
-      tagline="Traditional security testing finds vulnerabilities. Red team operations reveal whether your organization can detect, respond to, and survive a determined adversary."
-      description="Our Red Team Assessments simulate sophisticated, multi-stage attacks using the same tactics, techniques, and procedures (TTPs) employed by advanced persistent threats (APTs) and organized cybercrime groups."
+      tagline="Simulate real-world adversary attacks to test your detection and response capabilities."
+      description="Full-spectrum red team operations combining cyber, physical, and social engineering—just like real threat actors."
       extendedDescription="ParameterX red team operators bring government, military, and intelligence backgrounds to every engagement. We develop custom tools and tradecraft that bypass modern security controls—giving you an honest assessment of what a motivated adversary can achieve against your organization."
       trustIndicators={[
         { icon: Shield, label: "MITRE ATT&CK" },

@@ -9,8 +9,8 @@ const AISecurityAssessment = () => {
       icon={<Brain className="h-8 w-8 text-[hsl(var(--color-violet-ai))]" />}
       title="Secure Your AI Systems Against Novel Attacks"
       subtitle="AI Security Assessment"
-      tagline="Large Language Models and AI systems introduce entirely new attack surfaces—from prompt injection to model manipulation and data poisoning."
-      description="Our AI Security Assessment service identifies critical vulnerabilities in production LLMs, machine learning models, and AI-powered applications that expose novel attack paths traditional security testing doesn't cover."
+      tagline="Protect your LLMs and AI systems against prompt injection, data poisoning, and model attacks."
+      description="Specialized security testing for AI applications, chatbots, RAG systems, and machine learning models."
       extendedDescription="ParameterX AI security researchers are at the forefront of this emerging field. We've assessed 100+ AI systems including chatbots, RAG applications, AI agents, and custom ML models—discovering vulnerabilities ranging from prompt injection to complete model extraction and data poisoning."
       trustIndicators={[
         { icon: Shield, label: "OWASP LLM Top 10" },

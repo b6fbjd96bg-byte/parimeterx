@@ -37,6 +37,7 @@ import DashboardVulnerabilitiesPage from "./pages/dashboard/VulnerabilitiesPage"
 import DashboardReportsPage from "./pages/dashboard/ReportsPage";
 import TargetsPage from "./pages/dashboard/TargetsPage";
 import ActivityPage from "./pages/dashboard/ActivityPage";
+import LeadsPage from "./pages/dashboard/LeadsPage";
 
 // Platform Pages
 import PlatformDashboard from "./pages/platform/PlatformDashboard";
@@ -76,6 +77,7 @@ const App = () => (
             <Route path="/dashboard/reports" element={<RoleGuard allowedRoles={['admin']}><DashboardReportsPage /></RoleGuard>} />
             <Route path="/dashboard/targets" element={<RoleGuard allowedRoles={['admin']}><TargetsPage /></RoleGuard>} />
             <Route path="/dashboard/activity" element={<RoleGuard allowedRoles={['admin']}><ActivityPage /></RoleGuard>} />
+            <Route path="/dashboard/leads" element={<RoleGuard allowedRoles={['admin']}><LeadsPage /></RoleGuard>} />
             
             {/* Platform Routes - Role-based */}
             <Route path="/platform" element={<RoleGuard allowedRoles={['admin', 'pentester', 'client']}><PlatformDashboard /></RoleGuard>} />

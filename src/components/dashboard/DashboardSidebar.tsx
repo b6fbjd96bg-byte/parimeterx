@@ -9,7 +9,8 @@ import {
   Target,
   Activity,
   Bell,
-  User
+  User,
+  Inbox
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -25,6 +26,7 @@ const DashboardSidebar = () => {
     { path: '/dashboard/reports', icon: FileText, label: 'Reports' },
     { path: '/dashboard/targets', icon: Target, label: 'Targets' },
     { path: '/dashboard/activity', icon: Activity, label: 'Activity' },
+    { path: '/dashboard/leads', icon: Inbox, label: 'Leads' },
   ];
 
   const bottomItems = [

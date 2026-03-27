@@ -9,8 +9,8 @@ const SourceCodeAudit = () => {
       icon={<Code className="h-8 w-8 text-[hsl(var(--color-teal-code))]" />}
       title="Ensure Code Security From the Source"
       subtitle="Source Code Security Audit"
-      tagline="Security vulnerabilities in source code are the root cause of most application breaches. Finding them before deployment is critical."
-      description="Our Source Code Security Audit service provides deep analysis of your codebase to identify security vulnerabilities, insecure coding patterns, and architectural weaknesses that could be exploited by attackers."
+      tagline="Find security flaws in your source code before they reach production."
+      description="Expert manual code review combined with automated static analysis across 15+ programming languages."
       extendedDescription="ParameterX code auditors have reviewed over 5 million lines of code across 15+ programming languages. We combine automated static analysis with expert manual review to find vulnerabilities that tools miss—including business logic flaws, race conditions, and subtle cryptographic weaknesses."
       trustIndicators={[
         { icon: Shield, label: "OWASP ASVS" },
