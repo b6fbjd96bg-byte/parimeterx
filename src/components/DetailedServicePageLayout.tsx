@@ -343,11 +343,6 @@ const DetailedServicePageLayout = ({
                  <p className="text-lg text-muted-foreground leading-relaxed mb-4 animate-fade-in" style={{ animationDelay: '0.6s' }}>
                   {description}
                 </p>
-                {extendedDescription && (
-                  <p className="text-base text-muted-foreground/80 leading-relaxed mb-8 animate-fade-in" style={{ animationDelay: '0.65s' }}>
-                    {extendedDescription}
-                  </p>
-                )}
                 
                 {/* Trust Indicators */}
                  <div className="flex flex-wrap gap-4 animate-fade-in" style={{ animationDelay: '0.7s' }}>
