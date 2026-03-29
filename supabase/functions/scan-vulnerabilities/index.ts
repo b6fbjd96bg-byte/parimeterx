@@ -696,9 +696,52 @@ Deno.serve(async (req) => {
     
     const { scanId, targetUrl } = await req.json();
     
-    if (!scanId || !targetUrl) {
+    if (!scanId || !targetUrl || typeof scanId !== 'string' || typeof targetUrl !== 'string') {
       return new Response(
         JSON.stringify({ error: 'scanId and targetUrl are required' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // SSRF protection: validate target URL
+    let parsedUrl: URL;
+    try {
+      let normalized = targetUrl.trim();
+      if (!normalized.startsWith('http://') && !normalized.startsWith('https://')) {
+        normalized = `https://${normalized}`;
+      }
+      parsedUrl = new URL(normalized);
+    } catch {
+      return new Response(
+        JSON.stringify({ error: 'Invalid URL format' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Only allow http/https schemes
+    if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
+      return new Response(
+        JSON.stringify({ error: 'Only HTTP and HTTPS URLs are allowed' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Block internal/private IPs and cloud metadata
+    const hostname = parsedUrl.hostname.toLowerCase();
+    const blockedHosts = [
+      'localhost', '127.0.0.1', '0.0.0.0', '[::1]', '::1',
+      '169.254.169.254', // Cloud metadata
+      'metadata.google.internal',
+    ];
+    const blockedPatterns = [
+      /^10\./, /^172\.(1[6-9]|2[0-9]|3[01])\./, /^192\.168\./,
+      /^169\.254\./, /^100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\./,
+      /^0\./, /^fc00:/i, /^fe80:/i, /^fd/i,
+    ];
+
+    if (blockedHosts.includes(hostname) || blockedPatterns.some(p => p.test(hostname))) {
+      return new Response(
+        JSON.stringify({ error: 'Scanning internal or private addresses is not allowed' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
