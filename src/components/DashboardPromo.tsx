@@ -6,7 +6,7 @@ import useScrollAnimation from '@/hooks/useScrollAnimation';
 import dashboardPreview from '@/assets/dashboard-preview.jpg';
 
 const DashboardPromo = () => {
-  const sectionRef = useScrollAnimation();
+  const { ref: sectionRef, isVisible } = useScrollAnimation();
 
   const features = [
     {
