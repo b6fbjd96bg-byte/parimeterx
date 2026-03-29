@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import AISecurityEngine from "@/components/AISecurityEngine";
 import Services from "@/components/Services";
+import DashboardPromo from "@/components/DashboardPromo";
 import WhyUs from "@/components/WhyUs";
 import TrustMetrics from "@/components/TrustMetrics";
 import FinalCTA from "@/components/FinalCTA";
@@ -26,6 +27,7 @@ const Index = () => {
         <Hero />
         <AISecurityEngine />
         <Services />
+        <DashboardPromo />
         <WhyUs />
         <TrustMetrics />
         <FinalCTA />
