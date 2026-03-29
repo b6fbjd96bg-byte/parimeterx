@@ -7,7 +7,6 @@ import ScannerAnimation from '@/components/dashboard/ScannerAnimation';
 import VulnerabilityChart from '@/components/dashboard/VulnerabilityChart';
 import RecentScans from '@/components/dashboard/RecentScans';
 import VulnerabilityList from '@/components/dashboard/VulnerabilityList';
-import LiveThreatFeed from '@/components/dashboard/LiveThreatFeed';
 import NewScanModal from '@/components/dashboard/NewScanModal';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -19,22 +18,46 @@ const Dashboard = () => {
   const [isScanning, setIsScanning] = useState(false);
   const [scanProgress, setScanProgress] = useState(0);
   const [scanCount, setScanCount] = useState(0);
+  const [vulnCount, setVulnCount] = useState(0);
+  const [resolvedCount, setResolvedCount] = useState(0);
+  const [targetCount, setTargetCount] = useState(0);
   const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     if (!user) return;
 
-    const fetchScanCount = async () => {
-      const { count } = await supabase
+    const fetchStats = async () => {
+      // Total scans
+      const { count: scans } = await supabase
         .from('scans')
         .select('*', { count: 'exact', head: true });
-      setScanCount(count || 0);
+      setScanCount(scans || 0);
+
+      // Total vulnerabilities
+      const { count: vulns } = await supabase
+        .from('vulnerabilities')
+        .select('*', { count: 'exact', head: true });
+      setVulnCount(vulns || 0);
+
+      // Resolved vulnerabilities
+      const { count: resolved } = await supabase
+        .from('vulnerabilities')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'fixed');
+      setResolvedCount(resolved || 0);
+
+      // Unique targets (distinct target_url from scans)
+      const { data: targets } = await supabase
+        .from('scans')
+        .select('target_url');
+      const uniqueTargets = new Set(targets?.map(t => t.target_url) || []);
+      setTargetCount(uniqueTargets.size);
     };
 
-    fetchScanCount();
+    fetchStats();
   }, [user, refreshKey]);
 
-  // Simulated scan animation
+  // Scan animation
   useEffect(() => {
     if (!isScanning) return;
 
@@ -51,14 +74,10 @@ const Dashboard = () => {
     return () => clearInterval(interval);
   }, [isScanning]);
 
-  const startDemoScan = () => {
-    setScanProgress(0);
-    setIsScanning(true);
-  };
-
   const handleScanCreated = () => {
     setRefreshKey((prev) => prev + 1);
-    startDemoScan();
+    setScanProgress(0);
+    setIsScanning(true);
   };
 
   return (
@@ -76,12 +95,6 @@ const Dashboard = () => {
             </p>
           </div>
           <div className="flex items-center gap-4">
-            <Button variant="outline" size="icon" className="relative">
-              <Bell className="w-4 h-4" />
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-destructive rounded-full text-[10px] flex items-center justify-center text-white">
-                3
-              </span>
-            </Button>
             <NewScanModal onScanCreated={handleScanCreated} />
           </div>
         </div>
@@ -90,31 +103,28 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <StatsCard
             title="Total Scans"
-            value={scanCount || 47}
+            value={scanCount}
             icon={<Search className="w-5 h-5" />}
-            trend={12}
             color="primary"
             delay={0}
           />
           <StatsCard
             title="Vulnerabilities Found"
-            value={241}
+            value={vulnCount}
             icon={<AlertTriangle className="w-5 h-5" />}
-            trend={-8}
             color="destructive"
             delay={100}
           />
           <StatsCard
             title="Issues Resolved"
-            value={189}
+            value={resolvedCount}
             icon={<CheckCircle className="w-5 h-5" />}
-            trend={24}
             color="success"
             delay={200}
           />
           <StatsCard
             title="Active Targets"
-            value={12}
+            value={targetCount}
             icon={<Target className="w-5 h-5" />}
             color="warning"
             delay={300}
@@ -141,13 +151,9 @@ const Dashboard = () => {
                 ) : scanProgress === 100 ? (
                   <div className="space-y-2">
                     <p className="text-sm text-green-500">Scan completed!</p>
-                    <Button variant="outline" onClick={startDemoScan}>Run Again</Button>
                   </div>
                 ) : (
-                  <Button variant="cyber" onClick={startDemoScan}>
-                    <Shield className="w-4 h-4 mr-2" />
-                    Start Demo Scan
-                  </Button>
+                  <p className="text-sm text-muted-foreground">No active scan. Start a new scan above.</p>
                 )}
               </div>
             </CardContent>
@@ -158,10 +164,9 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Recent Scans and Threat Feed Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        {/* Recent Scans */}
+        <div className="grid grid-cols-1 gap-6 mb-8">
           <RecentScans refreshKey={refreshKey} />
-          <LiveThreatFeed />
         </div>
 
         {/* Vulnerability List */}
