@@ -41,7 +41,7 @@ const DashboardPromo = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Header */}
-        <div className="text-center mb-16 opacity-0 translate-y-4 animate-on-scroll" style={{ animationDelay: '0ms' }}>
+        <div className={`text-center mb-16 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 mb-6">
             <Zap className="w-3.5 h-3.5 text-primary" />
             <span className="text-xs font-medium uppercase tracking-wider text-primary">Free for All Users</span>
@@ -56,7 +56,7 @@ const DashboardPromo = () => {
         </div>
 
         {/* Dashboard Preview Image */}
-        <div className="relative mb-16 opacity-0 translate-y-4 animate-on-scroll" style={{ animationDelay: '150ms' }}>
+        <div className={`relative mb-16 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
           <div className="relative mx-auto max-w-5xl">
             {/* Glow behind image */}
             <div className="absolute -inset-4 bg-primary/10 rounded-2xl blur-3xl opacity-50" />
@@ -95,8 +95,8 @@ const DashboardPromo = () => {
           {features.map((feature, index) => (
             <div
               key={feature.title}
-              className="group p-5 rounded-xl border border-border/40 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-500 opacity-0 translate-y-4 animate-on-scroll"
-              style={{ animationDelay: `${300 + index * 100}ms` }}
+              className={`group p-5 rounded-xl border border-border/40 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              style={{ transitionDelay: `${500 + index * 100}ms` }}
             >
               <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
                 <feature.icon className="w-5 h-5 text-primary" />
@@ -108,7 +108,7 @@ const DashboardPromo = () => {
         </div>
 
         {/* CTA */}
-        <div className="text-center opacity-0 translate-y-4 animate-on-scroll" style={{ animationDelay: '700ms' }}>
+        <div className={`text-center transition-all duration-700 delay-[900ms] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
           <Link to="/auth">
             <Button size="lg" variant="cyber" className="gap-2 group">
               Start Scanning — Free
