@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { Shield, Search, AlertTriangle, CheckCircle, Target, ArrowRight, Zap, BarChart3, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import useScrollAnimation from '@/hooks/useScrollAnimation';
