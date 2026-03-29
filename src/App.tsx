@@ -70,13 +70,13 @@ const App = () => (
             <Route path="/AdMiN_loggin" element={<AdminLogin />} />
             <Route path="/prOtectors" element={<ProtectorsLogin />} />
             
-            {/* Dashboard Routes - Admin only */}
-            <Route path="/dashboard" element={<RoleGuard allowedRoles={['admin']}><Dashboard /></RoleGuard>} />
-            <Route path="/dashboard/scans" element={<RoleGuard allowedRoles={['admin']}><ScansPage /></RoleGuard>} />
-            <Route path="/dashboard/vulnerabilities" element={<RoleGuard allowedRoles={['admin']}><DashboardVulnerabilitiesPage /></RoleGuard>} />
-            <Route path="/dashboard/reports" element={<RoleGuard allowedRoles={['admin']}><DashboardReportsPage /></RoleGuard>} />
-            <Route path="/dashboard/targets" element={<RoleGuard allowedRoles={['admin']}><TargetsPage /></RoleGuard>} />
-            <Route path="/dashboard/activity" element={<RoleGuard allowedRoles={['admin']}><ActivityPage /></RoleGuard>} />
+            {/* Dashboard Routes - Any authenticated user */}
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/dashboard/scans" element={<ProtectedRoute><ScansPage /></ProtectedRoute>} />
+            <Route path="/dashboard/vulnerabilities" element={<ProtectedRoute><DashboardVulnerabilitiesPage /></ProtectedRoute>} />
+            <Route path="/dashboard/reports" element={<ProtectedRoute><DashboardReportsPage /></ProtectedRoute>} />
+            <Route path="/dashboard/targets" element={<ProtectedRoute><TargetsPage /></ProtectedRoute>} />
+            <Route path="/dashboard/activity" element={<ProtectedRoute><ActivityPage /></ProtectedRoute>} />
             <Route path="/dashboard/leads" element={<RoleGuard allowedRoles={['admin']}><LeadsPage /></RoleGuard>} />
             
             {/* Platform Routes - Role-based */}
