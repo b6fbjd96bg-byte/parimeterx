@@ -4,10 +4,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Plus, Loader2, Shield, Zap, Target } from 'lucide-react';
+import { Plus, Loader2, Shield, Zap, Target, Coins } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { useCredits } from '@/hooks/useCredits';
 import { useToast } from '@/hooks/use-toast';
+import { Badge } from '@/components/ui/badge';
 
 const urlSchema = z.string().min(1, 'URL is required');
 
@@ -17,6 +19,7 @@ interface NewScanModalProps {
 
 const NewScanModal = ({ onScanCreated }: NewScanModalProps) => {
   const { user } = useAuth();
+  const { creditsRemaining, hasCredits, deductCredit } = useCredits();
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -40,7 +43,20 @@ const NewScanModal = ({ onScanCreated }: NewScanModalProps) => {
       return;
     }
 
+    if (!hasCredits) {
+      setError('No scan credits remaining. Please purchase more credits to continue scanning.');
+      return;
+    }
+
     setLoading(true);
+
+    // Deduct credit first
+    const credited = await deductCredit();
+    if (!credited) {
+      setError('Failed to deduct scan credit. You may be out of credits.');
+      setLoading(false);
+      return;
+    }
 
     // Normalize URL
     let normalizedUrl = targetUrl.trim();
@@ -48,7 +64,7 @@ const NewScanModal = ({ onScanCreated }: NewScanModalProps) => {
       normalizedUrl = `https://${normalizedUrl}`;
     }
 
-    // Create the scan record first
+    // Create the scan record
     const { data: scanData, error: dbError } = await supabase.from('scans').insert({
       user_id: user.id,
       target_url: normalizedUrl,
@@ -65,7 +81,7 @@ const NewScanModal = ({ onScanCreated }: NewScanModalProps) => {
 
     toast({
       title: 'Scan Created',
-      description: 'Starting vulnerability scan...',
+      description: `Starting vulnerability scan... (${creditsRemaining - 1} credits remaining)`,
     });
 
     setOpen(false);
@@ -73,27 +89,18 @@ const NewScanModal = ({ onScanCreated }: NewScanModalProps) => {
     setScanType('full');
     onScanCreated();
 
-    // Trigger the edge function to perform the scan
+    // Trigger the edge function
     const { data: session } = await supabase.auth.getSession();
     
     try {
       const response = await supabase.functions.invoke('scan-vulnerabilities', {
-        body: {
-          scanId: scanData.id,
-          targetUrl: normalizedUrl,
-        },
-        headers: {
-          Authorization: `Bearer ${session?.session?.access_token}`,
-        },
+        body: { scanId: scanData.id, targetUrl: normalizedUrl },
+        headers: { Authorization: `Bearer ${session?.session?.access_token}` },
       });
 
       if (response.error) {
         console.error('Scan error:', response.error);
-        toast({
-          title: 'Scan Error',
-          description: 'The scan encountered an error. Please try again.',
-          variant: 'destructive',
-        });
+        toast({ title: 'Scan Error', description: 'The scan encountered an error.', variant: 'destructive' });
       } else {
         toast({
           title: 'Scan Completed',
@@ -129,7 +136,24 @@ const NewScanModal = ({ onScanCreated }: NewScanModalProps) => {
             Create New Vulnerability Scan
           </DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-6 mt-4">
+
+        {/* Credit Balance */}
+        <div className={`flex items-center gap-2 p-3 rounded-lg border ${
+          hasCredits 
+            ? 'bg-primary/5 border-primary/20' 
+            : 'bg-destructive/5 border-destructive/20'
+        }`}>
+          <Coins className={`w-4 h-4 ${hasCredits ? 'text-primary' : 'text-destructive'}`} />
+          <span className="text-sm">
+            {hasCredits ? (
+              <>You have <Badge variant="outline" className="mx-1 text-primary border-primary/30">{creditsRemaining}</Badge> scan credits remaining</>
+            ) : (
+              <span className="text-destructive font-medium">No credits remaining — purchase more to scan</span>
+            )}
+          </span>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6 mt-2">
           <div className="space-y-2">
             <Label htmlFor="target">Target URL</Label>
             <Input
@@ -139,10 +163,8 @@ const NewScanModal = ({ onScanCreated }: NewScanModalProps) => {
               value={targetUrl}
               onChange={(e) => setTargetUrl(e.target.value)}
               className="bg-muted/50"
+              disabled={!hasCredits}
             />
-            <p className="text-xs text-muted-foreground">
-              Enter the website URL to scan for security vulnerabilities
-            </p>
           </div>
 
           <div className="space-y-2">
@@ -153,11 +175,12 @@ const NewScanModal = ({ onScanCreated }: NewScanModalProps) => {
                   key={type.value}
                   type="button"
                   onClick={() => setScanType(type.value)}
+                  disabled={!hasCredits}
                   className={`flex items-center gap-3 p-3 rounded-lg border transition-all duration-300 ${
                     scanType === type.value
                       ? 'border-primary bg-primary/10'
                       : 'border-border hover:border-primary/50'
-                  }`}
+                  } ${!hasCredits ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   <type.icon className={`w-5 h-5 ${scanType === type.value ? 'text-primary' : 'text-muted-foreground'}`} />
                   <div className="text-left">
@@ -169,22 +192,19 @@ const NewScanModal = ({ onScanCreated }: NewScanModalProps) => {
             </div>
           </div>
 
-          {error && (
-            <p className="text-sm text-destructive animate-fade-in">{error}</p>
-          )}
+          {error && <p className="text-sm text-destructive animate-fade-in">{error}</p>}
 
           <div className="flex gap-3">
             <Button type="button" variant="outline" onClick={() => setOpen(false)} className="flex-1">
               Cancel
             </Button>
-            <Button type="submit" variant="cyber" disabled={loading} className="flex-1">
+            <Button type="submit" variant="cyber" disabled={loading || !hasCredits} className="flex-1">
               {loading ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Scanning...
-                </>
+                <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Scanning...</>
+              ) : !hasCredits ? (
+                'No Credits'
               ) : (
-                'Start Scan'
+                'Start Scan (1 Credit)'
               )}
             </Button>
           </div>
