@@ -38,6 +38,7 @@ import DashboardReportsPage from "./pages/dashboard/ReportsPage";
 import TargetsPage from "./pages/dashboard/TargetsPage";
 import ActivityPage from "./pages/dashboard/ActivityPage";
 import LeadsPage from "./pages/dashboard/LeadsPage";
+import AdminUsersPage from "./pages/dashboard/UsersPage";
 
 // Platform Pages
 import PlatformDashboard from "./pages/platform/PlatformDashboard";
