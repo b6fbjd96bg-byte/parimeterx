@@ -109,11 +109,11 @@ const AdminUsersPage = () => {
       const profiles = profilesRes.data || [];
       const credits = creditsRes.data || [];
       const roles = rolesRes.data || [];
-      const authUsers = authUsersRes.data?.users || [];
+      const authUsers: Array<{ id: string; email: string; last_sign_in_at: string | null }> = authUsersRes.data?.users || [];
 
       const creditsMap = new Map(credits.map(c => [c.user_id, c]));
       const rolesMap = new Map(roles.map(r => [r.user_id, r.role]));
-      const authMap = new Map(authUsers.map((u: any) => [u.id, u]));
+      const authMap = new Map(authUsers.map(u => [u.id, u]));
 
       const merged: FullUser[] = profiles.map(p => {
         const c = creditsMap.get(p.user_id);
