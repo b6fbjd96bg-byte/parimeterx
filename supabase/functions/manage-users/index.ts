@@ -22,7 +22,6 @@ Deno.serve(async (req) => {
     // Allow reset_password without auth (bootstrap scenario)
     if (action === "reset_admin_password") {
       const { email, password } = params;
-      // Protected: verify caller has service role key
       const authHeader = req.headers.get("Authorization");
       if (!authHeader?.includes(serviceRoleKey)) {
         return new Response(JSON.stringify({ error: "Forbidden" }), {
@@ -85,6 +84,27 @@ Deno.serve(async (req) => {
       });
     }
 
+    // LIST USERS - returns all auth users with emails
+    if (action === "list") {
+      const { data: authUsers, error: listError } = await adminClient.auth.admin.listUsers({ perPage: 1000 });
+      if (listError) {
+        return new Response(JSON.stringify({ error: listError.message }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const users = (authUsers?.users || []).map((u: any) => ({
+        id: u.id,
+        email: u.email,
+        created_at: u.created_at,
+        last_sign_in_at: u.last_sign_in_at,
+        email_confirmed_at: u.email_confirmed_at,
+      }));
+      return new Response(JSON.stringify({ users }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     if (action === "create_user") {
       const { email, password, full_name, role } = params;
 
@@ -95,7 +115,6 @@ Deno.serve(async (req) => {
         });
       }
 
-      // Create user with admin API
       const { data: newUser, error: createError } = await adminClient.auth.admin.createUser({
         email,
         password,
@@ -110,7 +129,6 @@ Deno.serve(async (req) => {
         });
       }
 
-      // Assign role if provided
       if (role && newUser.user) {
         await adminClient.from("user_roles").insert({
           user_id: newUser.user.id,
@@ -153,7 +171,6 @@ Deno.serve(async (req) => {
         });
       }
 
-      // Prevent self-deletion
       if (user_id === caller.id) {
         return new Response(JSON.stringify({ error: "Cannot delete yourself" }), {
           status: 400,
@@ -161,11 +178,10 @@ Deno.serve(async (req) => {
         });
       }
 
-      // Delete role first
       await adminClient.from("user_roles").delete().eq("user_id", user_id);
-      // Delete profile
       await adminClient.from("profiles").delete().eq("user_id", user_id);
-      // Delete auth user
+      await adminClient.from("user_credits").delete().eq("user_id", user_id);
+      await adminClient.from("credit_transactions").delete().eq("user_id", user_id);
       const { error: deleteError } = await adminClient.auth.admin.deleteUser(user_id);
 
       if (deleteError) {
